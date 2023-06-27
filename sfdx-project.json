@@ -7,6 +7,6 @@
   ],
   "name": "Prod",
   "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sfdcLoginUrl": "https://sfcom-d-dev-ed.my.salesforce.com/",
   "sourceApiVersion": "57.0"
 }
