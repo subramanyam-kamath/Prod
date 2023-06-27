@@ -36,3 +36,7 @@ jobs:
       - name: Authenticate Salesforce ORG
         run: |
           sfdx force:auth:jwt:grant --clientid 3MVG9pRzvMkjMb6ncJId.OI_4C_nnM4jsxwsHThKRalsbZJ_ebOoHslwdaxTR1a_.mmTbxwfVQJSFdxoNZ2wa --jwtkeyfile Assets/server.key --username subramanyam.kamath@sf.com --setdefaultdevhubusername -a HubOrg
+     
+      - name: Validate Source Code Against Salesforce ORG
+        run: |
+          sfdx force:source:deploy -p force-app -c -u HubOrg
