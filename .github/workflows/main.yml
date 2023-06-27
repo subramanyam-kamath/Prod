@@ -35,4 +35,4 @@ jobs:
   
       - name: Authenticate Salesforce ORG
         run: |
-          sfdx force:auth:jwt:grant --clientid 3MVG9pRzvMkjMb6ncJId.OI_4C4G8Cp64kMSKugu95A9oHFFdWY0k4UYi9K5SQdWJOfqdYtKsQ9QK.Cj3IFBt --jwtkeyfile Assets/server.key --username subramanyam.kamath@sf.com --setdefaultdevhubusername -a HubOrg
+          sfdx force:auth:jwt:grant --clientid 3MVG9pRzvMkjMb6ncJId.OI_4C_nnM4jsxwsHThKRalsbZJ_ebOoHslwdaxTR1a_.mmTbxwfVQJSFdxoNZ2wa --jwtkeyfile Assets/server.key --username subramanyam.kamath@sf.com --setdefaultdevhubusername -a HubOrg
