@@ -3,11 +3,11 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   push:
     branches:
-      - Develop
+      - QA-Branch
     paths:
       - 'force-app/**'
 jobs:
-  Explore-GitHub-ActionsDevelop:
+  Explore-GitHub-ActionsQA:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
