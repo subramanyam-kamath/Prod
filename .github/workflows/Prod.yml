@@ -8,7 +8,7 @@ on:
     paths:
       - 'force-app/**'
 jobs:
-  Explore-GitHub-Actions:
+  Explore-GitHub-ActionsMain:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
