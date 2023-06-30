@@ -44,4 +44,4 @@ jobs:
      
       - name: Validate Source Code Against Salesforce ORG
         run: |
-          sfdx force:source:deploy -p force-app -c -u HubOrg
+          sfdx force:source:deploy -p "changed-sources/force-app" --checkonly --testlevel RunLocalTests  --json
