@@ -3,7 +3,8 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   push:
     branches:
-      - QA-Branch
+      - main
+      - master
     paths:
       - 'force-app/**'
 jobs:
