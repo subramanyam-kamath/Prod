@@ -128,14 +128,14 @@ jobs:
                 sfdx force:auth:jwt:grant --clientid 3MVG9pRzvMkjMb6ncJId.OI_4C_nnM4jsxwsHThKRalsbZJ_ebOoHslwdaxTR1a_.mmTbxwfVQJSFdxoNZ2wa --jwtkeyfile Assets/server.key --username subramanyam.kamath@sf.com --setdefaultdevhubusername -a HubOrg               
              
             - name: 'Check-only deploy delta changes - run specified tests'
-              if: ${{ env.APEX_TESTS != 'all' }}
+              if: ${{ github.event.head_commit.message!= 'all' }}
               run: |
-                  echo ${{env.APEX_TESTS}}
+                  echo ${{github.event.head_commit.message}}
                   sfdx force:source:deploy -p force-app -c --testlevel RunSpecifiedTests --runtests ${{ github.event.head_commit.message }} -u HubOrg
             
             # If the env variable equals all, we run all tests
             - name: 'Check-only deploy delta changes - run all tests'
-              if: ${{ env.APEX_TESTS == 'all' }}
+              if: ${{ github.event.head_commit.message == 'all' }}
               run: |
                   sfdx force:source:deploy -p force-app -c --testlevel RunLocalTests -u HubOrg
 
