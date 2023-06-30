@@ -30,11 +30,41 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+    
+      - name: 'Read PR Body'
+              env:
+              PR_BODY: ${{github.event.pull_request.body}}
+       
+      run: |
+          echo $PR_BODY > ./pr_body.txt
+          node ./parsePR.js              
+          TESTS=$(cat testsToRun.txt)       
+          echo "APEX_TESTS=$TESTS" >> $GITHUB_ENV
+              
+              
       # Install the SFDX CLI using the npm command
       - name: Install the SFDX CLI
         run: |
           npm install sfdx-cli --global
           sfdx force --help
+          
+      # Install java as it is required for the next step
+            - name: 'Installing java'
+              run: |
+                sudo apt-get update
+                sudo apt install default-jdk
+                
+      # Install SFDX scanner
+            - name: 'Installing SFDX scanner'
+              run: sfdx plugins:install @salesforce/sfdx-scanner
+              
+      
+      - name: 'Installing sfdx git delta'
+              run: | 
+                  echo y | sfdx plugins:install sfdx-git-delta
+                  sfdx plugins 
+               
+          
       - name: Decrypt the server.key.enc file & store inside assets folder
         run: openssl enc -nosalt -aes-256-cbc -d -in Assets/server.key.enc -out Assets/server.key -base64 -K DE3B4F6346E0CFA95CA695168A0FD8DA4D06AE808A0AFA9A4DBD2502D5DD6FE7 -iv AC767FEDCF2105140E84B62495C3F43A
   
@@ -42,6 +72,7 @@ jobs:
         run: |
           sfdx force:auth:jwt:grant --clientid 3MVG9pRzvMkjMb6ncJId.OI_4C_nnM4jsxwsHThKRalsbZJ_ebOoHslwdaxTR1a_.mmTbxwfVQJSFdxoNZ2wa --jwtkeyfile Assets/server.key --username subramanyam.kamath@sf.com --setdefaultdevhubusername -a HubOrg
      
-      - name: Validate Source Code Against Salesforce ORG
+      - name: 'Check-only deploy full changes - run specified tests'
+         if: ${{ env.APEX_TESTS != 'all' }}
         run: |
-          sfdx force:source:deploy -p force-app -c --testlevel RunLocalTests -u HubOrg
+          sfdx force:source:deploy -p force-app -c --testlevel RunSpecifiedTests --runtests ${{env.APEX_TESTS} -u HubOrg
