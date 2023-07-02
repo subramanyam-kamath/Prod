@@ -9,7 +9,8 @@ on:
 
 jobs:   
     validate-deployment-on-develop-org:        
-        runs-on: ubuntu-latest       
+        runs-on: ubuntu-latest
+        environment: developer
         steps:            
             - uses: actions/setup-node@v3
               with:
@@ -59,13 +60,13 @@ jobs:
 
             
             - name: Decrypt the server.key.enc file & store inside assets folder
-              run: openssl enc -nosalt -aes-256-cbc -d -in Assets/server.key.enc -out Assets/server.key -base64 -K DE3B4F6346E0CFA95CA695168A0FD8DA4D06AE808A0AFA9A4DBD2502D5DD6FE7 -iv AC767FEDCF2105140E84B62495C3F43A
+              run: openssl enc -nosalt -aes-256-cbc -d -in ${{ secrets.ENCRYPTION_KEY_FILE }} -out ${{ secrets.JWT_KEY_FILE }} -base64 -K ${{ secrets.DECRYPTION_KEY }} -iv ${{ secrets.DECRYPTION_IV }}
               
 
             
             - name: Authenticate Salesforce ORG
               run: |
-                sfdx force:auth:jwt:grant --clientid 3MVG9pRzvMkjMb6ncJId.OI_4C_nnM4jsxwsHThKRalsbZJ_ebOoHslwdaxTR1a_.mmTbxwfVQJSFdxoNZ2wa --jwtkeyfile Assets/server.key --username subramanyam.kamath@sf.com --setdefaultdevhubusername -a HubOrg               
+                sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg               
              
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{ github.event.head_commit.message!= 'Deploytodevorgwithspecifiedtests' }}
