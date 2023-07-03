@@ -69,7 +69,7 @@ jobs:
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg               
              
             - name: 'Check-only full deploy changes - run specified tests'
-              if: ${{ github.event.head_commit.message!= 'Deploytodevorgwithspecifiedtests' }}
+              if: ${{ github.event.head_commit.message!= 'Deploytodevorg' }}
               run: |
                   echo ${{github.event.head_commit.message}}
                   sfdx force:source:deploy -p force-app -c --testlevel RunSpecifiedTests --runtests ${{ github.event.head_commit.message }} -u HubOrg
