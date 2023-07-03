@@ -3,14 +3,15 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   push:
     branches:
-      - QA-Branch
+      - main
+      - master
     paths:
       - 'force-app/**'
 
 jobs:   
     validate-deployment-on-develop-org:        
         runs-on: ubuntu-latest
-        environment: QA-Branch
+        environment: Production_Credentials
         steps:            
             - uses: actions/setup-node@v3
               with:
