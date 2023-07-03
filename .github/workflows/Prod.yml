@@ -10,7 +10,7 @@ on:
 jobs:   
     validate-deployment-on-develop-org:        
         runs-on: ubuntu-latest
-        environment: developer
+        environment: Production_Credentials
         steps:            
             - uses: actions/setup-node@v3
               with:
