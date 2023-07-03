@@ -7,5 +7,7 @@ global class AccountManager {
         Account acc = [SELECT Id, Name, (SELECT Id, Name FROM Contacts) 
                        FROM Account WHERE Id = :accId];
         return acc;
+
+        //commentadded
     }
 }

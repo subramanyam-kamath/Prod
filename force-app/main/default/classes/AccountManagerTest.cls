@@ -16,5 +16,7 @@ global class AccountManagerTest{
         // Verify results
         System.assert(acc.contacts != null);
         System.assertEquals('0035j00000ftXlEAAU', acc.contacts[0].id);
+
+        //commentadded
     }
     }
