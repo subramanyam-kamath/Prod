@@ -1,7 +1,8 @@
 name: GitHub Actions QA Org
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - QA-Branch
     paths:
@@ -24,7 +25,7 @@ jobs:
 
             - name: 'Read commit Body'
               env:
-                 PR_BODY: ${{ github.event.head_commit.message }}
+                 PR_BODY: ${{ github.event.pull_request.body }}
 
              
               run: |
@@ -69,14 +70,14 @@ jobs:
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg               
              
             - name: 'Check-only full deploy changes - run specified tests'
-              if: ${{ github.event.head_commit.message!= 'Deploytodevorgwithspecifiedtests' }}
+              if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
               run: |
                   echo ${{github.event.head_commit.message}}
-                  sfdx force:source:deploy -p force-app -c --testlevel RunSpecifiedTests --runtests ${{ github.event.head_commit.message }} -u HubOrg
+                  sfdx force:source:deploy -p force-app -c --testlevel RunSpecifiedTests --runtests ${{github.event.pull_request.body}} -u HubOrg
             
             
             - name: 'Check-only deploy delta changes - run all tests'
-              if: ${{ github.event.head_commit.message == 'Deploytodevorg' }}
+              if: ${{ github.event.pull_request.body == 'DeploytoQAorg' }}
               run: |
                   sfdx force:source:deploy -p force-app -c --testlevel RunLocalTests -u HubOrg
 
