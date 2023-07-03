@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: GitHub Actions Prod Deployment
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   push:
@@ -9,7 +9,7 @@ on:
       - 'force-app/**'
 
 jobs:   
-    validate-deployment-on-develop-org:        
+    validate-deployment-on-Prod-org:        
         runs-on: ubuntu-latest
         environment: Production_Credentials
         steps:            
@@ -25,7 +25,7 @@ jobs:
 
             - name: 'Read commit Body'
               env:
-                 PR_BODY: ${{ github.event.head_commit.message }}
+                 PR_BODY: ${{ github.event.pull_request.body }}
 
              
               run: |
@@ -68,17 +68,24 @@ jobs:
             - name: Authenticate Salesforce ORG
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg               
-             
+            
+            - name: Generate the package.xml for delta files
+              run: |
+                mkdir delta
+                sfdx sgd:source:delta --to "HEAD" --from "HEAD~1" --output "./delta" --ignore-whitespace -d -i .sgdignore
+                echo "--- package.xml generated with added and modified metadata ---"
+                cat delta/package/package.xml
+            
             - name: 'Check-only full deploy changes - run specified tests'
-              if: ${{ github.event.head_commit.message!= 'Deploytodevorgwithspecifiedtests' }}
+              if: ${{ github.event.head_commit.message!= 'Deploytodevorg' }}
               run: |
                   echo ${{github.event.head_commit.message}}
-                  sfdx force:source:deploy -p force-app -c --testlevel RunSpecifiedTests --runtests ${{ github.event.head_commit.message }} -u HubOrg
+                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunSpecifiedTests --runtests ${{github.event.head_commit.message}}  -u HubOrg
             
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.head_commit.message == 'Deploytodevorg' }}
               run: |
-                  sfdx force:source:deploy -p force-app -c --testlevel RunLocalTests -u HubOrg
+                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u HubOrg
 
             
