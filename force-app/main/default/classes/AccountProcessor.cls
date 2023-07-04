@@ -1,0 +1,21 @@
+public class AccountProcessor{
+
+@future
+public static void countContacts(List<Id> recordids){
+
+Account[] accts = [Select Id, Number_Of_Contacts__c from Account where Id IN:recordIds];
+
+List<Account> acct2 = new List<Account>();
+
+for (account acct : accts){
+
+id recordid = acct.id;
+List<AggregateResult> contcount = [Select count(id) from Contact where Accountid=:recordid];
+acct.Number_Of_Contacts__c= (integer)contcount[0].get('expr0');
+
+acct2.add(acct);
+}
+
+update acct2;
+}
+}
