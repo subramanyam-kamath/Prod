@@ -10,7 +10,7 @@
         <criteriaItems>
             <field>Status</field>
             <operation>equals</operation>
-            <value>Closed - Not Converted</value>
+            <value>Open - Not Contacted</value>
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
