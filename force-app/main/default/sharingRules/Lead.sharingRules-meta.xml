@@ -11,7 +11,7 @@
             <field>Status</field>
             <operation>equals</operation>
 
-            <value>Open - Not Contacted</value>
+            <value>Closed - Not Converted</value>
 
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
