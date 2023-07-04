@@ -32,7 +32,11 @@ insert createNewOpp;
 
 return createnewAccount;
 
+<<<<<<< HEAD
 
+=======
+//Commentadded
+>>>>>>> 1635e26aa8956eae8d67f75f91332b2c3c06db7f
 
 }
 
