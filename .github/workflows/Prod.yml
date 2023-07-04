@@ -74,7 +74,7 @@ jobs:
                   echo ${{github.event.head_commit.message}}
                   sfdx force:source:deploy -x delta/package/package.xml -c --testlevel noTestRun  -u HubOrg
                  # sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunSpecifiedTests --runtests ${{github.event.pull_request.body}}  -u HubOrg
-                 
+
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.head_commit.message == 'Deploytodevorg' }}
