@@ -1,8 +1,9 @@
 name: CI2
 on: 
   pull_request:
-   branches: 
-      -QA-Branch
+    types: [closed]
+    branches:
+      - QA-Branch
 jobs:
   build:
     runs-on: ubuntu-latest
