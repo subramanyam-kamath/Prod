@@ -1,0 +1,21 @@
+name: CI2
+on: 
+  pull_request:
+    types: [closed]
+    branches:
+      - QA-Branch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v1
+      - name: Branch name
+        run: |
+           echo running on branch ${GITHUB_REF##*/}
+           echo running on branch2 ${{ github.head_ref }}
+           echo running on branch3 ${{ github.base_ref }}
+           echo running on branch3 ${{ github.sha }}
+           echo running on branch3 ${{ github.event.before }}
+           echo running on branch3 ${{ github.base_ref }}
+           
