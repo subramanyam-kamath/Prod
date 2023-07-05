@@ -45,9 +45,18 @@ jobs:
            
             - name: 'Installing sfdx git delta'
               run: | 
-                  echo y | sfdx plugins:install sfdx-git-delta
-                  sfdx plugins 
-
+                   echo y | sfdx plugins:install sfdx-git-delta
+                    sfdx plugins 
+                    git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+                    git fetch --all
+                    git checkout Develop
+                    git --no-pager diff --name-status develop origin/QA-Branch
+                    mkdir delta
+                    sfdx sgd:source:delta ---to develop --from origin/QA-Branch --output "./delta" --ignore-whitespace -d -i .sgdignore
+                    echo "--- package.xml generated with added and modified metadata ---"
+                    cat delta/package/package.xml
+                  
+             
             
             - name: 'Installing java'
               run: |
@@ -69,12 +78,12 @@ jobs:
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
                 
                 
-            - name: Generate the package.xml for delta files
-              run: |
-                mkdir delta
-                sfdx sgd:source:delta ---to develop --from origin/QA-Branch --output "./delta" --ignore-whitespace -d -i .sgdignore
-                echo "--- package.xml generated with added and modified metadata ---"
-                cat delta/package/package.xml
+            #- name: Generate the package.xml for delta files
+             # run: |
+              #  mkdir delta
+               # sfdx sgd:source:delta ---to develop --from origin/QA-Branch --output "./delta" --ignore-whitespace -d -i .sgdignore
+                #echo "--- package.xml generated with added and modified metadata ---"
+                #cat delta/package/package.xml
                 
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{ github.event.head_commit.message == 'DeltaDeploy' }}
