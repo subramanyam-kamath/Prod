@@ -1,29 +1,10 @@
-name: GitHub Actions Developer Org
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: 
-  push:
-    branches:
-      - Develop
-    paths:
-      - 'force-app/**'
-
-jobs:   
-    validate-deployment-on-develop-org:        
-        runs-on: ubuntu-latest
-     
-        steps:            
-            - uses: actions/setup-node@v3
-              with:
-                node-version: '14'
-
-            - name: 'Checkout source code'
-              uses: actions/checkout@v3
-              with:
-                fetch-depth: 0       
-            
-
-            - name: 'Read commit Body'
-              run: |
-               echo github.${{ github.ref_name }}
-               
-            
+name: CI
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v1
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
