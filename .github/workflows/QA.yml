@@ -73,7 +73,7 @@ jobs:
               run: |
                 mkdir delta
 
-                sfdx sgd:source:delta --to "Develop" --from ${GITHUB_REF##*/} --output "./delta" --ignore-whitespace -d -i .sgdignore
+                sfdx sgd:source:delta --to ${{ github.head_ref }} --from ${GITHUB_REF##*/} --output "./delta" --ignore-whitespace -d -i .sgdignore
 
                 echo "--- package.xml generated with added and modified metadata ---"
                 cat delta/package/package.xml
