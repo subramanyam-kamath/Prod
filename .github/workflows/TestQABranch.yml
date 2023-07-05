@@ -13,4 +13,9 @@ jobs:
       - name: Branch name
         run: |
            echo running on branch ${GITHUB_REF##*/}
-           echo running on branch2 ${GitHUB.event.pull_request.head.sha}}
+           echo running on branch2 ${{ github.head_ref }}
+           echo running on branch3 ${{ github.base_ref }}
+           echo running on branch3 ${{ github.sha }}
+           echo running on branch3 ${{ github.event.before }}
+           echo running on branch3 ${{ github.base_ref }}
+           
