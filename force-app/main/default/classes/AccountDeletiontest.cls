@@ -15,8 +15,6 @@ Test.stopTest();
 System.assertEquals(false,result.Issuccess());
 System.assert(result.getErrors().Size()>0);
 System.assertEquals('You cannot delete the Opportunity',result.getErrors()[0].getMessage());
-
-
-
+//commentadded
 }
 }
