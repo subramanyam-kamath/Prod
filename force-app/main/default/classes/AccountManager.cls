@@ -8,7 +8,7 @@ global class AccountManager {
                        FROM Account WHERE Id = :accId];
         return acc;
 //Commentadded
-//Commentaddedfive
+//Commentadded5
     
     }
 }
