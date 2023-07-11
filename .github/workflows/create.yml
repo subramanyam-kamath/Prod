@@ -24,7 +24,9 @@ jobs:
             - name: 'Echo sdrignore file'
               run: echo ./.sgdignore
                 
-                
+            - name: Get version
+              id: vars
+              run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT    
           
   
           #  - name: Read package.json
