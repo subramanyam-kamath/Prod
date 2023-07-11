@@ -1,4 +1,6 @@
 name: GitHub Actions Developer Org
+env:
+  Name: 'Storesdgignore'
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   push:
@@ -21,20 +23,17 @@ jobs:
               with:
                 fetch-depth: 0    
                 
-            - name: 'Echo sdrignore file'
-              run: echo ./.sgdignore
-                
-            - name: Get version
-              id: vars
-              run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT    
+              
           
   
-          #  - name: Read package.json
-           #   id: package
-            #  uses: juliangruber/read-file-action@v1
-             # with:
-              # path: ./.sgdignore
-            #- name: Echo sgdignore
-             # run: echo "${{ steps.package.outputs.content }}"
+            - name: Read package.json
+              id: package
+              uses: juliangruber/read-file-action@v1
+              with:
+               path: ./.sgdignore
+            - name: set env & echo sgdignore
+              run: echo "Read_File_Content=${{ steps.package.outputs.content }}" >> $GITHUB_ENV
+            - name: testrun
+              run: echo $Read_File_Content
                 
             
