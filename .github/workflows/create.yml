@@ -1,14 +1,14 @@
-name: GitHub Actions Developer Org
+#name: GitHub Actions Developer Org
 
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: 
-  push:
+#run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+#on: 
+ # push:
     branches:
       - 'Feature*'
     
       
 
-jobs:   
+#jobs:   
     validate-deployment-on-develop-org:
         runs-on: ubuntu-latest
         environment: developer
