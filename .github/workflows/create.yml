@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - 'Feature*'
-    paths:
-      - 'scripts/**'
+    
+      
 
 jobs:   
     validate-deployment-on-develop-org:
