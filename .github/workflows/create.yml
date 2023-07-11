@@ -28,7 +28,7 @@ jobs:
               id: package
               uses: juliangruber/read-file-action@v1
               with:
-               path: ./sgdignore
+               path: ./.sgdignore
             - name: Echo sgdignore
               run: echo "${{ steps.package.outputs.content }}"
                 
