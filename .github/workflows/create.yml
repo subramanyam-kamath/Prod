@@ -26,7 +26,7 @@ jobs:
   
             - name: Read package.json
               id: package
-              uses: juliangruber/read-file-action@v1
+              uses: subramayam-kamath/read-file-action@v1
               with:
                path: ./package.json
             - name: Echo package.json
