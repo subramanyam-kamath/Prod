@@ -1,1 +1,3 @@
-# Github Actions,.github/,.github/workflow
+# Github Actions
+.github/
+.github/workflow
