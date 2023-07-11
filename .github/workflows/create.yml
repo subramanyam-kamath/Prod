@@ -5,7 +5,7 @@ on:
     branches:
       - 'Feature*'
     paths:
-      - 'force-app/**'
+      - 'scripts/**'
 
 jobs:   
     validate-deployment-on-develop-org:
@@ -20,5 +20,16 @@ jobs:
               uses: actions/checkout@v3
               with:
                 fetch-depth: 0    
+                
+                
+          
+  
+            - name: Read package.json
+              id: package
+              uses: juliangruber/read-file-action@v1
+              with:
+               path: ./package.json
+            - name: Echo package.json
+              run: echo "${{ steps.package.outputs.content }}"
                 
             
