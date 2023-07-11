@@ -1,6 +1,5 @@
 name: GitHub Actions Developer Org
-env:
-  Name: 'Storesdgignore'
+
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   push:
