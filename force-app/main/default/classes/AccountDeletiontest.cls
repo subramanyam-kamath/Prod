@@ -17,5 +17,6 @@ System.assert(result.getErrors().Size()>0);
 System.assertEquals('You cannot delete the Opportunity',result.getErrors()[0].getMessage());
 //commentadded
 //commentadded2
+//commentadded3
 }
 }
