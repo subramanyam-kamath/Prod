@@ -22,11 +22,11 @@ jobs:
                 fetch-depth: 0       
             
 
-            - name: Read package.json
+            - name: Read TestClassFile
               id: package
               uses: juliangruber/read-file-action@v1
               with:
-               path: ./.TestClass.txt
+               path: ./TestClass.txt
             - name: Test
               run: echo "Read_File_Content=${{ steps.package.outputs.content }}" >> $GITHUB_ENV
             - name: testrun
