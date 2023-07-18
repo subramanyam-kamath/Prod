@@ -27,9 +27,9 @@ jobs:
               uses: juliangruber/read-file-action@v1
               with:
                path: ./TestClass.txt
-            - name: Test
+            - name: Pasing TestClass name to Github Variable
               run: echo "Read_File_Content=${{ steps.package.outputs.content }}" >> $GITHUB_ENV
-            - name: testrun
+            - name: Print Github Test class variable
               run: echo ${{ env.Read_File_Content }}
                   
             
