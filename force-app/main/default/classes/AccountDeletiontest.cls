@@ -24,5 +24,6 @@ System.assertEquals('You cannot delete the Opportunity',result.getErrors()[0].ge
 //comment07
 //comment08
 //commet09
+//Comment10
 }
 }
