@@ -1,14 +1,14 @@
-#name: GitHub Actions Developer Org
+name: GitHub Actions Developer Org
 
-#run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-#on: 
- # push:
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: 
+  push:
     branches:
       - 'Feature*'
     
       
 
-#jobs:   
+jobs:   
     validate-deployment-on-develop-org:
         runs-on: ubuntu-latest
         environment: developer
@@ -34,5 +34,11 @@
               run: echo "Read_File_Content=${{ steps.package.outputs.content }}" >> $GITHUB_ENV
             - name: testrun
               run: echo ${{ env.Read_File_Content }}
+              
+            - name: Get version
+              id: vars
+              run: echo ::set-output name=version::$(cat package.json)
+            - name: Test output 
+              run: echo ${{ steps.vars.outputs.version }}
                 
             
