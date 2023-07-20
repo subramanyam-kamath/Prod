@@ -33,7 +33,7 @@ jobs:
             - name: Test
               run: echo "Read_File_Content=${{ steps.package.outputs.content }}" >> $GITHUB_ENV
             - name: testrun
-              run: echo ${{ env.Read_File_Content }}
+              run: echo ${{env.Read_File_Content}}
               
             - name: Get version
               id: vars
