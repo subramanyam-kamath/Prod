@@ -29,7 +29,7 @@ jobs:
               id: package
               uses: juliangruber/read-file-action@v1
               with:
-               path: ./.sgdignore
+               path: ./TestClass.txt
             - name: Test
               run: echo "Read_File_Content=${{ steps.package.outputs.content }}" >> $GITHUB_ENV
             - name: testrun
