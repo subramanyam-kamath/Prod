@@ -25,19 +25,19 @@ jobs:
               
           
   
-            - name: Read package.json
+           # - name: Read package.json
               id: package
               uses: juliangruber/read-file-action@v1
               with:
                path: ./TestClass.txt
-            - name: Test
+            #- name: Test
               run: echo "Read_File_Content=${{ steps.package.outputs.content }}" >> $GITHUB_ENV
-            - name: testrun
+           # - name: testrun
               run: echo ${{env.Read_File_Content}}
               
             - name: Get version
               id: vars
-              run: echo ::set-output name=version::$(cat package.json)
+              run: echo ::set-output name=version::$(cat TestClass.txt)
             - name: Test output 
               run: echo ${{ steps.vars.outputs.version }}
                 
