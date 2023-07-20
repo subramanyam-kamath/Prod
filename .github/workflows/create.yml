@@ -31,6 +31,8 @@ jobs:
               id: vars
               run: echo ::set-output name=version::$(cat TestClass.txt)
             - name: Test output 
-              run: echo ${{ steps.vars.outputs.version }}
+              run: echo "Read_File_Content= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+            - name: Test Result
+              run: echo ${{env.Read_File_Content}}
                 
             
