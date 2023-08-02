@@ -5,7 +5,7 @@ on:
     branches:
       - 'feature/**'
     paths:
-      - 'basepackage'
+      - 'basepackage/**'
 
 jobs:   
     validate-deployment-on-develop-org:        
