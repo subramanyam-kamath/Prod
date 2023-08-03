@@ -22,17 +22,13 @@ jobs:
                 fetch-depth: 0       
             
 
-            - name: 'Read commit Body'
-              env:
-                 PR_BODY: ${{ github.event.head_commit.message }}
-
-             
-              run: |
-                  echo $PR_BODY > ./pr_body.txt
-                  node ./parsePR.js              
-                  TESTS=$(cat testsToRun.txt)       
-                  echo "APEX_TESTS=$TESTS" >> $GITHUB_ENV
-                  
+            - name: Get Apex test class names
+              id: vars
+              run: echo ::set-output name=version::$(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd "," -)
+            - name: Passing the test class names to Env variable
+              run: echo "Read_File_Content= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+            - name: Name of the apex test classes
+              run: echo ${{env.Read_File_Content}}    
             
             - name: 'Install Salesforce CLI'
               run: |
