@@ -5,8 +5,9 @@
 # .forceignore v2
 .force-app/*
 .force-app/default/*
-force-app/default/**
+.force-app/default/**
 /force-app/default/*
 ./force-app/default/*
+.**/force-app/default/*
 **/force-app/default/*
 force-app/default/*
