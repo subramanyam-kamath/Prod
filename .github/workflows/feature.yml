@@ -70,7 +70,7 @@ jobs:
             - name: Generate the package.xml for delta files
               run: |
                 mkdir delta
-                sfdx sgd:source:delta --to ${{github.ref}} --from origin/QA-Org  --output "./delta" --ignore-whitespace -d -i .sgdignore
+                sfdx sgd:source:delta --to ${{github.ref}} --from origin/QA-Org  --output "./delta" -i .sgdignore
                 echo "--- package.xml generated with added and modified metadata ---"
                 cat delta/package/package.xml
                 
