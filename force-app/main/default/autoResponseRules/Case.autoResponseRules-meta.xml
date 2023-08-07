@@ -13,6 +13,7 @@
             <senderEmail>sdo@salesforce.com</senderEmail>
             <senderName>Customer Service</senderName>
             <template>SDO_Service_Templates/SDO_Service_Auto_Response_Email</template>
+            //commentadded
         </ruleEntry>
     </autoResponseRule>
 </AutoResponseRules>

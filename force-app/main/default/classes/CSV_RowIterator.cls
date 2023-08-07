@@ -1,6 +1,6 @@
 public with sharing class CSV_RowIterator implements Iterator<String>, Iterable<String>
 {
-	//commentadded
+	
 	private string m_Data;
 	private Integer m_index = 0;
 	private Integer csvStringLength = 0;
