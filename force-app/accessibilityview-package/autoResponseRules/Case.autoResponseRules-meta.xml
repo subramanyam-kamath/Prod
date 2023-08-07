@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+//<?xml version="1.0" encoding="UTF-8"?>
 <AutoResponseRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <autoResponseRule>
         <fullName>SDO_Service_Standard_Case_Response</fullName>
