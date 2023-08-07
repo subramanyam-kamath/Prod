@@ -1,4 +1,4 @@
 # Github Actions
 .github/
 .github/workflow
-.force-app/
+.*default/classes
