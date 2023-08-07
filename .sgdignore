@@ -2,3 +2,7 @@
 .github/
 .github/workflow
 *default/classes
+.force-app/*
+.force-app/default/*
+force-app/default/**
+/force-app/default/*

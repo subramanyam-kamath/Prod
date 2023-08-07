@@ -41,7 +41,7 @@ jobs:
            
             - name: 'Installing sfdx git delta'
               run: | 
-                   echo y | sfdx plugins:install sfdx-git-delta
+                   echo y | sfdx plugins:install sfdx-git-delta@v5.11.3
                     sfdx plugins 
                     
                   
