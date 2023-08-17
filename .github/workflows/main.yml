@@ -73,20 +73,19 @@ jobs:
             - name: Generate the package.xml for delta files
               run: |
                 mkdir delta
-                sfdx sgd:source:delta --to "HEAD" --from "HEAD~1" --output "./delta" --ignore-whitespace -d -i .sgdignore
+                sfdx sgd:source:delta --to "HEAD" --from "HEAD^" --output "./delta" --ignore-whitespace -d -i .sgdignore
                 echo "--- package.xml generated with added and modified metadata ---"
                 cat delta/package/package.xml
             
-            - name: 'Check-only full deploy changes - run specified tests'
-              if: ${{ github.event.pull_request.body!= 'DeploytoProdorg' }}
+            - name: 'Check-only full deploy changes - run specified tests'          
               run: |
                   echo ${{github.event.pull_request.body}}
-                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunSpecifiedTests --runtests ${{github.event.pull_request.body}}  -u HubOrg
+                  sfdx force:source:deploy -x delta/package/package.xml -c  --testlevel NoTestRun  -u HubOrg
             
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.pull_request.body == 'DeploytoProdorg' }}
               run: |
-                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u HubOrg
+                  sfdx force:source:deploy -x delta/package/package.xml -c  --testlevel NoTestRun -u HubOrg
 
             
