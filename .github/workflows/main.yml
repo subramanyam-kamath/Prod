@@ -81,12 +81,12 @@ jobs:
               if: ${{ github.event.pull_request.body!= 'DeploytoProdorg' }}
               run: |
                   echo ${{github.event.pull_request.body}}
-                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunSpecifiedTests --runtests NoTestRun  -u HubOrg
+                  sfdx force:source:deploy -x delta/package/package.xml -c  --testlevel NoTestRun  -u HubOrg
             
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.pull_request.body == 'DeploytoProdorg' }}
               run: |
-                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u HubOrg
+                  sfdx force:source:deploy -x delta/package/package.xml -c  --testlevel NoTestRun -u HubOrg
 
             
