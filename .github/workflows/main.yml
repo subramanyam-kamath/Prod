@@ -2,7 +2,7 @@ name: GitHub Actions Prod Deployment
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   pull_request:
-    types: [closed]
+    types: [opened,synchronize]
     branches:    
       - main
       - master
@@ -73,7 +73,7 @@ jobs:
             - name: Generate the package.xml for delta files
               run: |
                 mkdir delta
-                sfdx sgd:source:delta --to "HEAD" --from "HEAD~1" --output "./delta" --ignore-whitespace -d -i .sgdignore
+                sfdx sgd:source:delta --to ${{github.ref}} --from origin/main --output "./delta" --ignore-whitespace -d -i .sgdignore
                 echo "--- package.xml generated with added and modified metadata ---"
                 cat delta/package/package.xml
             
