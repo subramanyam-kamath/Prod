@@ -77,8 +77,7 @@ jobs:
                 echo "--- package.xml generated with added and modified metadata ---"
                 cat delta/package/package.xml
             
-            - name: 'Check-only full deploy changes - run specified tests'
-              if: ${{ github.event.pull_request.body!= ' ' }}
+            - name: 'Check-only full deploy changes - run specified tests'          
               run: |
                   echo ${{github.event.pull_request.body}}
                   sfdx force:source:deploy -x delta/package/package.xml -c  --testlevel NoTestRun  -u HubOrg
