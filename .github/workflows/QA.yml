@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [Opened,synchronize]
     branches:
-      - QA-Org
+      - "QA-Org"
     paths:
       - 'force-app/**'
 
