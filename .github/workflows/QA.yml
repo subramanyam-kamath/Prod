@@ -67,8 +67,12 @@ jobs:
             
             - name: Authenticate Salesforce ORG
               run: |
-                sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg               
-            
+                sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
+
+            - name: Create scratch org
+              run: |
+                 sf org create scratch -d -f config/project-scratch-def.json -a trailheadacademy-org
+                             
             - name: Generate the package.xml for delta files
               run: |
                 mkdir delta
@@ -82,12 +86,12 @@ jobs:
               if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
               run: |
                   echo ${{github.event.pull_request.body}}
-                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u HubOrg
+                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u trailheadacademy-org
             
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.pull_request.body == 'DeploytoQAorg' }}
               run: |
-                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u HubOrg
+                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u trailheadacademy-org
 
             
