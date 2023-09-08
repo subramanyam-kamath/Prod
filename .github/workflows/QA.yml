@@ -88,7 +88,7 @@ jobs:
             - name: 'Check-only full deploy changes - run specified tests'
               run: |                  
                   sfdx force:source:deploy -x delta/package/package.xml -c --testlevel NoTestRun -u HubOrg
-                  sf project deploy start --manifest delta/destructiveChanges/destructiveChanges.xml --test-level NoTestRun --target-org HubOrg
+                  sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings -u HubOrg
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.pull_request.body == 'DeploytoQAorg' }}
