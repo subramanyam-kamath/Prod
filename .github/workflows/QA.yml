@@ -83,7 +83,7 @@ jobs:
                 cat delta/package/package.xml
 
                 echo "--- destructiveChanges.xml generated with deleted metadata ---"
-                cat destructiveChanges/destructiveChanges.xml
+                cat delta/destructiveChanges/destructiveChanges.xml
             
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
