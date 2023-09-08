@@ -81,11 +81,16 @@ jobs:
 
                 echo "--- package.xml generated with added and modified metadata ---"
                 cat delta/package/package.xml
+
+                echo "--- destructiveChanges.xml generated with deleted metadata ---"
+                cat destructiveChanges/destructiveChanges.xml
+
             
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
               run: |
                   sf project deploy start --manifest delta/package/package.xml --test-level RunLocalTests --target-org trailheadacademy-org
+                  sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings
             
             
             - name: 'Check-only deploy delta changes - run all tests'
