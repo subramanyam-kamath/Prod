@@ -36,7 +36,7 @@ jobs:
 
             - name: print role file
               run: |
-               value=$(<config.txt)
+               value=$(<roleid.txt)
                echo "$value"
 
             - name: gerp command to exclude Id string from CSV format and capture only Role id
