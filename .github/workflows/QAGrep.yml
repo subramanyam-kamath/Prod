@@ -1,0 +1,28 @@
+name: GitHub Actions QA Org
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: 
+  pull_request:
+    types: [opened,synchronize]
+    branches:
+      - "QA-Org"
+    paths:
+      - 'force-app/**'
+
+jobs:   
+    validate-deployment-on-QA-org:        
+        runs-on: ubuntu-latest
+        environment: QA-Branch
+        steps:            
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '14'
+
+            - name: 'Checkout source code'
+              uses: actions/checkout@v3
+              with:
+                fetch-depth: 0       
+            
+
+            - name: 'Read commit Body'
+              run: |
+                $grep –e "Salesforce"  README.md
