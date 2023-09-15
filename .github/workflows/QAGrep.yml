@@ -25,7 +25,7 @@ jobs:
 
             - name: 'Read commit Body'
               id: vars
-              run: echo ::set-output name=version::$(grep "^great"  Search.txt)
+              run: echo ::set-output name=version::$(grep "great"  Search.txt)
 
             - name: 'update variable commit Body'
               run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
