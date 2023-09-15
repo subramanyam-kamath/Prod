@@ -75,13 +75,13 @@ jobs:
 
             - name: Get role id & store in the variable.
               id: vars
-              run: echo ::set-output name=version::$(sf data query --query "SELECT Id FROM UserRole where Name='ceo'" --result-format csv)
+              run: echo ::set-output name=version::$(sf data query --query "SELECT Id FROM UserRole where Name='ceo'" --result-format csv )
 
             - name: Passing the Role id to Env variable
-              run: echo "role_id= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+              run: echo "role_id= ${{ steps.vars.outputs.version }}" > roleid.txt
 
             - name: gerp command to exclude Id string from CSV format and capture only Role id
-              run: $(grep -v "Id" ${{env.role_id}} )
+              run: $(grep -v "Id" rolid.txt )
 
             - name: Id of the Role in environment variable
               run: echo ${{env.role_id}}
