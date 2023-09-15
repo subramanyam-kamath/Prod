@@ -22,7 +22,10 @@ jobs:
               with:
                 fetch-depth: 0       
             - name: remove id name from the file
-              run: sed -i 's/Id/foo/g' roleid.txt
+              run: sed -i 's/Id//g' roleid.txt
+
+            - name: print role file
+              run: cat roleid.txt
 
             - name: gerp command to exclude Id string from CSV format and capture only Role id
               id: vars2
