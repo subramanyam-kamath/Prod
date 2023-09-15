@@ -27,3 +27,6 @@ jobs:
               run: |
                 echo ::set-output name=version:: $grep –e "Salesforce"  README.md
                 echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+
+            - name: Name of the apex test classes
+              run: echo ${{env.test_classes_in_repo}}
