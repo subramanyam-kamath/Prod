@@ -23,17 +23,7 @@ jobs:
                 fetch-depth: 0       
             
 
-            - name: 'Read commit Body'
-              env:
-                 PR_BODY: ${{ github.event.pull_request.body }}
-
-             
-              run: |
-                  echo $PR_BODY > ./pr_body.txt
-                  node ./parsePR.js              
-                  TESTS=$(cat testsToRun.txt)       
-                  echo "APEX_TESTS=$TESTS" >> $GITHUB_ENV
-                  
+                          
             
             - name: 'Install Salesforce CLI'
               run: |
@@ -84,6 +74,20 @@ jobs:
 
                 echo "--- destructiveChanges.xml generated with deleted metadata ---"
                 cat destructiveChanges/destructiveChanges.xml
+
+            - name: Get role id & store in the variable.
+              run: |
+                    echo ::set-output name=version:: sf data query --query "SELECT Id FROM UserRole where Name='ceo'"
+
+            - name: Passing the Role id to Env variable
+              run: echo "role_id= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+
+            - name: Id of the Role in environment variable
+              run: echo ${{env.role_id}}
+
+            - name: Assign role to scratch org Admin
+              run:  |
+               sf data update record --sobject User --where "email='skamath@salesforce.com'" --values "UserRoleid=${env.role_id}"
             
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
