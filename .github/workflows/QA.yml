@@ -81,10 +81,14 @@ jobs:
               run: echo "role_id= ${{ steps.vars.outputs.version }}" > roleid.txt
 
             - name: gerp command to exclude Id string from CSV format and capture only Role id
-              run: $(grep -v "Id" roleid.txt )
+              id: vars2
+              run: echo ::set-output name=version::$(grep -v "Id" roleid.txt )
+
+            - name: assign local variable to environment
+              run: echo "test_classes_in_repo= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
 
             - name: Id of the Role in environment variable
-              run: echo ${{env.role_id}}
+              run: echo ${{env.test_classes_in_repo}}
 
             - name: Assign role to scratch org Admin
               run:  |
