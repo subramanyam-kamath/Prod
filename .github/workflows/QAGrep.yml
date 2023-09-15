@@ -26,8 +26,12 @@ jobs:
             - name: 'Read commit Body'
               run: |
                 cat  Search.txt
-                echo ::set-output name=version:: grep "^great"  Search.txt
-                echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+                echo ::set-output name=version:: $(grep "^great"  Search.txt)
+                Shell: bash
+
+            - name: Print variable value
+              run: |
+                 echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
 
             - name: Name of the apex test classes
               run: echo ${{env.test_classes_in_repo}}
