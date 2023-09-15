@@ -74,8 +74,8 @@ jobs:
             
 
             - name: Get role id & store in the variable.
-              run: |
-                  sf data query --query "SELECT Id FROM UserRole where Name='ceo'" --result-format csv
+              id: vars
+              run: echo::set-output name=version::$(sf data query --query "SELECT Id FROM UserRole where Name='ceo'" --result-format csv)
 
             - name: Passing the Role id to Env variable
               run: echo "role_id= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
