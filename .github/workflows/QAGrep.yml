@@ -25,6 +25,7 @@ jobs:
 
             - name: 'Read commit Body'
               run: |
+                $cat > Search.txt
                 echo ::set-output name=version:: $grep "^great"  Search.txt
                 echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
 
