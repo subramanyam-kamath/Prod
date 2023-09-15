@@ -80,6 +80,9 @@ jobs:
             - name: Passing the Role id to Env variable
               run: echo "role_id= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
 
+            - name: gerp command to exclude Id string from CSV format and capture only Role id
+              run: $(grep -v "Id" ${{env.role_id}} )
+
             - name: Id of the Role in environment variable
               run: echo ${{env.role_id}}
 
