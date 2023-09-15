@@ -24,13 +24,4 @@ jobs:
             - name: remove id name from the file
               run: sed -i 's/Id/foo/g' roleid.txt
 
-            - #name: 'Read commit Body'
-              id: vars
-              run: echo ::set-output name=version::(sed -i 's/Id/foo/g' roleid.txt)
-
-            - name: 'update variable commit Body'
-              run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
-                
-
-            - name: Name of the apex test classes
-              run: echo ${{env.test_classes_in_repo}}
+          
