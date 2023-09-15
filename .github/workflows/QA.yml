@@ -80,19 +80,17 @@ jobs:
             - name: Passing the Role id to Env variable
               run: echo "role_id= ${{ steps.vars.outputs.version }}" > roleid.txt
 
-            - name: gerp command to exclude Id string from CSV format and capture only Role id
-              id: vars2
-              run: echo ::set-output name=version::$(grep -v "Id" roleid.txt )
+            - name: remove id name from the file
+              run: sed -i 's/Id//g' roleid.txt
 
-            - name: assign local variable to environment
-              run: echo "test_classes_in_repo= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
-
-            - name: Id of the Role in environment variable
-              run: echo ${{env.test_classes_in_repo}}
+            - name: print role file
+              run: |
+               value=$(<roleid.txt)
+               echo "$value"
 
             - name: Assign role to scratch org Admin
               run:  |
-               sf data update record --sobject User --where "email='skamath@salesforce.com'" --values "UserRoleid=${env.role_id}"
+               sf data update record --sobject User --where "email='skamath@salesforce.com'" --values "UserRoleid=${value}"
             
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
