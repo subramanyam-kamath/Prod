@@ -71,9 +71,7 @@ jobs:
 
                 echo "--- package.xml generated with added and modified metadata ---"
                 cat delta/package/package.xml
-
-                echo "--- destructiveChanges.xml generated with deleted metadata ---"
-                cat destructiveChanges/destructiveChanges.xml
+            
 
             - name: Get role id & store in the variable.
               run: |
