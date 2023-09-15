@@ -22,15 +22,9 @@ jobs:
               with:
                 fetch-depth: 0       
             - name: remove id name from the file
-              id: vars
-              run:  echo ::set-output name=version::$(sed -i 's/Id//g' roleid.txt)
+              run: sed -i 's/Id//g' roleid.txt
 
-            - name: set the output to variable
-              run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
-
-            - name: Name of the apex test classes
-              run: echo ${{env.test_classes_in_repo}}
-              
+                  
               
             
 
