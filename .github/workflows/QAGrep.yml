@@ -25,7 +25,7 @@ jobs:
 
             - name: 'Read commit Body'
               run: |
-                echo ::set-output name=version:: $grep "^Salesforce"  README.md
+                echo ::set-output name=version:: $grep "^great"  Search.txt
                 echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
 
             - name: Name of the apex test classes
