@@ -59,18 +59,6 @@ jobs:
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
-            - name: Create scratch org
-              run: |
-                 sf org create scratch --target-dev-hub HubOrg -d -f config/project-scratch-def.json -a trailheadacademy-org
-                             
-            - name: Generate the package.xml for delta files
-              run: |
-                mkdir delta
-
-                sfdx sgd:source:delta  --from origin/QA-Org --output "./delta" --ignore-whitespace -d -i .sgdignore
-
-                echo "--- package.xml generated with added and modified metadata ---"
-                cat delta/package/package.xml
             
 
             - name: Get role id & store in the variable.
@@ -84,7 +72,7 @@ jobs:
               run: cat roleid.txt
 
             - name: remove id name from the file
-              run: sed -i 's/role_id= Id//g' roleid.txt
+              run: sed -i 's/role_id= Id //g' roleid.txt
 
             - name: print role id file
               run: cat roleid.txt
