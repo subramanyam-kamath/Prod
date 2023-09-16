@@ -1,13 +1,39 @@
 {
-  "orgName": "Demo company",
-  "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
-  "settings": {
-    "lightningExperienceSettings": {
-      "enableS1DesktopEnabled": true
+    "orgName": "Trailhead Academy",
+    "edition": "Developer",
+    "features": [
+        "LiveAgent",
+        "AuthorApex",
+        "ServiceCloud",
+        "Knowledge",
+        "Communities",
+        "CustomerCommunity",
+        "EnableSetPasswordInApi",
+        "OrderManagement",
+        "Sites",
+        "MultiCurrency",
+        "Communities",
+        "CMSUnlimitedUse"
+    ],
+    "settings": {
+        "languageSettings": {
+            "enableTranslationWorkbench": true
+        },
+        "liveAgentSettings": {
+            "enableLiveAgent": true
+        },
+        "communitiesSettings": {
+            "enableNetworksEnabled": true
+        },
+        "experienceBundleSettings": {
+            "enableExperienceBundleMetadata": true
+        },
+        "lightningExperienceSettings": {
+            "enableS1DesktopEnabled": true
+        },
+        "mobileSettings": {
+            "enableS1EncryptedStoragePref2": false
+        }
     },
-    "mobileSettings": {
-      "enableS1EncryptedStoragePref2": false
-    }
-  }
+    "release": "preview"
 }
