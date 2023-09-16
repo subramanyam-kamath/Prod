@@ -103,6 +103,9 @@ jobs:
             - name: print env variable
               run: echo ${{env.Role_id}}
 
+            - name : variable print in query
+              run:  echo sf data update record --sobject User --where "email='skamath@salesforce.com'" --values "UserRoleid='$value'"
+
             - name: Assign role to scratch org Admin
               run:  |
                sf data update record --sobject User --where "email='skamath@salesforce.com'" --values "UserRoleid='$value'"
