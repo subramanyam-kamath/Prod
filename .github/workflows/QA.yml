@@ -96,7 +96,7 @@ jobs:
 
             - name: Assign role to scratch org Admin
               run:  |
-               sf data update record --sobject User --where "email='skamath@salesforce.com'" --values "UserRoleid='$(<roleid.txt)'" --target-org HubOrg
+               sf data update record --sobject User --where "username='subramanyam.kamath@sf.com'" --values "UserRoleid='$(<roleid.txt)'" --target-org HubOrg
             
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
