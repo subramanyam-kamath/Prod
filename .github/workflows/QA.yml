@@ -94,8 +94,13 @@ jobs:
                value=$(<roleid.txt)
                echo "$value"
 
-            - name: print query result
-              run: echo 
+            - name: set env variable result
+              env:
+                Role_id: |
+                -value : $(<roleid.txt)
+
+            - name: print env variable
+              run: echo ${{env.Role_id}}
 
             - name: Assign role to scratch org Admin
               run:  |
