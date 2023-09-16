@@ -74,11 +74,11 @@ jobs:
             
 
             - name: Get role id & store in the variable.
-              id: vars
+              id: varss
               run: echo ::set-output name=version::$(sf data query --query "SELECT Id FROM UserRole where Name='ceo'" --result-format csv )
 
             - name: Passing the Role id to Env variable
-              run: echo "role_id= ${{ steps.vars.outputs.version }}" > roleid.txt
+              run: echo "role_id= ${{ steps.varss.outputs.version }}" > roleid.txt
 
             - name: remove id name from the file
               run: sed -i 's/Id//g' roleid.txt
