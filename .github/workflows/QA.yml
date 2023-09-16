@@ -83,6 +83,9 @@ jobs:
             - name: remove id name from the file
               run: sed -i 's/Id//g' roleid.txt
 
+            - name: print role id file
+              run: cat roleid.txt
+
             - name: print role file
               run: |
                value=$(<roleid.txt)
