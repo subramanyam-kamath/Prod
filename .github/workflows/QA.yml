@@ -59,11 +59,13 @@ jobs:
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
-            
+            - name: create a new role
+              run: |
+               sf data create record --sobject UserRole --values "Name=Salesforce" --target-org HubOrg
 
             - name: Get role id & store in the variable.
               id: varss
-              run: echo ::set-output name=version::$(sf data query --query "SELECT Id FROM UserRole where Name='ceo'" --result-format csv --target-org HubOrg ) 
+              run: echo ::set-output name=version::$(sf data query --query "SELECT Id FROM UserRole where Name='Salesforce'" --result-format csv --target-org HubOrg ) 
 
             - name: Passing the Role id to Env variable
               run: echo "role_id= ${{ steps.varss.outputs.version }}" > roleid.txt
