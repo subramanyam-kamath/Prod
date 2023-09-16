@@ -63,7 +63,7 @@ jobs:
 
             - name: Get role id & store in the variable.
               id: varss
-              run: echo ::set-output name=version::$(sf data query --query "SELECT Id FROM UserRole where Name='ceo'" --result-format csv )
+              run: echo ::set-output name=version::$(sf data query --query "SELECT Id FROM UserRole where Name='ceo'" --result-format csv ) --target-org HubOrg
 
             - name: Passing the Role id to Env variable
               run: echo "role_id= ${{ steps.varss.outputs.version }}" > roleid.txt
