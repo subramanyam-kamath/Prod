@@ -94,9 +94,12 @@ jobs:
                value=$(<roleid.txt)
                echo "$value"
 
+            - name: print query result
+              run: echo 
+
             - name: Assign role to scratch org Admin
               run:  |
-               sf data update record --sobject User --where "email='skamath@salesforce.com'" --values "UserRoleid=${value}"
+               sf data update record --sobject User --where "email='skamath@salesforce.com'" --values "UserRoleid=${{ value }}"
             
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
