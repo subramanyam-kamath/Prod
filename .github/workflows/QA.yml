@@ -23,17 +23,7 @@ jobs:
                 fetch-depth: 0       
             
 
-            - name: 'Read commit Body'
-              env:
-                 PR_BODY: ${{ github.event.pull_request.body }}
-
-             
-              run: |
-                  echo $PR_BODY > ./pr_body.txt
-                  node ./parsePR.js              
-                  TESTS=$(cat testsToRun.txt)       
-                  echo "APEX_TESTS=$TESTS" >> $GITHUB_ENV
-                  
+                          
             
             - name: 'Install Salesforce CLI'
               run: |
@@ -69,28 +59,53 @@ jobs:
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
-            - name: Create scratch org
+            - name: create a new role
               run: |
-                 sf org create scratch --target-dev-hub HubOrg -d -f config/project-scratch-def.json -a trailheadacademy-org
-                             
-            - name: Generate the package.xml for delta files
+               sf data create record --sobject UserRole --values "Name=Salesforce" --target-org HubOrg
+
+            - name: Get role id & store in the variable.
+              id: varss
+              run: echo ::set-output name=version::$(sf data query --query "SELECT Id FROM UserRole where Name='Salesforce'" --result-format csv --target-org HubOrg ) 
+
+            - name: Passing the Role id to Env variable
+              run: echo "role_id= ${{ steps.varss.outputs.version }}" > roleid.txt
+
+            - name: print role id1 file
+              run: cat roleid.txt
+
+            - name: remove id name from the file
+              run: sed -i 's/role_id= Id //g' roleid.txt
+
+            - name: print role id file
+              run: cat roleid.txt
+
+            - name: print role file
               run: |
-                mkdir delta
+               value=$(<roleid.txt)
+               echo "$value"
 
-                sfdx sgd:source:delta to ${{github.ref}} --from origin/QA-Org --output "./delta" --ignore-whitespace -d -i .sgdignore
+            - name: set env variable result
+              run: |
+              env:
+                Role_id: |
+                -value : $(<roleid.txt)
 
-                echo "--- package.xml generated with added and modified metadata ---"
-                cat delta/package/package.xml
+            - name: print env variable
+              run: echo ${{env.Role_id}}
 
-                echo "--- destructiveChanges.xml generated with deleted metadata ---"
-                cat destructiveChanges/destructiveChanges.xml
+            - name : variable print in query
+              run:  echo sf data update record --sobject User --where "email='skamath@salesforce.com'" --values "UserRoleid='$(<roleid.txt)'"
+
+            - name: Assign role to scratch org Admin
+              run:  |
+               sf data update record --sobject User --where "username='subramanyam.kamath@sf.com'" --values "UserRoleid='$(<roleid.txt)'" --target-org HubOrg
             
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
               run: |
                   echo ${{github.event.pull_request.body}}
                   sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u trailheadacademy-org
-                  sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings
+                
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.pull_request.body == 'DeploytoQAorg' }}

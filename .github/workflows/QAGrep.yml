@@ -21,8 +21,26 @@ jobs:
               uses: actions/checkout@v3
               with:
                 fetch-depth: 0       
+            - name: remove id name from the file
+              run: sed -i 's/Id//g' roleid.txt
+
+                  
+              
             
 
-            - name: 'Read commit Body'
+            - name: print role file
               run: |
-                $grep –e "Salesforce"  README.md
+               value=$(<roleid.txt)
+               echo "$value"
+
+            - name: gerp command to exclude Id string from CSV format and capture only Role id
+              id: vars2
+              run: echo ::set-output name=version::$(grep  "Lines" roleid.txt )
+
+            - name: assign local variable to environment
+              run: echo "test_classes_in_repo= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
+
+            - name: Id of the Role in environment variable
+              run: echo ${{env.test_classes_in_repo}}
+
+          
