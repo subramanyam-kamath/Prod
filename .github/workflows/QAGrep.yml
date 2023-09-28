@@ -35,7 +35,7 @@ jobs:
 
             - name: gerp command to exclude Id string from CSV format and capture only Role id
               id: vars2
-              run: echo ::set-output name=version::$(grep  "foo" roleid.txt )
+              run: echo ::set-output name=version::$(grep  "Lines" roleid.txt )
 
             - name: assign local variable to environment
               run: echo "test_classes_in_repo= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
