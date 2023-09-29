@@ -1,5 +1,5 @@
 name: GitHub Actions QA Org
-run-name: ${{ github.actor }} is testing out GitHub Actions23 🚀
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   pull_request:
     types: [opened,synchronize]
@@ -25,5 +25,7 @@ jobs:
 
             - name: 'Read commit Body'
               run: |
+
                  echo ::set-output name=version:: ($grep –e "Lines"  codecoverage.txt)
                  echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+
