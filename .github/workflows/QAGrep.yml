@@ -23,11 +23,14 @@ jobs:
                 fetch-depth: 0       
             
 
-            - name: 'Read commit Body'
+            - name: Get Apex test class names
               id: vars
-              run: |
-                 echo ::set-output name=version:: $(grep 'Lines' codecoverate.txt)
-                 echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+              run: echo ::set-output name=version::$(grep -i "Lines" codeocoverate.txt)
+            - name: Passing the test class names to Env variable
+              run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+            - name: Name of the apex test classes
+              run: echo ${{env.test_classes_in_repo}}
+
 
             - name: 'Print Test file'
               run: |
