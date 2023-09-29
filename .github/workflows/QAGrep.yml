@@ -25,7 +25,6 @@ jobs:
 
             - name: 'Read commit Body'
               run: |
-
-                 echo ::set-output name=version:: ($grep –e "Lines"  codecoverage.txt)
+                 echo ::set-output name=version:: ($grep i "Lines"  codecoverage.txt)
                  echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
 
