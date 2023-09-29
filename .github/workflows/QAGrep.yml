@@ -28,3 +28,7 @@ jobs:
                  echo ::set-output name=version:: grep i "Lines" codecoverate.txt
                  echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
 
+            - name: 'Print Test file'
+              run: |
+                 cat codecoverate.txt
+
