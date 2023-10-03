@@ -69,9 +69,20 @@ jobs:
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
-            - name: Create scratch org
-              run: |
-                 sf org create scratch --target-dev-hub HubOrg -d -f config/project-scratch-def.json -a trailheadacademy-org
+            - name: Validating the changes(No deployment).
+              run: | 
+                  sfdx force:source:deploy --checkonly --manifest delta/package/package.xml --testlevel RunSpecifiedTests --runtests AccountManagerTest --coverageformatters=text-summary --resultsdir test-results -w 180 --target-org HubOrg
+      
+            - name: Invoking linux commands to get code coverage from text file.
+              id: vars2
+              run: echo ::set-output name=version::$(grep -i "Lines" test-results/codecoverate.txt |cut -c 15-18 |tr -dc '[:alnum:]\n\r'  )
+
+            - name: Passing the code coverage to Env variable
+              run: echo "code_coverage= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
+
+            - name: Printing the code coverage of the FUEL Build.
+              run: echo ${{env.code_coverage}}
+
                              
             - name: Generate the package.xml for delta files
               run: |
