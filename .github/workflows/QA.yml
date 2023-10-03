@@ -77,10 +77,13 @@ jobs:
             - name: Validating the changes(No deployment).
               run: | 
                   sfdx force:source:deploy --checkonly --manifest delta/package/package.xml --testlevel RunSpecifiedTests --runtests AccountManagerTest --coverageformatters=text-summary --resultsdir test-results -w 180 --target-org HubOrg
-      
+            - name: Printing the code coverage file.
+              run: |
+                  cat test-results/coverage/text-summary.txt
+                  
             - name: Invoking linux commands to get code coverage from text file.
               id: vars2
-              run: echo ::set-output name=version::$(grep -i "Lines" test-results/codecoverate.txt |cut -c 15-18 |tr -dc '[:alnum:]\n\r'  )
+              run: echo ::set-output name=version::$(grep -i "Lines" test-results\coverage\text-summary.txt |cut -c 15-18 |tr -dc '[:alnum:]\n\r'  )
 
             - name: Passing the code coverage to Env variable
               run: echo "code_coverage= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
