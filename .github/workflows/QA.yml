@@ -63,7 +63,12 @@ jobs:
             - name: Decrypt the server.key.enc file & store inside assets folder
               run: openssl enc -nosalt -aes-256-cbc -d -in ${{ secrets.ENCRYPTION_KEY_FILE }} -out ${{ secrets.JWT_KEY_FILE }} -base64 -K ${{ secrets.DECRYPTION_KEY }} -iv ${{ secrets.DECRYPTION_IV }}
               
-
+            - name: Generate the package.xml for delta files
+              run: |
+                mkdir delta
+                sfdx sgd:source:delta --to "HEAD" --from "HEAD~1" --output "./delta" --ignore-whitespace -d -i .sgdignore
+                echo "--- package.xml generated with added and modified metadata ---"
+                cat delta/package/package.xml
             
             - name: Authenticate Salesforce ORG
               run: |
