@@ -82,7 +82,7 @@ jobs:
                    echo $Deployment_Id > Deploymentjobid.txt
 
             - name: Applying regex to get Deployment id.
-              run:  echo $(grep -o "0Af..............."  DeploymentJobid.txt|head -1)
+              run:  echo $(grep -o "0Af..............."  Deploymentjobid.txt|head -1)
 
             - name: Resuming the validation job & extract code coverage.
               run: sf project deploy resume --job-id $(<Deploymentjobid.txt) --coverage-formatters=text-summary --results-dir test-results
