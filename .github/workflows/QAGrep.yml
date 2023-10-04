@@ -29,7 +29,7 @@ jobs:
             - name: Passing the test class names to Env variable
               run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
             - name: Name of the apex test classes
-              run: echo $(grep -o "0Af..............."  $(env.test_classes_in_repo)|head -1)
+              run: echo $(grep -o "0Af..............."  env.test_classes_in_repo| head -1)
 
 
             - name: 'Print Test file'
