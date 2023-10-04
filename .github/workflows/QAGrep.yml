@@ -29,12 +29,11 @@ jobs:
             - name: Passing the test class names to Env variable
               run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
             - name: Name of the apex test classes
-              id: vars4
               run: |
-               echo ::set-output name=version:: $(grep -o "0Af..............."  ${{env.test_classes_in_repo}} | head -1)
+                echo $test_classes_in_repo > ./AsynSummary.txt
 
             - name: Name of the grepcommand
-              run: echo "test_grepcommand_in_repo= ${{ steps.vars4.outputs.version }}" >> $GITHUB_ENV
+              run: cat AsyncSummary.txt
             
             
 
