@@ -80,23 +80,26 @@ jobs:
                    echo ::set-output name=version:: $(sf project deploy validate --source-dir force-app --test-level RunLocalTests -w 180  --async  --target-org HubOrg)
             
             - name: Passing the test class names to Env variable
-              run: echo "Deployment_Id= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
+              run: echo "job_summary= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
 
             - name: echoing the variable output
-              run: echo ${{env.Deployment_Id}}
+              run: echo ${{env.job_summary}}
 
             - name: Passing the variable output to file
-              run:  echo ${{env.Deployment_Id}} > Deploymentjobid.txt
+              run:  echo ${{env.job_summary}} > Deploymentjobid.txt
 
             - name: Priting the Deployment job.
               run: |
                    cat Deploymentjobid.txt
 
             - name: Applying regex to get Deployment id.
-              run:  echo $(grep -o "0Af..............."  Deploymentjobid.txt|head -1)
+              id: vars6
+              run: |              
+                echo ::set-output name=version:: $(grep -o "0Af..............."  Deploymentjobid.txt|head -1)
+                echo "deployment_id= ${{ steps.vars6.outputs.version }}" >> $GITHUB_ENV
 
             - name: Resuming the validation job & extract code coverage.
-              run: sf project deploy resume --job-id $(<Deploymentjobid.txt) --coverage-formatters=text-summary --results-dir test-results
+              run: sf project deploy resume --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --results-dir test-results
                   
             - name: Printing the code coverage file.
               run: |
