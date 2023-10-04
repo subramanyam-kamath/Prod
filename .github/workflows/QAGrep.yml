@@ -30,10 +30,11 @@ jobs:
               run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
             - name: Name of the apex test classes
               run: |
-                echo $test_classes_in_repo > ./AsynSummary.txt
-
+                echo $ > AsynSummary.txt
+                echo $test_classes_in_repo > AsynSummary.txt
+                
             - name: Name of the grepcommand
-              run: cat ./AsyncSummary.txt
+              run: cat AsyncSummary.txt
             
             
 
