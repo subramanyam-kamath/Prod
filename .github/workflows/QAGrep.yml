@@ -25,7 +25,7 @@ jobs:
 
             - name: Get Apex test class names
               id: vars
-              run: echo ::set-output name=version::$(grep -aob "0Af" codecoverate.txt  |tr -dc '[:alnum:]\n\r'  )
+              run: echo ::set-output name=version::$(grep -aob "0Af" codecoverate.txt| tr -dc '[:alnum:]\n\r'  )
             - name: Passing the test class names to Env variable
               run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
             - name: Name of the apex test classes
