@@ -74,9 +74,17 @@ jobs:
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
-            - name: Validating the changes(No deployment).
+            - name: Validating the changes(No deployment) & get Deployment id.
+              id: vars3
               run: | 
-                  sfdx force:source:deploy --checkonly --manifest delta/package/package.xml --testlevel RunSpecifiedTests --runtests AccountManagerTest --coverageformatters=text-summary --resultsdir test-results -w 180 --target-org HubOrg
+                  echo ::set-output name=version:: (sf project deploy validate --source-dir Miscellaneous  --async --test-level RunSpecifiedTests --tests AccountManagerTest --coverage-formatters=text-summary --results-dir test-results  -w 180 --target-org HubOrg)
+
+            - name: Passing the test class names to Env variable
+              run: echo "Deployment_Id= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
+
+            - name: Name of the apex test classes
+              run: echo ${{env.Deployment_Id}}
+                  
             - name: Printing the code coverage file.
               run: |
                   cat test-results/coverage/text-summary.txt
