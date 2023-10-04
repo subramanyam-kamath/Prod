@@ -80,6 +80,7 @@ jobs:
                    echo ::set-output name=version:: $(sf project deploy validate --source-dir force-app --test-level RunLocalTests -w 180  --async  --target-org HubOrg)
                    echo "Deployment_Id= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
                    echo $Deployment_Id > Deploymentjobid.txt
+                   cat Deploymentjobid.txt
 
             - name: Applying regex to get Deployment id.
               run:  echo $(grep -o "0Af..............."  Deploymentjobid.txt|head -1)
