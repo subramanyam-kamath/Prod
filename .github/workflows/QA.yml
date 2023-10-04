@@ -79,7 +79,12 @@ jobs:
               run: | 
                    echo ::set-output name=version:: $(sf project deploy validate --source-dir force-app --test-level RunLocalTests -w 180  --async  --target-org HubOrg)
                    echo "Deployment_Id= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
-                   echo $Deployment_Id > Deploymentjobid.txt
+
+            - name: echoing the variable output
+              run: echo ${{env.Deployment_Id}}
+
+            - name: Passing the variable output to file
+              run:  echo ${{env.Deployment_Id}} > Deploymentjobid.txt
 
             - name: Priting the Deployment job.
               run: |
