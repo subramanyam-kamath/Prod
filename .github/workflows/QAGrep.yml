@@ -34,7 +34,7 @@ jobs:
                 echo $test_classes_in_repo > AsynSummary.txt
                 
             - name: Name of the grepcommand
-              run: cat AsyncSummary.txt
+              run: cat AsynSummary.txt
             
             
 
