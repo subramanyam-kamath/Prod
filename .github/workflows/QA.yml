@@ -77,7 +77,7 @@ jobs:
             - name: Validating the changes(No deployment) & get Deployment id.
               id: vars3
               run: | 
-                  echo "::set-output name=version:: sf project deploy validate --source-dir Miscellaneous  --async --test-level RunSpecifiedTests --tests AccountManagerTest --coverage-formatters=text-summary --results-dir test-results  -w 180 --target-org HubOrg"
+                  echo ::set-output name=version:: $(sf project deploy validate --source-dir Miscellaneous  --async --test-level RunSpecifiedTests --tests AccountManagerTest --coverage-formatters=text-summary --results-dir test-results  -w 180 --target-org HubOrg)
 
             - name: Passing the test class names to Env variable
               run: echo "Deployment_Id= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
