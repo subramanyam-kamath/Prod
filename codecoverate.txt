@@ -1,6 +1,1 @@
-=============================== Coverage summary ===============================
-Statements   : 66.49% ( 635/955 )
-Branches     : 100% ( 0/0 )
-Functions    : 100% ( 0/0 )
-Lines        : 100 ( 635/955 )
-================================================================================
+Validating Deployment of v57.0 metadata to *** using the v58.0 SOAP API. Deploy ID: 0Af5j00000az8OfCAI Deploy has been queued. Run sf project deploy resume --job-id 0Af5j00000az8OfCAI to resume watching the deploy. Run sf project deploy report --job-id 0Af5j00000az8OfCAI to get the latest status. Run sf project deploy cancel --job-id 0Af5j00000az8OfCAI to cancel the deploy.
