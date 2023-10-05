@@ -101,7 +101,7 @@ jobs:
               run:  echo "deployment_id= ${{ steps.vars6.outputs.version }}" >> $GITHUB_ENV
 
             - name: Resuming the validation job & extract code coverage.
-              run: sf project deploy resume --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --junit --results-dir test-results SF_JSON_TO_STDOUT=true
+              run: SF_JSON_TO_STDOUT=true sf project deploy resume --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --junit --results-dir test-results 
                   
             - name: Printing the code coverage file.
               run: |
