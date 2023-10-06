@@ -107,7 +107,7 @@ jobs:
 
             - name: Printing the Failing summary
               if: always()
-              run: echo "failure_summary= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
+              run: echo "failure_summary= ${{ steps.vars7.outputs.version }}" >> $GITHUB_ENV
 
             - name: echoing the variable output
               if: always()
