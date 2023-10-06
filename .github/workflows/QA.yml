@@ -5,8 +5,7 @@ on:
     types: [opened,synchronize]
     branches:
       - "QA-Org"
-    paths:
-      - 'force-app/**'
+    
 
 jobs:   
     validate-deployment-on-QA-org:        
@@ -104,6 +103,7 @@ jobs:
               run: SF_JSON_TO_STDOUT=true sf project deploy resume --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --junit --results-dir test-results 
                   
             - name: Printing the code coverage file.
+              if: always()
               run: |
                   cat test-results/coverage/text-summary.txt
                   
