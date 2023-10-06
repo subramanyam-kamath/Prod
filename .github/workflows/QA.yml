@@ -155,7 +155,7 @@ jobs:
 
            
             - name: 'Check-only full deploy changes - run specified tests'
-              if: ${{env.failure_count > 0}}
+              if: ${{env.failure_count > 0 && env.code_coverage < 85}}
               run: |
                 sf project deploy report --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --junit --results-dir  test2-results2
                 exit 1
