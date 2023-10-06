@@ -100,8 +100,19 @@ jobs:
               run:  echo "deployment_id= ${{ steps.vars6.outputs.version }}" >> $GITHUB_ENV
 
             - name: Resuming the validation job & extract code coverage.
-              run: SF_JSON_TO_STDOUT=true sf project deploy resume --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --junit --results-dir test-results 
-                  
+              id: vars7
+              run: |
+                  echo ::set-output name=version:: $(sf project deploy resume --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --junit --results-dir test-results)
+      
+
+            - name: Printing the Failing summary
+              if: always()
+              run: echo "failure_summary= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
+
+            - name: echoing the variable output
+              if: always()
+              run: echo ${{env.failure_summary}}
+              
             - name: Printing the code coverage file.
               if: always()
               run: |
