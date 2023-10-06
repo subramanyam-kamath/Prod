@@ -41,7 +41,7 @@ jobs:
             - name: Parse the failure summary.
               id: vars6
               run: |              
-               echo ::set-output name=version:: $(grep -o "Failing.*Total"  AsynSummary.txt| head -1| -o "[0-9]{1,5}")
+               echo ::set-output name=version:: $(grep -o "Failing.*Total"  AsynSummary.txt| head -1| grep -o "[0-9]{1,5}")
 
             - name: Assigning the output to environment variable to leverage in resume job command.
               run:  echo "deployment_id= ${{ steps.vars6.outputs.version }}" >> $GITHUB_ENV
