@@ -117,7 +117,7 @@ jobs:
               if: always()
               id: vars8
               run: |              
-               echo ::set-output name=version:: $(grep -o "Failing.*Total"  AsynSummary.txt| head -1| grep -Eo "[0-9]{1,5}")
+               echo ::set-output name=version:: $(grep -o "Failing.*Total"  failuresummary.txt| head -1| grep -Eo "[0-9]{1,5}")
                
             - name: Assigning the output to environment variable to leverage in resume job command.
               if: always()
