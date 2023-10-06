@@ -149,7 +149,7 @@ jobs:
             
             
             - name: 'Check-only full deploy changes - run specified tests'
-              if: always() && ${{env.failure_count = 0}}              
+              if: always() && ${{env.failure_count == 0}}              
               run: |                  
                   sfdx force:source:deploy -x delta/package/package.xml -c --testlevel NoTestRun -u HubOrg
 
