@@ -112,6 +112,16 @@ jobs:
             - name: echoing the variable output
               if: always()
               run: echo ${{env.failure_summary}} > failuresummary.txt
+            
+            - name: Parse the failure summary
+              if: always()
+              id: vars8
+              run: |              
+               echo ::set-output name=version:: $(grep -o "Failing.*Total"  AsynSummary.txt| head -1| grep -Eo "[0-9]{1,5}")
+               
+            - name: Assigning the output to environment variable to leverage in resume job command.
+              if: always()
+              run:  echo "failure_count= ${{ steps.vars8.outputs.version }}" >> $GITHUB_ENV
 
             - name: Printing the failuresummary
               if: always()
@@ -123,36 +133,35 @@ jobs:
                   cat test-results/coverage/text-summary.txt
                   
             - name: Invoking linux commands to get code coverage from text file.
+              if: always()
               id: vars2
               run: echo ::set-output name=version::$(grep -i "Lines" test-results/coverage/text-summary.txt |cut -c 15-18 |tr -dc '[:alnum:]\n\r'  )
 
             - name: Passing the code coverage to Env variable
+              if: always()
               run: echo "code_coverage= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
 
             - name: Printing the code coverage of the FUEL Build.
+              if: always()
               run: echo ${{env.code_coverage}}
 
                              
-            - name: Generate the package.xml for delta files
-              run: |
-                mkdir delta
-
-                sfdx sgd:source:delta  --from origin/QA-Org --output "./delta" --ignore-whitespace -d -i .sgdignore
-
-                echo "--- package.xml generated with added and modified metadata ---"
-                cat delta/package/package.xml
-
-                echo "--- destructiveChanges.xml generated with deleted metadata ---"
-                cat delta/destructiveChanges/destructiveChanges.xml
+            
             
             - name: 'Check-only full deploy changes - run specified tests'
+              if: always() && ${{env.failure_count = 0}}              
               run: |                  
                   sfdx force:source:deploy -x delta/package/package.xml -c --testlevel NoTestRun -u HubOrg
-                  sfdx force:mdapi:deploy -d delta/destructiveChanges --ignorewarnings -u HubOrg
+
+           
+            - name: 'Check-only full deploy changes - run specified tests'
+              if: always() && ${{env.failure_count > 0}}
+              run: echo "Deployment has failed"
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.pull_request.body == 'DeploytoQAorg' }}
               run: |
                   sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u trailheadacademy-org
+                   sfdx force:mdapi:deploy -d delta/destructiveChanges --ignorewarnings -u HubOrg
 
             
