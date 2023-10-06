@@ -156,7 +156,7 @@ jobs:
            
             - name: 'Check-only full deploy changes - run specified tests'
               if: ${{env.failure_count > 0}}
-              run: echo $(sf project deploy report --job-id ${{env.deployment_id}} --coverage-formatters=text2-summary --junit --results-dir  test2-results2)
+              run: echo $(sf project deploy report --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --junit --results-dir  test2-results2)
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.pull_request.body == 'DeploytoQAorg' }}
