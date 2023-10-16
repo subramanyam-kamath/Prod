@@ -5,8 +5,7 @@ on:
     types: [opened,synchronize]
     branches:
       - "QA-Org"
-    paths:
-      - 'force-app/**'
+    
 
 jobs:   
     validate-deployment-on-QA-org:        
@@ -63,38 +62,109 @@ jobs:
             - name: Decrypt the server.key.enc file & store inside assets folder
               run: openssl enc -nosalt -aes-256-cbc -d -in ${{ secrets.ENCRYPTION_KEY_FILE }} -out ${{ secrets.JWT_KEY_FILE }} -base64 -K ${{ secrets.DECRYPTION_KEY }} -iv ${{ secrets.DECRYPTION_IV }}
               
-
+            - name: Generate the package.xml for delta files
+              run: |
+                mkdir delta
+                sfdx sgd:source:delta --to "HEAD" --from "HEAD~1" --output "./delta" --ignore-whitespace -d -i .sgdignore
+                echo "--- package.xml generated with added and modified metadata ---"
+                cat delta/package/package.xml
             
             - name: Authenticate Salesforce ORG
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
-            - name: Create scratch org
+            - name: Validating the changes(No deployment) & get Deployment id.
+              id: vars3
+              run: | 
+                   echo ::set-output name=version:: $(sf project deploy validate --source-dir force-app --test-level RunLocalTests   --async  --target-org HubOrg)
+            
+            - name: Passing the test class names to Env variable
+              run: echo "job_summary= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
+
+            - name: echoing the variable output
+              run: echo ${{env.job_summary}}
+
+            - name: Passing the variable output to file
+              run:  echo ${{env.job_summary}} > Deploymentjobid.txt
+
+            - name: Priting the Deployment job.
               run: |
-                 sf org create scratch --target-dev-hub HubOrg -d -f config/project-scratch-def.json -a trailheadacademy-org
+                   cat Deploymentjobid.txt
+
+            - name: Applying regex to get Deployment id.
+              id: vars6
+              run: |              
+                echo ::set-output name=version:: $(grep -o "0Af..............."  Deploymentjobid.txt| head -1)
+
+            - name: Assigning the output to environment variable.
+              run:  echo "deployment_id= ${{ steps.vars6.outputs.version }}" >> $GITHUB_ENV
+
+            - name: Resuming the validation job & extract code coverage.
+              id: vars7
+              run: |
+                  echo ::set-output name=version:: $(sf project deploy resume --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --junit --results-dir test-results)
+      
+
+            - name: passing the Failing summary
+              if: always()
+              run: echo "failure_summary= ${{ steps.vars7.outputs.version }}" >> $GITHUB_ENV
+
+            - name: echoing the variable output
+              if: always()
+              run: ${{env.failure_summary}} > failuresummary.txt
+            
+            - name: Parse the failure summary
+              if: always()
+              id: vars8
+              run: |              
+               echo ::set-output name=version:: $(grep -o "Failing.*Total"  failuresummary.txt| head -1| grep -Eo "[0-9]{1,5}")
+               
+            - name: Assigning the output to environment variable to leverage in resume job command.
+              if: always()
+              run:  echo "failure_count= ${{ steps.vars8.outputs.version }}" >> $GITHUB_ENV
+
+            - name: Printing the failuresummary
+              if: always()
+              run: cat failuresummary.txt
+               
+            - name: Printing the code coverage file.
+              if: always()
+              run: |
+                  cat test-results/coverage/text-summary.txt
+                  
+            - name: Invoking linux commands to get code coverage from text file.
+              if: always()
+              id: vars2
+              run: echo ::set-output name=version::$(grep -i "Lines" test-results/coverage/text-summary.txt |cut -c 15-18 |tr -dc '[:alnum:]\n\r'  )
+
+            - name: Passing the code coverage to Env variable
+              if: always()
+              run: echo "code_coverage= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
+
+            - name: Printing the code coverage of the FUEL Build.
+              if: always()
+              run: echo ${{env.code_coverage}}
+
                              
-            - name: Generate the package.xml for delta files
-              run: |
-                mkdir delta
-
-                sfdx sgd:source:delta to ${{github.ref}} --from origin/QA-Org --output "./delta" --ignore-whitespace -d -i .sgdignore
-
-                echo "--- package.xml generated with added and modified metadata ---"
-                cat delta/package/package.xml
-
-                echo "--- destructiveChanges.xml generated with deleted metadata ---"
-                cat destructiveChanges/destructiveChanges.xml
+            
             
             - name: 'Check-only full deploy changes - run specified tests'
-              if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
+              if:  ${{env.failure_count == 0}}              
+              run: |                  
+                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel NoTestRun -u HubOrg
+
+           
+            - name: 'Check-only full deploy changes - run specified tests'
+              if: ${{(env.failure_count > 0 && env.code_coverage < 85 ) || env.failure_count ==' ' }}
               run: |
-                  echo ${{github.event.pull_request.body}}
-                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u trailheadacademy-org
-                  sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings
+                sf project deploy report --job-id ${{env.deployment_id}} --coverage-formatters=text-summary --junit --results-dir  test2-results2
+                exit 1
+
             
             - name: 'Check-only deploy delta changes - run all tests'
               if: ${{ github.event.pull_request.body == 'DeploytoQAorg' }}
               run: |
                   sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u trailheadacademy-org
+                   sfdx force:mdapi:deploy -d delta/destructiveChanges --ignorewarnings -u HubOrg
 
             

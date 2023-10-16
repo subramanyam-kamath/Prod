@@ -1,12 +1,9 @@
 name: GitHub Actions QA Org
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
-  pull_request:
-    types: [opened,synchronize]
-    branches:
-      - "QA-Org"
-    paths:
-      - 'force-app/**'
+  schedule:
+   - cron : '5 * * * *'   
+   
 
 jobs:   
     validate-deployment-on-QA-org:        
@@ -23,6 +20,36 @@ jobs:
                 fetch-depth: 0       
             
 
-            - name: 'Read commit Body'
+            - name: Get Apex test class names
+              id: vars
+              run: echo ::set-output name=version::$(cat codecoverate.txt)
+            - name: Passing the test class names to Env variable
+              run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+            - name: Name of the apex test classes
               run: |
-                $grep –e "Salesforce"  README.md
+                echo $ > AsynSummary.txt
+
+            - name: Pass to text file.            
+              run: echo $test_classes_in_repo > AsynSummary.txt
+                
+            - name: Name of the grepcommand
+              run: cat AsynSummary.txt
+
+            - name: Parse the failure summary.
+              id: vars6
+              run: |              
+               echo ::set-output name=version:: $(grep -o "Failing.*Total"  AsynSummary.txt| head -1| grep -Eo "[0-9]{1,5}")
+
+            - name: Assigning the output to environment variable to leverage in resume job command.
+              run:  echo "deployment_id= ${{ steps.vars6.outputs.version }}" >> $GITHUB_ENV
+            
+
+
+            - name: 'Print Test file'
+              run: |
+                 cat codecoverate.txt
+
+            - name: 'Print variable info'
+              run: |
+                   echo ${{env.test_classes_in_repo}}
+
