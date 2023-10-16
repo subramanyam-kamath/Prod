@@ -25,5 +25,5 @@ jobs:
               run: git checkout -b Release/Version4 origin/main	
 
             - name: publish to github
-              run: git push origin release/version4
+              run: git push origin Release/Version4
             
