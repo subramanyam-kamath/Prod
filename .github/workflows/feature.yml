@@ -23,6 +23,7 @@ jobs:
 
             - name: create new branch
               run: 
-                git branch -b PreQA6 PreQA
+                git checkout PreQA
+                git branch PreQA6
 
             
