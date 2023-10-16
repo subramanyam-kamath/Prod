@@ -1,10 +1,9 @@
 name: GitHub Actions Developer Org
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
-  pull_request:
-    types: [opened,synchronize]
-    branches:
-      - "QA-Org"
+   schedule:
+    - cron: '05 * * * *'
+  
 
 jobs:   
     validate-deployment-on-develop-org:        
@@ -22,8 +21,8 @@ jobs:
             
 
             - name: create new branch
-              run: git checkout -b Release/Version6 origin/main	
+              run: git checkout -b Release/Version8 origin/main	
 
             - name: publish to github
-              run: git push origin Release/Version6
+              run: git push origin Release/Version8
             
