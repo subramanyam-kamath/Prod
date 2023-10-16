@@ -22,8 +22,8 @@ jobs:
             
 
             - name: create new branch
-              run: git checkout -b Release/Version4 origin/main	
+              run: git checkout -b Release/Version6 origin/main	
 
             - name: publish to github
-              run: git push origin Release/Version4
+              run: git push origin Release/Version6
             
