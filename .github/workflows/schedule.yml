@@ -1,0 +1,28 @@
+name: GitHub Actions Developer Org
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: 
+   schedule:
+    - cron: '5 * * * *'
+  
+
+jobs:   
+    validate-deployment-on-develop-org:        
+        runs-on: ubuntu-latest
+        environment: developer
+        steps:            
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '14'
+
+            - name: 'Checkout source code'
+              uses: actions/checkout@v3
+              with:
+                fetch-depth: 0       
+            
+
+            - name: create new branch
+              run: git checkout -b Release/Version9 origin/main	
+
+            - name: publish to github
+              run: git push origin Release/Version9
+            
