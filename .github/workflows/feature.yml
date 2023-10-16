@@ -22,7 +22,6 @@ jobs:
             
 
             - name: create new branch
-              run: 
-                 $git branch PreQA6 PreQA
+              run: git checkout -b release/version2
 
             
