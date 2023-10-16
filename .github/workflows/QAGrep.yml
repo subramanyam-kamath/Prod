@@ -1,12 +1,9 @@
 name: GitHub Actions QA Org
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
-  pull_request:
-    types: [opened,synchronize]
-    branches:
-      - "QA-Org"
-    paths:
-      - 'force-app/**'
+  schedule:
+   - cron : '5 * * * *'   
+   
 
 jobs:   
     validate-deployment-on-QA-org:        
