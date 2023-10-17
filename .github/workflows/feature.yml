@@ -19,10 +19,13 @@ jobs:
               with:
                 fetch-depth: 0       
             
-
+            - name: Get date value and append it to branch name
+              run: |
+                 echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
+            
             - name: create new branch
-              run: git checkout -b Release/Version8 origin/main	
+              run: git checkout -b Release/${{env.RELEASE_DATE}}  origin/main	
 
             - name: publish to github
-              run: git push origin Release/Version8
+              run: git push origin Release/${{env.RELEASE_DATE}}
             
