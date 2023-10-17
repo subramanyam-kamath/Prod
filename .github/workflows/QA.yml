@@ -69,33 +69,17 @@ jobs:
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
-            - name: Create scratch org
+            - name: Get date value and append it to branch name
               run: |
-                 sf org create scratch --target-dev-hub HubOrg -d -f config/project-scratch-def.json -a trailheadacademy-org
-                             
-            - name: Generate the package.xml for delta files
-              run: |
-                mkdir delta
-
-                sfdx sgd:source:delta to ${{github.ref}} --from origin/QA-Org --output "./delta" --ignore-whitespace -d -i .sgdignore
-
-                echo "--- package.xml generated with added and modified metadata ---"
-                cat delta/package/package.xml
-
-                echo "--- destructiveChanges.xml generated with deleted metadata ---"
-                cat destructiveChanges/destructiveChanges.xml
+                 echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
             
-            - name: 'Check-only full deploy changes - run specified tests'
-              if: ${{ github.event.pull_request.body!= 'DeploytoQAorg' }}
-              run: |
-                  echo ${{github.event.pull_request.body}}
-                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u trailheadacademy-org
-                  sfdx force:mdapi:deploy -d destructiveChanges --ignorewarnings
-            
-            
-            - name: 'Check-only deploy delta changes - run all tests'
-              if: ${{ github.event.pull_request.body == 'DeploytoQAorg' }}
-              run: |
-                  sfdx force:source:deploy -x delta/package/package.xml -c --testlevel RunLocalTests -u trailheadacademy-org
+            - name: create new branch
+              run: git checkout -b Release/${{env.RELEASE_DATE}}  origin/main	
+
+            - name: publish to github
+              run: git push origin Release/${{env.RELEASE_DATE}}
+
+            - name: Get all Accounts
+              run: sf data query --query "SELECT Id, Name, Account.Name FROM Contact" --result-format=csv --target-org HubOrg -w 180
 
             
