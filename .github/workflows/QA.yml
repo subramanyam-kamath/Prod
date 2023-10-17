@@ -69,10 +69,10 @@ jobs:
                  echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
             
             - name: create new branch
-              run: git checkout -b Release/version20  origin/main	
+              run: git checkout -b Release/version21  origin/main	
 
             - name: publish to github
-              run: git push origin Release/version20
+              run: git push origin Release/version21
 
             - name: Get all Accounts
               run:  sfdx force:data:tree:export -q "SELECT Id, Name, Account.Name FROM Contact" -x export-demo -d tmp/sfdx-out -p  --target-org HubOrg
