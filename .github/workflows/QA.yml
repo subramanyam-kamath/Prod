@@ -75,7 +75,7 @@ jobs:
               run: git push origin Release/${{env.RELEASE_DATE}}
 
             - name: Get all Accounts
-              run:  sfdx force:data:tree:export -q "SELECT Id, Name, Account.Name FROM Contact" -x export-demo -d /tmp/sfdx-out -p
+              run:  sfdx force:data:tree:export -q "SELECT Id, Name, Account.Name FROM Contact" -x export-demo -d /tmp/sfdx-out -p  -a HubOrg
 
 
             
