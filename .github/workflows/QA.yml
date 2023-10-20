@@ -91,6 +91,8 @@ jobs:
               run: |
                 git push origin Release/version26
               
-
+            - name: Create Pull request against main branch.
+              run: |
+                 gh pr merge --title "Course is created" --body "Course is created" --base main 
 
             
