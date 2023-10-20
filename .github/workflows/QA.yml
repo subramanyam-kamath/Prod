@@ -95,6 +95,6 @@ jobs:
               run: |
                  gh pr create --title "Course is created" --body "Course is created" --base main 
                  env:
-                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                 GH_TOKEN: ${{ github.token }}
 
             
