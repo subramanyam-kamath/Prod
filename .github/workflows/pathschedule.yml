@@ -6,13 +6,33 @@ on:
 env:
    GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
-jobs:   
+jobs:
+    Getting-the-export-files:
+     runs-on: ubuntu-latest
+     environment: QA-Branch
+     steps:            
+      - uses: actions/setup-node@v3
+        with:
+         node-version: '14'
+                
+      - name: Get CSV file names
+        id: vars
+        run: echo ::set-output name=version::$(find files -type f -iname "*.csv " -|paste -sd "," -)
+        
+      - name: Passing the test class names to Env variable
+        run: echo "csv_file_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+        
+      - name: Name of the apex test classes
+        run: echo ${{env.csv_file_in_repo}}
+
+      
+
     validate-deployment-on-QA-org:        
         runs-on: ubuntu-latest
         environment: QA-Branch
         strategy:
          matrix:
-          version: [Contactupload.csv, export20231025092428.csv]
+          version: [${{env.csv_file_in_repo}}]
         steps:            
             - uses: actions/setup-node@v3
               with:
