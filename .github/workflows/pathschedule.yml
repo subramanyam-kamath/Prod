@@ -26,7 +26,7 @@ jobs:
         environment: QA-Branch
         strategy:
          matrix:
-          version: ${{ steps.vars.outputs.csv_file_in_repo }}
+          version: ${{steps.vars.outputs.csv_file_in_repo}}
         steps:            
             - uses: actions/setup-node@v3
               with:
