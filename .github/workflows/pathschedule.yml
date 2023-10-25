@@ -1,14 +1,15 @@
-name: GitHub Actions Developer Org
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
-   schedule:
-    - cron: '*/15 23 * * *'
-  
+  workflow_dispatch: 
+
+
+env:
+   GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
 jobs:   
-    validate-deployment-on-develop-org:        
+    validate-deployment-on-QA-org:        
         runs-on: ubuntu-latest
-        environment: developer
+        environment: QA-Branch
         steps:            
             - uses: actions/setup-node@v3
               with:
@@ -20,9 +21,57 @@ jobs:
                 fetch-depth: 0       
             
 
-            - name: create new branch
-              run: git checkout -b Release/Version9 origin/main	
+            - name: 'Read commit Body'
+              env:
+                 PR_BODY: ${{ github.event.pull_request.body }}
 
-            - name: publish to github
-              run: git push origin Release/Version9
+             
+              run: |
+                  echo $PR_BODY > ./pr_body.txt
+                  node ./parsePR.js              
+                  TESTS=$(cat testsToRun.txt)       
+                  echo "APEX_TESTS=$TESTS" >> $GITHUB_ENV
+                  
+            
+            - name: 'Install Salesforce CLI'
+              run: |
+                  wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+                  mkdir ~/sfdx
+                  tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+                  echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+                  ~/sfdx/bin/sfdx version
+
+           
+            - name: 'Installing sfdx git delta'
+              run: | 
+                  echo y | sfdx plugins:install sfdx-git-delta
+                  sfdx plugins 
+
+            
+            - name: 'Installing java'
+              run: |
+                sudo apt-get update
+                sudo apt install default-jdk
+
+            
+            - name: 'Installing SFDX scanner'
+              run: sfdx plugins:install @salesforce/sfdx-scanner
+
+            
+            - name: Decrypt the server.key.enc file & store inside assets folder
+              run: openssl enc -nosalt -aes-256-cbc -d -in ${{ secrets.ENCRYPTION_KEY_FILE }} -out ${{ secrets.JWT_KEY_FILE }} -base64 -K ${{ secrets.DECRYPTION_KEY }} -iv ${{ secrets.DECRYPTION_IV }}
+              
+
+            
+            - name: Authenticate Salesforce ORG
+              run: |
+                sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
+
+            - name: import contacts
+              run: sf data upsert bulk --sobject Contact --file files --external-id email --wait 120 --target-org my-scratch
+                 
+
+            
+
+
             
