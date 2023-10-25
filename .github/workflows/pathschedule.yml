@@ -10,6 +10,10 @@ jobs:
     Getting-the-export-files:
      runs-on: ubuntu-latest
      environment: QA-Branch
+
+     outputs:
+         csv_file_in_repo: ${{steps.vars.outputs.csv_file_in_repo}}
+     
      steps:            
       - uses: actions/setup-node@v3
         with:
@@ -21,12 +25,13 @@ jobs:
         
            
 
-    validate-deployment-on-QA-org:        
+    validate-deployment-on-QA-org:
+        needs: Getting-the-export-files
         runs-on: ubuntu-latest
         environment: QA-Branch
         strategy:
          matrix:
-          version: ${{steps.vars.outputs.csv_file_in_repo}}
+          version: ${{needs.Getting-the-export-files.outputs.csv_file_in_repo}}
         steps:            
             - uses: actions/setup-node@v3
               with:
