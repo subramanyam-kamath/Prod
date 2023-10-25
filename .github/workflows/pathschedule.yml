@@ -17,22 +17,16 @@ jobs:
                 
       - name: Get CSV file names
         id: vars
-        run: echo ::set-output name=version::$(find files -type f -iname "*.csv " -|paste -sd "," -)
+        run: echo "csv_file_in_repo= $(find files -type f -iname "*.csv " -|paste -sd "," -)"  >> $GITHUB_OUTPUT
         
-      - name: Passing the test class names to Env variable
-        run: echo "csv_file_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
-        
-      - name: Name of the apex test classes
-        run: echo ${{env.csv_file_in_repo}}
-
-      
+           
 
     validate-deployment-on-QA-org:        
         runs-on: ubuntu-latest
         environment: QA-Branch
         strategy:
          matrix:
-          version: ${{env.csv_file_in_repo}}
+          version: ${{ steps.vars.outputs.csv_file_in_repo }}
         steps:            
             - uses: actions/setup-node@v3
               with:
