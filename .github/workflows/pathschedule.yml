@@ -10,6 +10,9 @@ jobs:
     validate-deployment-on-QA-org:        
         runs-on: ubuntu-latest
         environment: QA-Branch
+        strategy:
+         matrix:
+          version: [Contactupload.csv, export20231025092428.csv]
         steps:            
             - uses: actions/setup-node@v3
               with:
