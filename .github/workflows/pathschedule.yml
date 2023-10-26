@@ -28,19 +28,17 @@ jobs:
                 
       - name: Get CSV file names
         id: vars
-        run: echo "test= $(find files/ -name "*.csv" | sed 's/files//g' | sed 's/[/]//g' |paste -sd"," | sed -i "s|$|[[]|" ) "  >>  "$GITHUB_OUTPUT"
+        run: echo "test= $(find files/ -name "*.csv" | sed 's/files//g' | sed 's/[/]//g' |paste -sd",") "  >>  "$GITHUB_OUTPUT"
 
       
 
+        
 
     job2:
-     runs-on: ubuntu-latest
-     needs: Getting-the-export-files
-     steps:
-     - env:
-        OUTPUT1: ${{needs.Getting-the-export-files.outputs.csv_file_in_repo}}          
+      runs-on: ubuntu-latest
+      needs: Getting-the-export-files
+      steps:
+      - env:
+          OUTPUT1: ${{needs.Getting-the-export-files.outputs.csv_file_in_repo}}
+          
         run: echo "$OUTPUT1"
-  
-
-
-            
