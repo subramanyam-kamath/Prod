@@ -22,7 +22,7 @@ jobs:
          node-version: '14'
 
       - name: "Checkout source code"
-        uses: devforce/checkout@v3
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
                 
