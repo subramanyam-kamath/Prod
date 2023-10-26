@@ -76,6 +76,9 @@ jobs:
         - name: 'Installing SFDX scanner'
           run: sfdx plugins:install @salesforce/sfdx-scanner
 
+        - name: echo csv files
+          run: echo ${{needs.Getting-the-export-files.outputs.csv_file_in_repo}}
+
             
         - name: Decrypt the server.key.enc file & store inside assets folder
           run: openssl enc -nosalt -aes-256-cbc -d -in ${{ secrets.ENCRYPTION_KEY_FILE }} -out ${{ secrets.JWT_KEY_FILE }} -base64 -K ${{ secrets.DECRYPTION_KEY }} -iv ${{ secrets.DECRYPTION_IV }}
