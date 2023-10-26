@@ -28,10 +28,10 @@ jobs:
                 
       - name: Get CSV file names
         id: vars
-        run: echo "csv_file_in_repo= $(find . -name "*.js")"  >> $GITHUB_ENV
+        run: cat "csv_file_in_repo= $(find . -name "*.js")"  >> $GITHUB_ENV
 
       - name: Print file names
-        run: echo ${{env.csv_file_in_repo}}
+        run: cat ${{env.csv_file_in_repo}}
 
         
 
