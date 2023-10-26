@@ -12,7 +12,7 @@ jobs:
      environment: QA-Branch
 
      outputs:
-         csv_file_in_repo: ${{steps.vars.outputs.csv_file_in_repo}}
+         csv_file_in_repo: ${{steps.vars.outputs.test}}
 
         
      
@@ -28,15 +28,20 @@ jobs:
                 
       - name: Get CSV file names
         id: vars
-        run: echo ::set-output name=version::$(find files/ -name "*.csv" | sed 's/files//g' | sed 's/[/]//g' |paste -sd",")
+        run: echo "test= $(find files/ -name "*.csv" | sed 's/files//g' | sed 's/[/]//g' |paste -sd",") "  >>  "$GITHUB_OUTPUT"
 
-      - name: Print file names
-        run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+      
 
         
 
-      
-           
+    job2:
+      runs-on: ubuntu-latest
+      needs: Getting-the-export-files
+      steps:
+      - env:
+          OUTPUT1: ${{needs.Getting-the-export-files.outputs.csv_file_in_repo}}
+          
+        run: echo "$OUTPUT1"
 
   
 
