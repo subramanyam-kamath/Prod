@@ -28,7 +28,7 @@ jobs:
                 
       - name: Get CSV file names
         id: vars
-        run: echo "test= $(find files/ -name "*.csv" | sed 's/files//g' | sed 's/[/]//g' |paste -sd"," | sed  s/$/]/ | sed 's/^/[/' ) "  >>  "$GITHUB_OUTPUT"
+        run: echo "test= $(find files/ -name "*.csv" | sed 's/files//g' | sed 's/[/]//g' |paste -sd"," | sed  -e 's/^/"/' | sed  s/$/]/ | sed 's/^/[/' ) "  >>  "$GITHUB_OUTPUT"
 
       
 
