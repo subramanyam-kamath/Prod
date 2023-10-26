@@ -37,10 +37,10 @@ jobs:
         environment: QA-Branch
         strategy:
          matrix:
-          version: [  "${{ needs.Getting-the-export-files.outputs.csv_file_in_repo] }}", "${{ needs.Getting-the-export-files.outputs.csv_file_in_repo] }}"  ]
+          version: [ "${{ needs.Getting-the-export-files.outputs.csv_file_in_repo }}" , "${{ needs.Getting-the-export-files.outputs.csv_file_in_repo }}" ]
         
         steps:            
-            - uses: actions/setup-node@v3
+        - uses: actions/setup-node@v3
               with:
                 node-version: '14'
 
