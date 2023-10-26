@@ -49,8 +49,7 @@ jobs:
         environment: QA-Branch
         strategy:
          matrix:
-          version: [Contactupload.csv,export20231025092428.csv] 
-        
+          version:  ${{ fromJson(needs.Getting-the-export-files.outputs.csv_file_in_repo)}}
         steps:            
         - uses: actions/setup-node@v3
           with:
