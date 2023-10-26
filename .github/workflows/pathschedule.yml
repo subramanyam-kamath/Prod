@@ -28,7 +28,7 @@ jobs:
                 
       - name: Get CSV file names
         id: vars
-        run: echo ::set-output name=version::$(find files/ -name "*.js")
+        run: echo ::set-output name=version::$(find files/ -name "*.csv")
 
       - name: Print file names
         run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
