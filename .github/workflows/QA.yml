@@ -80,8 +80,8 @@ jobs:
 
             - name: Get all Accounts
               run: |
-                sf data query --query "SELECT Id, Name, Account.Name FROM Contact" >output.csv  --target-org HubOrg
-                 sf data query --query "SELECT Id, Name, Account.Name FROM Contact" >files/output2.csv  --target-org HubOrg
+                sf data query --query "SELECT Id, Name, Account.Name FROM Contact" --result-format csv >output.csv  --target-org HubOrg
+                 sf data query --query "SELECT Id, Name, Account.Name FROM Contact" --result-format csv >files/output2.csv  --target-org HubOrg
 
             - name: git config set
               run: |
