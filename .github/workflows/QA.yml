@@ -73,10 +73,10 @@ jobs:
                  echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
             
             - name: create new branch
-              run: git checkout -b Release/version26  origin/main	
+              run: git checkout -b Release/${{env.RELEASE_DATE}} origin/main	
 
             - name: publish to github
-              run: git push origin Release/version26
+              run: git push origin Release/${{env.RELEASE_DATE}}
 
             - name: Get all Accounts
               run: |
