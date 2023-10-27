@@ -95,7 +95,7 @@ jobs:
 
             - name: Push file to remote repository.
               run: |
-                git push origin Release/version26
+                git push origin Release/${{env.RELEASE_DATE}}
               
             - name: Create Pull request against main branch.
               run: |
