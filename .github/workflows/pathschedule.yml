@@ -30,7 +30,7 @@ jobs:
 
       - name: Get CSV file names
         id: vars
-        run: echo "test= $(find files/ -name "*.csv" |sed 's/.csv/.csv",/g' | sed 's/files//g' | sed 's/[/]//g' |paste  | sed  -e 's/^/"/' | sed  -e 's/$/"/' | sed  s/$/]/ | sed 's/^/[/' | sed 's/"$//g'| sed 's/,$//g') "  >>  "$GITHUB_OUTPUT"
+        run: echo "test= $(find files/ -name "*.csv" |sed 's/.csv/.csv",/g' | sed 's/files//g' | sed 's/[/]//g' |paste -sd ""," | sed  -e 's/^/"/' | sed  -e 's/$/"/' | sed  s/$/]/ | sed 's/^/[/' | sed 's/"$//g'| sed 's/,$//g') "  >>  "$GITHUB_OUTPUT"
 
 
     job2:
