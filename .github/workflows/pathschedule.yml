@@ -28,17 +28,10 @@ jobs:
                 
       
 
-      - name: get environment csv files
-        id: vars2
-        run: echo ::set-output name=version::$(find files/ -name "*.csv" |sed 's/.csv/.csv",/g' | sed 's/files//g' | sed 's/[/]//g' |paste -sd '"'   | sed  -e 's/^/"/' | sed  -e 's/$/"/' | sed  s/$/]/ | sed 's/^/[/' | sed 's/"$//g'| sed 's/,$//g')
-      - name: Passing the test class names to Env variable
-        run: echo "test_classes_in_repo= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
-      - name: Name of the apex test classes
-        run: echo ${{env.test_classes_in_repo}}
-
       - name: Get CSV file names
         id: vars
-        run: echo "test= ${{env.test_classes_in_repo}}"  >>  "$GITHUB_OUTPUT"
+        run: echo "test= $(find files/ -name "*.csv" |sed 's/.csv/.csv",/g' | sed 's/files//g' | sed 's/[/]//g' |paste -sd '"'   | sed  -e 's/^/"/' | sed  -e 's/$/"/' | sed  s/$/]/ | sed 's/^/[/' | sed 's/"$//g'| sed 's/,$//g') "  >>  "$GITHUB_OUTPUT"
+
 
     job2:
       runs-on: ubuntu-latest
