@@ -28,9 +28,9 @@ jobs:
                 
       
 
-      - name: get environment csv files:
+      - name: get environment csv files
         id: vars2
-        run:  echo ::set-output name=version::$(find files/ -name "*.csv" |sed '1 s/.csv/.csv",/g' | sed 's/files//g' | sed 's/[/]//g' |paste -sd '"'   | sed  -e 's/^/"/' | sed  -e 's/$/"/' | sed  s/$/]/ | sed 's/^/[/' )  
+        run: echo ::set-output name=version::$(find files/ -name "*.csv" |sed '1 s/.csv/.csv",/g' | sed 's/files//g' | sed 's/[/]//g' |paste -sd '"'   | sed  -e 's/^/"/' | sed  -e 's/$/"/' | sed  s/$/]/ | sed 's/^/[/' )  
 
       - name: Passing the test class names to Env variable
         run: echo "test_classes_in_repo= ${{ steps.vars2.outputs.version }}" >> $GITHUB_ENV
