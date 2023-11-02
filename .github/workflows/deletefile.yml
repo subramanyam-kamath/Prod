@@ -28,3 +28,15 @@ jobs:
               uses: actions/checkout@v3
               with:
                  fetch-depth: 0
+
+            - name: Identify Deleted Files
+              id: deleted-files
+              run: |
+                # Capture deleted files into a variables
+                deleted_files=$(git diff --name-only --diff-filter=D ${{ github.event.before }} ${{ github.sha }})
+                # Create a directory to store deleted files
+                mkdir ~/deleted_files
+                # Iterate over deleted files and move them to the directory
+                for file in $deleted_files; do
+                mv $file deleted_files/
+                echo "Deleted files: $deleted_files"
