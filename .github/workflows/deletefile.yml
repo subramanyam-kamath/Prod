@@ -28,8 +28,6 @@ jobs:
          with:
                 fetch-depth: 0 
                 
-       - name: Archive Deleted Files
-       - uses: actions/upload-artifact@v2
        
        - name: Deploy destructive changes
          run: sf project deploy start --dry-run --source-dir deleted_files --test-level NoTestRun
