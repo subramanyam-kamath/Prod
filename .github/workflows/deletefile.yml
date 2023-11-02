@@ -24,3 +24,5 @@ jobs:
                 ~/sfdx/bin/sfdx version
           
       
+            - name: Checkout code
+            - uses: actions/checkout@v2
