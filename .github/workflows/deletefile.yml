@@ -22,8 +22,10 @@ jobs:
           tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
           echo "$HOME/sfdx/bin" >> $GITHUB_PATH
           ~/sfdx/bin/sfdx version
+          
        - name: Checkout code
        - uses: actions/checkout@v2
+      
        - name: Identify Deleted Files
          id: deleted-files
          run: |
@@ -38,5 +40,6 @@ jobs:
          
        - name: Archive Deleted Files
        - uses: actions/upload-artifact@v2
+       
        - name: Deploy destructive changes
          run: sf project deploy start --dry-run --source-dir deleted_files --test-level NoTestRun
