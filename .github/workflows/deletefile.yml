@@ -17,11 +17,4 @@ jobs:
     
      
           
-       - name: Checkout code
-       - uses: actions/checkout@v2
-         with:
-                fetch-depth: 0 
-                
-       
-       - name: Deploy destructive changes
-         run: sf project deploy start --dry-run --source-dir deleted_files --test-level NoTestRun
+      
