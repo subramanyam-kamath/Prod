@@ -77,7 +77,7 @@ jobs:
                 
             
             - name: Passing the async summary to environment variable.
-              run: printf "${{ steps.vars.outputs.version }}" >> codecoverage.txt 
+              run: cat codecoverage.txt 
   
             - name: echoing the job summary output
               run: echo ${{env.job_summary}}
