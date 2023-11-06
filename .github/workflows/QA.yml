@@ -71,9 +71,13 @@ jobs:
             
 
             - name: Get all Accounts
+              id: vars
               run: |
-                sf apex run --file files/anonymouscode.apex --json --target-org HubOrg
+                 echo:set-output name=version::$(sf apex run --file files/anonymouscode.apex --json --target-org HubOrg)
                 
             
+            - name: Passing the async summary to environment variable.
+              run: echo "job_summary= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
+  
             - name: echoing the job summary output
               run: echo ${{env.job_summary}}
