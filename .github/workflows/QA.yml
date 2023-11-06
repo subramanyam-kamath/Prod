@@ -77,7 +77,7 @@ jobs:
                 
             
             - name: Passing the async summary to environment variable.
-              run: cat codecoverage.txt | grep -o "01p..............." | paste -sd ","
+              run: cat codecoverage.txt | grep -o "01p..............." | paste -sd "," |uniq 
   
             - name: echoing the job summary output
               run: echo ${{env.job_summary}}
