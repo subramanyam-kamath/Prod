@@ -68,16 +68,25 @@ jobs:
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
+            - name: Get Apex test class names
+              id: vars
+              run: echo ::set-output name=version::$(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd " " -)
+
+            - name: Passing the test class names to Env variable
+              run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+
+            - name: Name of the apex test classes
+              run: echo ${{env.test_classes_in_repo}}
             
 
-            - name: Get all Accounts
-              id: vars
+            - name: Get all Accounts              
               run: |
                  echo $(sf apex run --file files/anonymouscode.apex --json --target-org HubOrg) >> codecoverage.txt
                 
             
             - name: Passing the async summary to environment variable.
-              run: cat codecoverage.txt | grep -o "01p..............." | uniq | paste -sd "," 
+              run: cat codecoverage.txt | grep -o "01p..............." | uniq | paste -sd " "  |  sed 's/${{env.test_classes_in_repo}}//g'
+                   
   
             - name: echoing the job summary output
               run: echo ${{env.job_summary}}
