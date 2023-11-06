@@ -85,7 +85,9 @@ jobs:
                 
             
             - name: Passing the async summary to environment variable.
-              run: cat codecoverage.txt | grep -o "01p..............." | uniq | sed 's/([.]{9})/&+/g' 
+              run: cat codecoverage.txt | grep -o "01p..............." | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g'
+                   sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN ('$codecoverage.txt') --use-tooling-api  -r csv
+
                     
   
             - name: echoing the job summary output
