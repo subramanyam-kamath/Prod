@@ -19,4 +19,4 @@ jobs:
             
 
             - name: create new branch
-              run: cat codecoverage2.txt | grep -o "01p..............." | uniq | sed 's/(.{9})/&+/g'
+              run: cat codecoverage2.txt | grep -o "01p..............." | uniq | sed 's/01p.............../&',/g'
