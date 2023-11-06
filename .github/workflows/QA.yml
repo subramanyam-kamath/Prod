@@ -68,38 +68,14 @@ jobs:
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
-            - name: Get date value and append it to branch name
-              run: |
-                 echo "RELEASE_DATE=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
             
-            - name: create new branch
-              run: git checkout -b Release/${{env.RELEASE_DATE}} origin/main	
-
-            - name: publish to github
-              run: git push origin Release/${{env.RELEASE_DATE}}
 
             - name: Get all Accounts
               run: |
-                sf data query --query "SELECT Id, Name, Account.Name FROM Contact" --result-format csv >output.csv  --target-org HubOrg
-                 sf data query --query "SELECT Id, Name, Account.Name FROM Contact" --result-format csv >files/output2.csv  --target-org HubOrg
-
-            - name: git config set
-              run: |
-                git config --global user.email "subramanyam.kamath@gmail.com"
-                git config --global user.name "subramanyam-kamath"
-
-            - name: Push & Commit file
-              run: | 
-                 git add -A
-                 git commit -m "added new file"
-
-            - name: Push file to remote repository.
-              run: |
-                git push origin Release/${{env.RELEASE_DATE}}
-              
-            - name: Create Pull request against main branch.
-              run: |
-                 gh pr create --title "Course is created" --body "Course is created" --base main 
-                 
-
-            
+               echo ::set-output name=version:: $(sf apex run --file files/anonymouscode.apex --json --target-org HubOrg)
+                
+            - name: Passing the async summary to environment variable.
+              run: echo "job_summary= ${{ steps.vars3.outputs.version }}" >> $GITHUB_ENV
+           
+            - name: echoing the job summary output
+              run: echo ${{env.job_summary}}
