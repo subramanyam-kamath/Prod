@@ -85,7 +85,7 @@ jobs:
                 
             
             - name: Passing the async summary to environment variable.
-              run: cat codecoverage.txt | grep -o "01p..............." | uniq | sed 's/.\{20\}/"'"/g' 
+              run: cat codecoverage.txt | grep -o "01p..............." | uniq | sed 's/.\{10\}/'/g' 
                     
   
             - name: echoing the job summary output
