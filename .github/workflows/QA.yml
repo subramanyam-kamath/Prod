@@ -73,7 +73,7 @@ jobs:
             - name: Get all Accounts
               id: vars
               run: |
-                 cat $(sf apex run --file files/anonymouscode.apex --json --target-org HubOrg)
+                 echo $(sf apex run --file files/anonymouscode.apex --json --target-org HubOrg) >> codecoverage.txt
                 
             
             - name: Passing the async summary to environment variable.
