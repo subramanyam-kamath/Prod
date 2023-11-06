@@ -1,9 +1,7 @@
 name: GitHub Actions Developer Org
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
-   schedule:
-    - cron: '*/30 23 * * *'
-  
+   workflow_dispatch: 
 
 jobs:   
     validate-deployment-on-develop-org:        
@@ -21,7 +19,4 @@ jobs:
             
 
             - name: create new branch
-              run: git checkout -b Release/Version9 origin/main	
-
-            - name: publish to github
-              run: git push origin Release/Version9
+              run: cat codecoverage.txt | grep -o "01p..............." | uniq | sed 's/01p.............../&+/g'
