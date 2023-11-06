@@ -73,7 +73,7 @@ jobs:
             - name: Get all Accounts
               id: vars
               run: |
-                 echo ::set-output name=version::$(sf apex run --file files/anonymouscode.apex --json --target-org HubOrg)
+                 cat ::set-output name=version::$(sf apex run --file files/anonymouscode.apex --json --target-org HubOrg)
                 
             
             - name: Passing the async summary to environment variable.
