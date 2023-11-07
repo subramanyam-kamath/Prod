@@ -95,7 +95,10 @@ jobs:
               run: echo $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN (${{ steps.vars2.outputs.apexclassid }})" --use-tooling-api  -r csv  --target-org HubOrg) >> apexclassnames.txt
 
             - name: Print the classes before exception.
-              run: cat  apexclassnames.txt
+              run: cat  apexclassnames.txt 
+
+            - name: Print the apex classes after exception.
+              run:  cat apexclassnames.txt | sed 's/${{env.test_classes_in_repo}}//g'
                     
   
           
