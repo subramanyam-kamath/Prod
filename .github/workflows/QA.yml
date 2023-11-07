@@ -90,7 +90,7 @@ jobs:
                   cat codecoverage.txt | grep -o "01p..............." | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' |  sed  's/$/'"'"'/' |  sed 's/^/'"'"'/'
                   
             - name: run apex query.
-              run: sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN ('$(<codecoverage.txt)')" --use-tooling-api  -r csv  --target-org HubOrg
+              run: sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN ('$(codecoverage.txt)')" --use-tooling-api  -r csv  --target-org HubOrg
 
                     
   
