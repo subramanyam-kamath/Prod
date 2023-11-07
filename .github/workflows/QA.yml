@@ -104,7 +104,7 @@ jobs:
               run:  echo $(cat groupedClassesnames.txt  | tr ' ' '\n') >> uniqueclasses.txt
 
             - name: uniq the file.
-              run: cat uniqueclasses.txt |paste -sd "," | uniq
+              run: sort uniqueclasses.txt | uniq
                     
   
           
