@@ -19,7 +19,8 @@ jobs:
             
 
             - name: create new branch
-              run: cat codecoverage2.txt | grep -o "01p..............." | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' | sed  's/$/'"'"'/' |  sed 's/^/'"'"'/'
+              id: vars
+              run: echo "version=$(cat codecoverage2.txt | grep -o "01p..............." | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' | sed  's/$/'"'"'/' |  sed 's/^/'"'"'/')" >>  $GITHUB_OUTPUT 
 
             - name: print code coverage.
-              run: cat (codecoverage2.txt)
+              run: echo ${{ steps.vars.outputs.version }}
