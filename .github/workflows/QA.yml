@@ -101,8 +101,8 @@ jobs:
               run: cat apexclassnames.txt testClassname.txt > groupedClassesnames.txt
 
             - name: Print the apex classes after exception.
-              run:  echo $(cat groupedClassesnames.txt  | tr ' ' '\n') >> uniqueclasses.txt
-
+              run:  cat groupedClassesnames.txt  | tr ' ' '\n' | sort -u
+              
             - name: uniq the file.
               run: cat  uniqueclasses.txt | awk '!a[$0]++'
                     
