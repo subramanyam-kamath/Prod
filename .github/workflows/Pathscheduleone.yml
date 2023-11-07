@@ -20,7 +20,6 @@ jobs:
 
             - name: create new branch
               id: vars
-              run: echo "version=$(cat codecoverage2.txt | grep -o "01p..............." | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' | sed  's/$/'"'"'/' |  sed 's/^/'"'"'/')" >>  $GITHUB_OUTPUT 
+              run: cat codecoverage2.txt  | tr ' ' '\n'
 
-            - name: print code coverage.
-              run: echo ${{ steps.vars.outputs.version }}
+            
