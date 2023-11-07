@@ -70,7 +70,7 @@ jobs:
 
             - name: Get Apex test class names
               id: vars
-              run: echo ::set-output name=version::$(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd " " -)
+              run: echo $(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd " " -) >> testClassname.txt
 
             - name: Passing the test class names to Env variable
               run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
@@ -95,10 +95,10 @@ jobs:
               run: echo $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN (${{ steps.vars2.outputs.apexclassid }} ORDER BY ApexClassOrTrigger.Name ASC )" --use-tooling-api  -r csv  --target-org HubOrg) >> apexclassnames.txt
 
             - name: Print the classes before exception.
-              run: cat  apexclassnames.txt 
+              run: cat  apexclassnames.txt testClassname.txt > groupedClassesnames.txt
 
             - name: Print the apex classes after exception.
-              run:  cat apexclassnames.txt | sed 's/${{env.test_classes_in_repo}}//g'
+              run:  cat groupedClassesnames.txt 
                     
   
           
