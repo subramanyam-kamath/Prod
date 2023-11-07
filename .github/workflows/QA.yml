@@ -92,7 +92,7 @@ jobs:
               run: echo ${{ steps.vars.outputs.apexclassid }}
                 
             - name: run apex query.
-              run: echo $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN (${{ steps.vars2.outputs.apexclassid }} )" --use-tooling-api  -r csv  --target-org HubOrg) >> apexclassnames.txt
+              run: echo $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN (${{ steps.vars2.outputs.apexclassid }} )" --use-tooling-api   --target-org HubOrg) >> apexclassnames.txt
 
             - name: print <75 code coverage
               run: cat apexclassnames.txt
