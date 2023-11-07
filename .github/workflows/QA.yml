@@ -101,7 +101,7 @@ jobs:
               run: cat apexclassnames.txt testClassname.txt > groupedClassesnames.txt
 
             - name: Print the apex classes after exception.
-              run:  cat groupedClassesnames.txt  |paste -sd ","| uniq
+              run:  cat groupedClassesnames.txt  | tr ' ' '\n' 
                     
   
           
