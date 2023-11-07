@@ -20,6 +20,6 @@ jobs:
 
             - name: create new branch
               id: vars
-              run: cat codecoverage2.txt  | tr ' ' '\n'
+              run: cat codecoverage2.txt  | tr ' ' '\n' | sort -u
 
             
