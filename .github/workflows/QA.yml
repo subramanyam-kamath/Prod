@@ -88,7 +88,7 @@ jobs:
               id: vars2
               run: |
                cat codecoverage.txt
-               echo "apexclassid= $(cat codecoverage.txt | grep -o "|DEBUG|.................." |sed 's/|DEBUG|//g' | 's/res.getBody(): {\"//g'  | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' |  sed  's/$/'"'"'/' |  sed 's/^/'"'"'/' )" >> $GITHUB_OUTPUT
+               echo "apexclassid= $(cat codecoverage.txt | grep -o "|DEBUG|.................." |sed 's/|DEBUG|//g' | sed 's/res.getBody(): {\"//g'  | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' |  sed  's/$/'"'"'/' |  sed 's/^/'"'"'/' )" >> $GITHUB_OUTPUT
 
             - name: Passig again async summary.
               id: vars5
