@@ -18,7 +18,7 @@ for (Integer i=0; i < objList.size(); i++) {
     Decimal numLinesCovered = ((Integer)record.get('NumLinesCovered'));
     Decimal totalLines = ((Integer)record.get('NumLinesUncovered')) + numLinesCovered;
     Integer codecoverage = (numLinesCovered >0)  ? (Integer.valueOf((numLinesCovered/totalLines)*100)) : 0;
-    String apexname =  (([SELECT Name from ApexClass where Id=:apexClassId].size())>0) ? ([SELECT Name from ApexClass where Id=:apexClassId][0].Name) : ([Select Name from ApexTrigger where Id=:apexClassId][0].Name) ;
+    String apexname =  (([SELECT Name from ApexClass where Id=:apexClassId].size())>0) ? ([SELECT Id from ApexClass where Id=:apexClassId][0].Id) : ([Select Id from ApexTrigger where Id=:apexClassId][0].Id) ;
         if(codecoverage < 75){
             System.debug( apexname);
             
