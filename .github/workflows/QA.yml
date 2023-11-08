@@ -86,7 +86,9 @@ jobs:
             
             - name: Passing the async summary to environment variable.
               id: vars2
-              run: echo "apexclassid= $(cat codecoverage.txt | grep -o "01p..............." | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' |  sed  's/$/'"'"'/' |  sed 's/^/'"'"'/' )" >> $GITHUB_OUTPUT
+              run: |
+               cat codecoverage.txt
+               echo "apexclassid= $(cat codecoverage.txt | grep -o "01p..............." | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' |  sed  's/$/'"'"'/' |  sed 's/^/'"'"'/' )" >> $GITHUB_OUTPUT
 
             - name: Echo the variable.
               run: echo ${{ steps.vars.outputs.apexclassid }}
