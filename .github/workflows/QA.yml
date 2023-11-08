@@ -88,17 +88,17 @@ jobs:
               id: vars2
               run: |
                cat codecoverage.txt
-               echo "apexclassid= $(cat codecoverage.txt | grep -o "DEBUG|.................." |sed 's/DEBUG|//g'  | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' |  sed  's/$/'"'"'/' |  sed 's/^/'"'"'/' )" >> $GITHUB_OUTPUT
+               echo "apexclassid= $(cat codecoverage.txt | grep -o "|DEBUG|.................." |sed 's/|DEBUG|//g'  | uniq | sed 's/01p.............../&'"'"',/g' | paste -sd "'" |  sed 's/'"'"',$//g' |  sed  's/$/'"'"'/' |  sed 's/^/'"'"'/' )" >> $GITHUB_OUTPUT
 
             - name: Passig again async summary.
               id: vars5
-              run: echo "apexclassid2= $(cat codecoverage.txt | grep -o "DEBUG|.................." |sed 's/DEBUG|//g' )"
+              run: echo "apexclassid2= $(cat codecoverage.txt | grep -o "|DEBUG|.................." |sed 's/DEBUG|//g' )"
               
             - name: Echo the variable.
               run: |
               
                echo ${{ steps.vars2.outputs.apexclassid }}
-               echo ${{ steps.vars5.outputs.apexclassid2 }}
+              
                 
             - name: run apex query.
               run: echo $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN (${{ steps.vars2.outputs.apexclassid }} )" -r csv --use-tooling-api   --target-org HubOrg) >> apexclassnames.txt
