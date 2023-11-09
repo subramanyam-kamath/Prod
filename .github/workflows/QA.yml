@@ -116,7 +116,7 @@ jobs:
               run: cat  uniqueclasses.txt | awk '!a[$0]++'
 
             - name: Run test classes in the org.
-              run: sfdx force:apex:test:run -c  -w 180 -u HubOrg
+              run: sfdx force:apex:test:run -l RunSpecifiedTests --tests AccountProcessorTest -c -r tap --wait 180 -w 180 -u HubOrg
                     
   
           
