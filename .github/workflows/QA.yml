@@ -115,8 +115,12 @@ jobs:
             - name: uniq the file.
               run: cat  uniqueclasses.txt | awk '!a[$0]++'
 
-            - name: Run test classes in the org.
-              run: sfdx force:apex:test:run -l RunSpecifiedTests --tests AccountProcessorTest -c -r junit --wait 180 -w 180 -u HubOrg
-                    
+            - name: Run SOQL to filter the wrapper classes from the result.
+              id: vars7
+              run: echo "Finalclasses= $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverage where ApexClassOrTrigger.Name IN (${{ steps.vars6.outputs.wrapperclasses }} )" -r human --use-tooling-api   --target-org trailheadscratchorg)" >> $GITHUB_OUTPUT
+
+            
+            - name: echoing the ouptput
+              run: echo ${{ steps.vars7.outputs.Finalclasses }} 
   
           
