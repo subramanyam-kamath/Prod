@@ -128,4 +128,4 @@ jobs:
 
             
             - name: echoing the king
-              run: cat finaclasses.txt  | sed 's/$(wrapperclass.txt)//g' |
+              run: cat finaclasses.txt  | sed 's/$(wrapperclass.txt)//g' 
