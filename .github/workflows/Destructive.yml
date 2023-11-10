@@ -11,14 +11,14 @@ jobs:
         runs-on: ubuntu-latest
         environment: QA-Branch
         steps:
-            - uses: devforce/setup-node@v3.5.1
+            - uses: actions/setup-node@v3.5.1
               with:
                 node-version: "18"
             - uses: actions/setup-node@v3
               with:
                 node-version: '14'
             - name: "Checkout source code"
-              uses: devforce/checkout@v3
+              uses: actions/checkout@v3
               with:
                 fetch-depth: 0
             - name: "Install Salesforce CLI"
