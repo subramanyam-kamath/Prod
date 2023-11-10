@@ -124,8 +124,8 @@ jobs:
 
             
             - name: echoing the ouptput
-              run: cat  apexclassnames.txt wrapperclass.txt  > finaclasses.txt  
+              run: cat wrapper2.txt
 
             
             - name: echoing the king
-              run: cat apexclassnames.txt  | sed 's/$(wrapper2.txt)//g' 
+              run: cat apexclassnames.txt  | sed 's/$(wrapper2.txt)//g'   
