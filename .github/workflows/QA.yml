@@ -124,8 +124,8 @@ jobs:
             - name: echoing the ouptput
               id: vars8
               run: |
-               echo "finalist=  $(diff -23 groupedClassesnames.txt wrapper2.txt)"  >> "$GITHUB_OUTPUT"
-               echo ${{ steps.vars8.outputs.finalist }}
+               echo  $(diff -23 groupedClassesnames.txt wrapper2.txt)  >> finalist.txt
+               cat finalist.txt
               
 
             
