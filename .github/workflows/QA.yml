@@ -117,7 +117,7 @@ jobs:
 
             - name: Run SOQL to filter the wrapper classes from the result.
               id: vars7
-              run: echo "Finalclasses= $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverage where ApexClassOrTrigger.Name IN (${{ steps.vars6.outputs.wrapperclasses }} )" -r human --use-tooling-api   --target-org trailheadscratchorg)" >> $GITHUB_OUTPUT
+              run: echo "Finalclasses= $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverage where ApexClassOrTrigger.Id IN ('01p5j00000LlbQF','01p5j00000LlfAa' )" -r human --use-tooling-api   --target-org HubOrg)" >> $GITHUB_OUTPUT
 
             
             - name: echoing the ouptput
