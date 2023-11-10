@@ -117,10 +117,10 @@ jobs:
 
             - name: Run SOQL to filter the wrapper classes from the result.
               id: vars7
-              run:  cat "Finalclasses= $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverage where ApexClassOrTrigger.Id IN ('01p5j00000LlbQF','01p5j00000LlfAa' ) AND ApexClassOrTrigger.Name LIKE 'AccountMan%' " -r human --use-tooling-api   --target-org HubOrg)" >> $GITHUB_OUTPUT
+              run:  echo $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverage where ApexClassOrTrigger.Id IN ('01p5j00000LlbQF','01p5j00000LlfAa' ) AND ApexClassOrTrigger.Name LIKE 'AccountMan%' " -r human --use-tooling-api   --target-org HubOrg)" >> wrapperclass.txt
 
             
             - name: echoing the ouptput
-              run: echo ${{ steps.vars7.outputs.Finalclasses }} 
+              run: cat wrapperclass.txt
   
           
