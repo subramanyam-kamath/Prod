@@ -117,10 +117,10 @@ jobs:
 
             - name: Run SOQL to filter the wrapper classes from the result.
               id: vars7
-              run:  echo $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverage where ApexClassOrTrigger.Id IN ('01p5j00000LlbQF','01p5j00000LlfAa' ) AND ApexClassOrTrigger.Name LIKE 'AccountMan%' " -r human --use-tooling-api   --target-org HubOrg) >> wrapperclass.txt
+              run:  echo $(sf data query --query "SELECT ApexClassOrTrigger.Name FROM ApexCodeCoverage where ApexClassOrTrigger.Id IN ('01p5j00000LlbQF','01p5j00000LlfAa' )" -r human --use-tooling-api   --target-org HubOrg) >> wrapperclass.txt
 
             - name: trim the wroapper clas
-              run: cat wrapperclass.txt | sed 's/APEXCLASSORTRIGGER.NAME ───────────────────────//g' | sed 's/Total number of records retrieved://g' | sed 's/1.//g'  > wrapper2.txt
+              run: cat wrapperclass.txt | sed 's/APEXCLASSORTRIGGER.NAME ───────────────────────//g' | sed 's/Total number of records retrieved://g' | sed 's/1.//g' | tr ' ' '\n' | sort -u  > wrapper2.txt
 
             
             - name: echoing the ouptput
