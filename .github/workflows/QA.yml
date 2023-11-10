@@ -124,7 +124,7 @@ jobs:
             - name: echoing the ouptput
               id: vars8
               run: |
-               echo  $(diff -23 groupedClassesnames.txt wrapper2.txt)  >> finalist.txt
+               echo  $(comm -23 groupedClassesnames.txt wrapper2.txt)  >> finalist.txt
                cat finalist.txt
               
 
