@@ -124,8 +124,8 @@ jobs:
             - name: echoing the ouptput
               id: vars8
               run: |
-               finalist= $(comm -23 groupedClassesnames.txt wrapper2.txt) 
-               echo finalist
+               finalist= $(cat comm -23 groupedClassesnames.txt wrapper2.txt) 
+               echo $finalist
               
 
             
