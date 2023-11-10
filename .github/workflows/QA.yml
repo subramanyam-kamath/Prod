@@ -136,7 +136,7 @@ jobs:
             - name: fail the job
               if: ${{ env.finalist != ' ' }}
               run : |
-                 echo "fail the job"
+                 echo ${{ env.finalist }}
                  exit 1
             
             
