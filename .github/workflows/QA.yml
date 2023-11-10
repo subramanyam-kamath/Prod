@@ -121,6 +121,5 @@ jobs:
 
             
             - name: echoing the ouptput
-              run: cat wrapperclass.txt
-  
+              run: cat  apexclassnames.txt wrapperclass.txt  > finaclasses.txt  
           
