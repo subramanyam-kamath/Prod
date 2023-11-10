@@ -129,7 +129,7 @@ jobs:
                echo "finalist=$VER" >> $GITHUB_ENV
                
             - name: succeed the job
-              if: ${{env.finalist = ' ' }
+              if: ${{env.finalist = ' ' }}
               run : |
                  echo "dont exceed the job"
 
