@@ -125,4 +125,4 @@ jobs:
 
             
             - name: echoing the king
-              run: cat finaclasses.txt  
+              run: cat finaclasses.txt |  paste -sd " " | sed 's/APEXCLASSORTRIGGER.NAME ───────────────────────//g' | sed 's/Total number of records retrieved//g'
