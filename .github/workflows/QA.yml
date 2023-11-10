@@ -129,12 +129,12 @@ jobs:
                echo "finalist=$VER" >> $GITHUB_ENV
                
             - name: succeed the job
-              if: ${{env.finalist = ' ' }}
+              if: ${{ env.finalist == ' ' }}
               run : |
                  echo "dont exceed the job"
 
             - name: fail the job
-              if: ${{env.finalist != ' ' }
+              if: ${{ env.finalist != ' ' }
               run : |
                  echo "fail the job"
                  exit 1
