@@ -122,7 +122,7 @@ jobs:
 
             
             - name: echoing the ouptput
-              run: diff -23 groupedClassesnames.txt wrapper.txt
+              run: diff -23 groupedClassesnames.txt wrapper2.txt
 
             
             
