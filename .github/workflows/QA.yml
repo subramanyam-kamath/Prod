@@ -134,7 +134,7 @@ jobs:
                  echo "dont exceed the job"
 
             - name: fail the job
-              if: ${{ env.finalist != ' ' }
+              if: ${{ env.finalist != ' ' }}
               run : |
                  echo "fail the job"
                  exit 1
