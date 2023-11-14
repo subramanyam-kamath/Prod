@@ -30,7 +30,7 @@ jobs:
 
             - name: echo test classes
               run: |
-                echo ${{env.JSON_RESPONSE}}
+                 echo $( echo ${{env.JSON_RESPONSE}}) >> test.txt
 
             - name: echo test file
               run: cat test.txt apexclassnames.txt > groupedclasses.txt
