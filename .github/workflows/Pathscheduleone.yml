@@ -34,7 +34,7 @@ jobs:
                  echo ${{env.test_classes_in_repo}}
 
             - name: succeed the job
-              if:  ${{env.test_classes_in_repo == ""}}       
+              if:  ${{env.test_classes_in_repo == ''}}  
               run: |
                  echo "There are no classes"
                
