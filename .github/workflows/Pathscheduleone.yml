@@ -32,6 +32,7 @@ jobs:
               run: |
                  echo "There are classes"
                  echo ${{env.test_classes_in_repo}}
+                 echo ${{#env.test_classes_in_repo}}
 
             - name: succeed the job
               if:  ${{ env.test_classes_in_repo == '' }}  
