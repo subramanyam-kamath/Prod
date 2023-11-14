@@ -20,6 +20,18 @@ jobs:
 
             - name: create new branch
               id: vars
-              run: cat codecoverage2.txt  | tr ' ' '\n' | sort -u
+              run: |         
+               echo $(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd " " -) >> testClassname.txt
+               echo "testclassesname= $(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd "," -) " >> $GITHUB_OUTPUT
 
-            
+            - name: exit the job
+              if: ${{  steps.vars6.outputs.testclassesname != ' ' }}
+              run: |
+                 echo "There are classes"
+
+            - name: succeed the job
+              if: ${{  steps.vars.outputs.testclassesname = ' ' }}
+              run: |
+                 echo "There are no classes"
+               
+               
