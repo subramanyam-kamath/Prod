@@ -21,7 +21,7 @@ jobs:
             - name: Read the testClassnames,Exceptional class & pass it to output variable.
               id: vars3
               run: |  
-               echo $(cat apexclassnames.txt  | tr " " "\n"    ) >> testclasslist.csv
+               cat apexclassnames.txt  | tr " " "\n"    
                
 
             - name: echo test classes
