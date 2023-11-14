@@ -1,6 +1,7 @@
 
 
 //comment
+@isTest
 public class AccountDeletiontest{
 
 public static void TestAccountDeletion(){
