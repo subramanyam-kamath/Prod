@@ -1,7 +1,7 @@
-@istest
+
 public class AccountProcessorTest{
 
-@istest public static void testAccountProcessor(){
+ public static void testAccountProcessor(){
 
 Account acct = new account (Name='Test');
 
