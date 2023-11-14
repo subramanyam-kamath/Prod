@@ -31,7 +31,7 @@ jobs:
             - name: echo test classes
               run: |
                  echo $( echo ${{env.JSON_RESPONSE}} |sort | uniq  ) >> test.txt
-                 cat apexclassnames.txt | sort -u  > apexclassnames2
+                 cat apexclassnames.txt | sort -u  > apexclassnames2.txt
 
             - name: echo test file
               run:  echo $(comm -23 apexclassnames2.txt test.txt ) >> groupedclasses.txt
