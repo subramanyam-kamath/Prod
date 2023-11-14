@@ -16,13 +16,15 @@ jobs:
               uses: actions/checkout@v3
               with:
                 fetch-depth: 0       
-
-            
+                
+            - name: create new branch
+               echo $(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd " " -) >> testClassname.txt
+               
             - name: Defining a new Environment Variable
               run: |                          
                {
                echo 'JSON_RESPONSE<<EOF'
-               cat apexclassnames.txt | tr ' ' '\n' 
+               cat testClassname.txt | tr ' ' '\n' 
                echo EOF
                  } >> "$GITHUB_ENV"
 
@@ -31,4 +33,7 @@ jobs:
                 echo "JSON_RESPONSE" > test.txt
 
             - name: echo test file
-              run: cat test.txt 
+              run: cat test.txt apexclassnames.txt > groupedclasses.txt
+
+            - name: echo teh goruped file
+              run: cat groupedclasses.txt
