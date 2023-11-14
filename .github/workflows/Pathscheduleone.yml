@@ -31,7 +31,7 @@ jobs:
                  echo ${{  steps.vars.outputs.testclassesname}}
 
             - name: succeed the job
-              if: ${{  steps.vars.outputs.testclassesname == ' ' }}
+              if: ${{  steps.vars.outputs.testclassesname == '' }}
               run: |
                  echo "There are no classes"
                
