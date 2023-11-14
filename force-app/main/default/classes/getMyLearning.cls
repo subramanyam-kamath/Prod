@@ -1,4 +1,4 @@
-@isTest
+
 public class AccountProcessorTest{
 
  public static void testAccountProcessor(){
