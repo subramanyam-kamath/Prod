@@ -22,7 +22,7 @@ jobs:
               id: vars3
               run: |  
                echo $(cat apexclassnames.txt  | tr " " "\n"    ) >> testclasslist.csv
-               echo "wrapperclass= $(echo "/path/to/file /path/to/file2 /path/to/file3 /path/to/file4 /path/to/file5" \ | tr " " "\n")" >> $GITHUB_OUTPUT
+               
 
             - name: echo test classes
               run: cat testclasslist.csv
