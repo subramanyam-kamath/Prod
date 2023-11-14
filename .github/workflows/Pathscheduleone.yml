@@ -31,13 +31,13 @@ jobs:
                echo ${{ steps.vars.outputs.classesNames }}
              
             - name: exit the job
-              if: ${{ steps.vars.outputs.classesNames == 1 }}  
+              if: ${{ steps.vars.outputs.classesNames == 3 }}  
               run: |
                  echo "There are classes"
                  echo ${{env.test_classes_in_repo}}
 
             - name: succeed the job
-              if:  ${{ steps.vars.outputs.classesNames > 1 }}  
+              if:  ${{ steps.vars.outputs.classesNames > 3 }}  
               run: |
                  echo "There are no classes"
                
