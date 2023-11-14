@@ -3,3 +3,4 @@ Test
 CommunitiesLandingControllerTest 
 sf_lms_AccountCatalogSelectorTest 
 getMyLearning
+LightningSelfRegisterController
