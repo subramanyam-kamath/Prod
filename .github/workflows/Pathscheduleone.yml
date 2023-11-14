@@ -28,13 +28,13 @@ jobs:
               run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
              
             - name: exit the job
-              if: ${{env.test_classes_in_repo != ''}}
+              if: ${{env.test_classes_in_repo != ""}}
               run: |
                  echo "There are classes"
                  echo ${{env.test_classes_in_repo}}
 
             - name: succeed the job
-              if:   "${{env.test_classes_in_repo == ''}} "            
+              if:  ${{env.test_classes_in_repo == ""}}       
               run: |
                  echo "There are no classes"
                
