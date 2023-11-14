@@ -22,16 +22,19 @@ jobs:
               id: vars
               run: |         
                echo $(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd " " -) >> testClassname.txt
-               echo "testclassesname= $(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd "," -) " >> $GITHUB_OUTPUT
+               echo ::set-output name=version:: $(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd "," -) 
 
+            - name: echo the variable.
+              run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+             
             - name: exit the job
-              if: "${{  steps.vars.outputs.testclassesname != '' }}"
+              if: ${{env.test_classes_in_repo !=''}}
               run: |
                  echo "There are classes"
-                 echo ${{  steps.vars.outputs.testclassesname}}
+                 echo ${{env.test_classes_in_repo}}
 
             - name: succeed the job
-              if: "${{  steps.vars.outputs.testclassesname == '' }}"
+              if:   ${{env.test_classes_in_repo ==''}}              
               run: |
                  echo "There are no classes"
                
