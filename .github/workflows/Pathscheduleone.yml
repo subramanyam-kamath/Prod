@@ -23,16 +23,18 @@ jobs:
               run: |         
                echo $(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd " " -) >> testClassname.txt
                echo ::set-output name=version:: $(find . -type f -iregex '.*\.cls' -not -iregex '.*node\_modules.*' -exec grep -Eil --color '@IsTest' {} \; | grep -oE '[^/]*$' | sed 's/.cls//g' | sort | uniq | paste -sd "," -) 
-
+               echo "classesNames= $(cat testClassname.txt  |  wc -c)" >> $GITHUB_OUTPUT
+               
             - name: echo the variable.
-              run: echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+              run: |
+               echo "test_classes_in_repo= ${{ steps.vars.outputs.version }}" >> $GITHUB_ENV
+               echo ${{ steps.vars.outputs.classesNames }}
              
             - name: exit the job
               if: ${{ env.test_classes_in_repo != '' }}  
               run: |
                  echo "There are classes"
                  echo ${{env.test_classes_in_repo}}
-                 echo ${#env.test_classes_in_repo}
 
             - name: succeed the job
               if:  ${{ env.test_classes_in_repo == '' }}  
