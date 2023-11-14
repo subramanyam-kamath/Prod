@@ -1,55 +1,17 @@
 name: Executing GitHub Actions on Develop
 run-name: ${{ github.actor }} is validating the Deployment on the ${{github.ref_name}}
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - "main"
-    paths:
-      - "force-app/**"
+env:
+  env_text: ${{ vars.TEXT }}
 jobs:
-    validate-destctive-deployment-on-PreQA-org:
-        runs-on: ubuntu-latest
-        environment: QA-Branch
-        steps:
-            - uses: actions/setup-node@v3.5.1
-              with:
-                node-version: "18"
-            - uses: actions/setup-node@v3
-              with:
-                node-version: '14'
-            - name: "Checkout source code"
-              uses: actions/checkout@v3
-              with:
-                fetch-depth: 0
-            - name: "Install Salesforce CLI"
-              run: |
-               wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-               mkdir ~/sfdx
-               tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-               echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-                ~/sfdx/bin/sfdx version
-                
-            - name: Checkout code
-              uses: actions/checkout@v3
-              with:
-                 fetch-depth: 0
-
-            - name: Decrypt the server.key.enc file & store inside assets folder
-              run: openssl enc -nosalt -aes-256-cbc -d -in ${{ secrets.ENCRYPTION_KEY_FILE }} -out ${{ secrets.JWT_KEY_FILE }} -base64 -K ${{ secrets.DECRYPTION_KEY }} -iv ${{ secrets.DECRYPTION_IV }}
-
-            - name: Authenticate Salesforce ORG
-              run: |
-                sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
-                
-            - name: Identify Deleted Files
-              id: deleted-files
-              run: |
-                # Capture deleted files into a variables
-                deleted_files=$(git diff --name-only --diff-filter=D ${{ github.event.before }} ${{ github.sha }})
-                echo "Deleted files: $deleted_files"
-            - name: PLugin installation
-              run:  sfdx plugins:install sfdx-git-delta
-            - name: Getting delta destructive changes
-              run:  sfdx sgd:source:delta --to "HEAD" -d --from "$deleted_files" --output "."
-            - name: Deploychanges from
-              run:  sfdx force:source:deploy —from “./output” -u HubOrg
+  greeting_job:
+    runs-on: ubuntu-latest
+    steps:
+      - if: ${{ env.env_text == '' }}
+        run: |
+          echo "Empty text"
+      - if: ${{ env.env_text != '' }}
+        run: |
+          echo "Text: '$env_text'"
