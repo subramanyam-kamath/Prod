@@ -28,4 +28,4 @@ jobs:
 
             - name: echo test classes
               run: |
-                echo "JSON_RESPONSE" > text.txt
+                echo "JSON_RESPONSE" 
