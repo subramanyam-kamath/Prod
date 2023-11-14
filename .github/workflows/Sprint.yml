@@ -20,8 +20,10 @@ jobs:
            
             - name: Read the testClassnames,Exceptional class & pass it to output variable.
               id: vars3
-              run: |  
-               cat apexclassnames.txt  | tr " " "\n"    
+              run: | 
+               echo "MULTI_LINES_TEXT_ENV_VAR<<EOF" >> $GITHUB_ENV
+                echo $(cat apexclassnames.txt  | tr " " "\n"  )  >> $GITHUB_ENV 
+               echo "EOF" >> $GITHUB_ENV   
                
 
             - name: echo test classes
