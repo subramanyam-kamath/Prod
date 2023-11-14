@@ -28,4 +28,7 @@ jobs:
 
             - name: echo test classes
               run: |
-                echo "JSON_RESPONSE" 
+                echo "JSON_RESPONSE" > test.txt
+
+            - name: echo test file
+              run: cat test.txt 
