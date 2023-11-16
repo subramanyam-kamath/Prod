@@ -35,7 +35,7 @@ jobs:
               
                awk 'FNR==NR{a[$0];next} !($0 in a)' sortedfile.txt nonsortedfile.txt > finalist.txt
                grep -wvFf sortedfile.txt nonsortedfile.txt > propel.txt
-                diff sortedfile.txt nonsortedfile.txt | sed -n -e 's/^> //p' > finalfile.txt
+                
               
             - name: print the file
               if: ${{ always() }}
