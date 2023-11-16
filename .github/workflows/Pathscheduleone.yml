@@ -29,7 +29,7 @@ jobs:
          
              
             - name: comm the files
-              run: comm -23   groupedclasses2.txt
+              run: comm -23  sortedfile.txt nonsortedfile.txt
            
                
             - name: echo the files
