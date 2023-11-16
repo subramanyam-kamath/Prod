@@ -30,7 +30,7 @@ jobs:
              
             - name: comm the files
               run: |
-                echo  $(grep -wo '[[:alnum:]]\+' apexclassnames.txt  | sort | uniq -u) > testfile.txt
+                echo  $( grep -wo '[[:alnum:]]\+' sortedfile.txt  | sort | uniq -u) > testfile.txt
                 cat testfile.txt
 
                
