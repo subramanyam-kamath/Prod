@@ -19,12 +19,12 @@ jobs:
 
             - name: Trimming the characters.
               run: |
-               cat apexclassnames.txt | sed 's/_//g' | sort  > sortedfile.txt
+               cat apexclassnames.txt | sed 's/_//g' | tr -d '\r' | tr -d '[:space:]' | sort  > sortedfile.txt
                cat sortedfile.txt
 
             - name: triming the further characters
               run: |
-                 cat codecoverage2.txt | sed 's/_//g' | sort  > nonsortedfile.txt
+                 cat codecoverage2.txt | sed 's/_//g' |  tr -d '\r' | tr -d '[:space:]' | sort  > nonsortedfile.txt
                  cat nonsortedfile.txt
          
              
