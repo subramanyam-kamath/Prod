@@ -29,6 +29,7 @@ jobs:
          
              
             - name: comm the files
+              continue-on-error: true
               run: |
               
                diff sortedfile.txt nonsortedfile.txt | sed -n -e 's/^> //p' > finalfile.txt
