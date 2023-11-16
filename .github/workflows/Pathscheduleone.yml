@@ -29,7 +29,9 @@ jobs:
          
              
             - name: comm the files
-              run: awk 'FNR==NR{a[$0];next} !($0 in a)'  sortedfile.txt  nonsortedfile.txt
-           
+              run: echo $( awk 'FNR==NR{a[$0];next} !($0 in a)'  sortedfile.txt  nonsortedfile.txt) >> finalfile.txt
+              
+            - name: print the file
+              run: cat finalfile.txt
                
             
