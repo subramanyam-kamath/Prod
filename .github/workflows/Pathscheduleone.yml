@@ -30,19 +30,8 @@ jobs:
              
             - name: comm the files
               run: |
-                 var =$(diff sortedfile.txt nonsortedfile.txt | sed -n -e 's/^> //p')
-                 var2 = $(awk 'FNR==NR{a[$0];next} !($0 in a)' sortedfile.txt nonsortedfile.txt)
-                 var3= $(grep -wvFf sortedfile.txt nonsortedfile.txt)
-                 var4 = $(comm -23 sortedfile.txt nonsortedfile.txt)
-              
-            - name: print the file
-              if: ${{ always() }}
-              run: |
-              
-               echo "{var}"
-               echo "{var2}"
-               echo "{var3}"
-               echo "{var4}"
-               
+                echo  $(grep -wo '[[:alnum:]]\+' apexclassnames.txt  | sort | uniq -u) > testfile.txt
+                cat testfile.txt
+
                
             
