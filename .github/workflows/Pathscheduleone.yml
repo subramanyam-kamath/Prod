@@ -41,7 +41,7 @@ jobs:
               if: ${{ always() }}
               run: |
               
-               cat finalfile.txt
+              
                cat finalist.txt
                cat propel.txt
                
