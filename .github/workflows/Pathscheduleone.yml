@@ -29,7 +29,7 @@ jobs:
          
              
             - name: comm the files
-              run:  comm -23 sortedfile.txt  nonsortedfile.txt > finalfile.txt
+              run:  diff file1 file2 | sed -n -e 's/^> //p' > finalfile.txt
               
             - name: print the file
               run: cat finalfile.txt
