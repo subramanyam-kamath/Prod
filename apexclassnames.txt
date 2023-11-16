@@ -1,6 +1,6 @@
 Account 
 Test 
-CommunitiesLandingControllerTest 
+Communities_LandingController_Test 
 sf_lms_AccountCatalogSelectorTest 
-getMyLearning
-LightningSelfRegisterController
+get_MyLearning
+Lightning_SelfRegister_Controller
