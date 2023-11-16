@@ -36,6 +36,7 @@ jobs:
                grep -wvFf sortedfile.txt nonsortedfile.txt > propel.txt
               
             - name: print the file
+              if: ${{ always() }}
               run: |
               
                cat finalfile.txt
