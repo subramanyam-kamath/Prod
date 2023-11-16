@@ -29,9 +29,17 @@ jobs:
          
              
             - name: comm the files
-              run:  diff file1 file2 | sed -n -e 's/^> //p' > finalfile.txt
+              run: |
+              
+               diff sortedfile.txt nonsortedfile.txt | sed -n -e 's/^> //p' > finalfile.txt
+               awk 'FNR==NR{a[$0];next} !($0 in a)' sortedfile.txt nonsortedfile.txt > finalist.txt
+               grep -wvFf sortedfile.txt nonsortedfile.txt > propel.txt
               
             - name: print the file
-              run: cat finalfile.txt
+              run: |
+              
+               cat finalfile.txt
+               cat finalist.txt
+               cat propel.txt
                
             
