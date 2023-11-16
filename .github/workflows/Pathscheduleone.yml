@@ -19,6 +19,8 @@ jobs:
             
 
             - name: comm the files
-              run: comm -23 apexclassnames.txt codecoverage2.txt
+              run: comm -23 <(sed 's/[^A-Z]//g' | sed 's/[^a-z]//g' |sed 's/_//g' |sort apexclassnames.txt) <(sed 's/[^A-Z]//g' | sed 's/[^a-z]//g' |sed 's/_//g' |sort codecoverage2.txt) > groupedclasses2.txt
            
                
+            - name: echo the files
+              run: cat groupedclasses2.txt
