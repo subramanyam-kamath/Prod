@@ -33,7 +33,7 @@ jobs:
               run: |
               
               
-               var= $(awk 'FNR==NR{a[$0];next} !($0 in a)' sortedfile.txt nonsortedfile.txt) 
+               var= $("This is test") 
                 
                 
               
