@@ -1,4 +1,4 @@
 Account 
 Test 
 CommunitiesLandingControllerTest
-get_MyLearning
+sf_lms_AccountCatalogSelectorTest   
