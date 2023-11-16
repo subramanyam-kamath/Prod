@@ -43,6 +43,6 @@ jobs:
               
                echo "$var"
                
-               cat propel.txt
+               
                
             
