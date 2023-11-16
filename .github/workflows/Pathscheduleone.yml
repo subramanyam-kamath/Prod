@@ -33,16 +33,16 @@ jobs:
               run: |
               
               
-               awk 'FNR==NR{a[$0];next} !($0 in a)' sortedfile.txt nonsortedfile.txt > finalist.txt
-               grep -wvFf sortedfile.txt nonsortedfile.txt > propel.txt
+               var= $(awk 'FNR==NR{a[$0];next} !($0 in a)' sortedfile.txt nonsortedfile.txt) 
+                echo "$var"
                 
               
             - name: print the file
               if: ${{ always() }}
               run: |
               
-              
-               cat finalist.txt
+               echo "$var"
+               
                cat propel.txt
                
             
