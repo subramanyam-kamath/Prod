@@ -41,7 +41,7 @@ jobs:
               if: ${{ always() }}
               run: |
               
-               echo "$var"
+               echo $var
                
                
                
