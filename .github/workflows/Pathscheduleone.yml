@@ -29,7 +29,7 @@ jobs:
          
              
             - name: comm the files
-              run: comm -23  sortedfile.txt nonsortedfile.txt
+              run: awk 'FNR==NR{a[$0];next} !($0 in a)'  sortedfile.txt  nonsortedfile.txt
            
                
             
