@@ -70,5 +70,5 @@ jobs:
 
             - name: Query the apex classes.  
               run: |
-                 echo $(sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN (${{ steps.vars4.outputs.apexclassid }} )  AND ApexClassOrTrigger.Name LIKE 'sf_lms%' AND ApexClassOrTrigger.Name LIKE 'drm%' " -r csv --use-tooling-api   --target-org trailheadscratchorg) >> apexclassnames.csv
+                 echo $(sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate WHERE ApexClassOrTriggerId IN (${{ steps.vars4.outputs.apexclassid }} )  AND ApexClassOrTrigger.Name LIKE 'sf_lms%' AND ApexClassOrTrigger.Name LIKE 'drm%' " -r csv --use-tooling-api   --target-org HubOrg) >> apexclassnames.csv
                  apexclassnames.csv
