@@ -71,4 +71,5 @@ jobs:
             - name: Query the apex classes.  
               run: |
                  echo $(sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate" -r csv --use-tooling-api   --target-org HubOrg) >> apexclassnames.csv
-                  cat apexclassnames.csv
+                  awk -F"," '{$6=((NumLinesCovered/NumLinesUncovered)*100) OFS $6; print}' apexclassnames.csv > output.csv
+                 cat output.csv
