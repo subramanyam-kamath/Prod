@@ -19,7 +19,7 @@ jobs:
 
             - name: Trimming the characters.
               run: |
-               cat apexclassnames.txt | paste -sd "'" |  sed 's/'"'"',$//g' |  sed  's/$/'"'"'/' |  sed 's/^/'"'"'/'   > sortedfile.txt
+               cat apexclassnames.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd ","   > sortedfile.txt
                cat sortedfile.txt
 
             - name: triming the further characters
