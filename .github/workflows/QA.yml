@@ -75,5 +75,5 @@ jobs:
                  
             - name: Output the results
               run: |
-                  awk -F '{print $1,$4}' OFS=, output.csv > output2.csv
+                  awk -F, '{print $1,$4}' OFS=, output.csv > output2.csv
                   cat output2.csv
