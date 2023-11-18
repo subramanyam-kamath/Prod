@@ -75,4 +75,4 @@ jobs:
                  
             - name: Output the results
               run: |
-                cat output.csv | awk !($3="")
+                awk '{print $1,$4}' output.csv 
