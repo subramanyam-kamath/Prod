@@ -72,4 +72,7 @@ jobs:
               run: |
                  sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate WHERE ApexClassOrTrigger.Name NOT IN ('PairNumbers','RestrictContactByName')" -r csv --use-tooling-api   --target-org HubOrg >> apexclassnames.csv
                   awk -F, '{$(NF+1)=($2>0 && $3!="NumLinesUncovered")?(($2/($2+$3))*100): (($2==0 )? 0:"CodeCoverage");}1' OFS=, apexclassnames.csv  > output.csv
-                 cat output.csv
+                 
+            - name: Output the results
+              run: |
+               cat output.csv
