@@ -73,5 +73,5 @@ jobs:
                  sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate" -r csv --use-tooling-api   --target-org HubOrg >> apexclassnames.csv
                   awk -F, '{$(NF+1)=
                   if($2="NumLinesCovered && $3=NumLinesUncovered) "Codecoverage";
-                  ;}1' OFS=, apexclassnames.csv  > output.csv
+                  }1' OFS=, apexclassnames.csv  > output.csv
                  cat output.csv
