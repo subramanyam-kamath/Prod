@@ -22,9 +22,7 @@ jobs:
                 fetch-depth: 0       
             
 
-            - name: 'Read commit Body'
-              env:
-                 PR_BODY: ${{ github.event.pull_request.body }}
+            
                  
             - name: Trimming the characters.
               id: vars68
@@ -33,12 +31,8 @@ jobs:
                echo "exception= $(cat apexclassnames.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g' )"  >  $GITHUB_OUTPUT
                cat sortedfile.txt
 
-            - name: PR body
-              run: |
-                  echo $PR_BODY > ./pr_body.txt
-                  node ./parsePR.js              
-                  TESTS=$(cat testsToRun.txt)       
-                  echo "APEX_TESTS=$TESTS" >> $GITHUB_ENV
+           
+                  
                   
             
             - name: 'Install Salesforce CLI'
