@@ -25,8 +25,15 @@ jobs:
             - name: 'Read commit Body'
               env:
                  PR_BODY: ${{ github.event.pull_request.body }}
+                 
+            - name: Trimming the characters.
+              id: vars68
+              run: |
+               cat apexclassnames.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g'   > sortedfile.txt
+               echo "exception= $(cat apexclassnames.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g' )"  >  $GITHUB_OUTPUT
+               cat sortedfile.txt
 
-             
+            - name: PR body
               run: |
                   echo $PR_BODY > ./pr_body.txt
                   node ./parsePR.js              
@@ -70,7 +77,7 @@ jobs:
 
             - name: Query the apex classes.  
               run: |
-                 sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate WHERE ApexClassOrTrigger.Name NOT IN ('PairNumbers','RestrictContactByName')" -r csv --use-tooling-api   --target-org HubOrg >> apexclassnames.csv
+                 sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate WHERE ApexClassOrTrigger.Name NOT IN ('${{ steps.vars68.outputs.exception }}')" -r csv --use-tooling-api   --target-org HubOrg >> apexclassnames.csv
                   awk -F, '{$(NF+1)=($2>0 && $3!="NumLinesUncovered")?(($2/($2+$3))*100): (($2==0 )? 0:"CodeCoverage");}1' OFS=, apexclassnames.csv  > output.csv
                  
             - name: Output the results
