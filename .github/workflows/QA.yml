@@ -71,7 +71,7 @@ jobs:
 
             - name: Query the apex classes.  
               run: |
-                 sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate WHERE ApexClassOrTrigger.Name NOT IN ('${{ steps.vars68.outputs.exception }}')" -r csv --use-tooling-api   --target-org HubOrg >> apexclassnames.csv
+                 sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate WHERE ApexClassOrTrigger.Name NOT IN (${{ steps.vars68.outputs.exception }})" -r csv --use-tooling-api   --target-org HubOrg >> apexclassnames.csv
                   awk -F, '{$(NF+1)=($2>0 && $3!="NumLinesUncovered")?(($2/($2+$3))*100): (($2==0 )? 0:"CodeCoverage");}1' OFS=, apexclassnames.csv  > output.csv
                  
             - name: Output the results
