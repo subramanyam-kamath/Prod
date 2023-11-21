@@ -13,7 +13,7 @@ jobs:
           submodules: recursive
       - name: Update module
         run: |
-          git submodule update --init --recursive --checkout -f --remote -- "${{github.event.client_payload.module}}"
+          git submodule update --init --recursive --checkout -f --remote -- "${{github.event.client_payload.module}}" --allow-unrelated-histories
           git add subramanyam-kamath/Merge
 
           git config --global user.name "GitHub Action"
