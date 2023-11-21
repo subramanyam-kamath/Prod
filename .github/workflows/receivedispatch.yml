@@ -13,8 +13,8 @@ jobs:
           submodules: recursive
       - name: Update module
         run: |
-          git submodule update --init --recursive --checkout -f --remote -- "subramanyam-kamath/Merge"
-          git add subramanyam-kamath/Merge
+          git submodule update --init --recursive --checkout -f --remote -- "Merge"
+          git add .
 
           git config --global user.name "GitHub Action"
           git config --global user.email "noreply@github.com"
