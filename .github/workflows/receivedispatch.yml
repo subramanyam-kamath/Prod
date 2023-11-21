@@ -13,7 +13,7 @@ jobs:
           submodules: recursive
       - name: Update module
         run: |
-          git submodule update --remote --merge --allow-unrelated-histories
+          git submodule update --remote --f --merge --allow-unrelated-histories
           git add subramanyam-kamath/Merge
 
           git config --global user.name "GitHub Action"
