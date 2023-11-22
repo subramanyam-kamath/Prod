@@ -4,12 +4,9 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        
-          
-      -  name: Update module
-         run: |
+         
+    steps:         
+      - run: |
            git submodule update --init --recursive --checkout -f --remote -- "Merge"
            git config --global user.name "GitHub Action"
            git config --global user.email "noreply@github.com"
