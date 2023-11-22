@@ -1,13 +1,13 @@
 name: GitHub Actions Prod Deployment
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
-  pull_request:
-    types: [opened,synchronize]
+  push:
     branches:    
       - main
       - master
     paths:
       - 'force-app/**'
+      - 'Merge/**'
 
 jobs:   
     validate-deployment-on-Prod-org:        
