@@ -1,14 +1,21 @@
 name: Update module
 on:
-  workflow_call:
+  workflow_dispatch:
+  repository_dispatch:
+   workflow_call:
+    types: update
 jobs:
   update:
     runs-on: ubuntu-latest
-         
-    steps:         
-      - run: |
-           git submodule update --init --recursive --checkout -f --remote -- "Merge"
-           git config --global user.name "GitHub Action"
-           git config --global user.email "noreply@github.com"
-           git commit 
-           git push
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
+          submodules: recursive
+      - name: Update module
+        run: |
+          git submodule update --init --recursive --checkout -f --remote -- "Merge"
+          git config --global user.name "GitHub Action"
+          git config --global user.email "noreply@github.com"
+          git commit -am "deploy: ${{github.event.client_payload.module}} - ${{github.event.client_payload.sha}}"
+          git push
