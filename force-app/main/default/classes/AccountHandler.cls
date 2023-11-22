@@ -10,7 +10,7 @@ List<Account> acct2 = [Select Id,SLASerialNumber__c from Account where SLASerial
 
     
     if(
-    (acct2.size()>1))
+    (acct2.size()>0))
     {
     
     a.addError('We have duplicate record with this serial number');
