@@ -2,6 +2,7 @@ name: Update module
 on:
   workflow_dispatch:
   repository_dispatch:
+   workflow_call:
     types: update
 jobs:
   update:
