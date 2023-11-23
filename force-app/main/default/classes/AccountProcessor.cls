@@ -1,7 +1,7 @@
 public class AccountProcessor{
 
 @future
-public static void countContacts(List<Id> recordids){
+public static void countContacts2(List<Id> recordids){
 
 Account[] accts = [Select Id, Number_Of_Contacts__c from Account where Id IN:recordIds];
 
