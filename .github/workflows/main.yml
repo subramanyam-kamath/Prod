@@ -23,9 +23,7 @@ jobs:
                 token: ${{ secrets.PAT}}
             
 
-            - name: 'Read commit Body'
-              env:
-                 PR_BODY: ${{ github.event.pull_request.body }}
+            
 
             - name: Get Apex test class names
               id: vars
