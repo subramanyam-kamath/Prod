@@ -61,10 +61,7 @@ jobs:
                 sudo apt install default-jdk
 
                  
-            - name: 'Installing SFDX scanner'
-              run: sfdx plugins:install @salesforce/sfdx-scanner
-
-            
+                  
                       
             
             - name: Generate the package.xml for delta files
