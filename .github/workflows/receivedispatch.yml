@@ -13,14 +13,10 @@ jobs:
           token: ${{ secrets.PAT }}
           submodules: recursive
 
-      - name: checkout the branch
-        run: git checkout -b Modulechange  
-    
       - name: Update module
         run: |
           git submodule update --init --recursive --checkout -f --remote -- "Merge"
           git config --global user.name "GitHub Action"
           git config --global user.email "noreply@github.com"
-          git commit -am "Updated with latest commit"          
-          git pull --ff-only
-          git push  -u origin Modulechange
+          git commit -am "Updated with latest commit"
+          git push
