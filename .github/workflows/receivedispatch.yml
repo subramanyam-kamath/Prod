@@ -12,6 +12,10 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           submodules: recursive
+
+      - name: checkout the branch
+        run: git checkout -b Modulechange  
+    
       - name: Update module
         run: |
           git submodule update --init --recursive --checkout -f --remote -- "Merge"
