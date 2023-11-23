@@ -20,6 +20,7 @@ jobs:
               with:
                 fetch-depth: 0
                 submodules: recursive
+                token: ${{ secrets.PAT}}
             
 
             - name: 'Read commit Body'
