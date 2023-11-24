@@ -1,8 +1,11 @@
 name: GitHub Actions QA Org
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
-  workflow_dispatch: 
-
+  push:
+    branches:
+      - "main"
+    paths:
+      - "force-app/**"
 
 env:
    GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
@@ -69,12 +72,26 @@ jobs:
               run: |
                 sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
 
-            - name: Query the apex classes.  
+            - name: Identify Deleted Files
+              id: deleted-files
               run: |
-                 sf data query --query "SELECT ApexClassOrTrigger.Name,NumLinesCovered,NumLinesUncovered FROM ApexCodeCoverageAggregate WHERE ApexClassOrTrigger.Name NOT IN (${{ steps.vars68.outputs.exception }})" -r csv --use-tooling-api   --target-org HubOrg >> apexclassnames.csv
-                  awk -F, '{$(NF+1)=($2>0 && $3!="NumLinesUncovered")?(($2/($2+$3))*100): (($2==0 )? 0:"CodeCoverage");}1' OFS=, apexclassnames.csv  > output.csv
-                 
-            - name: Output the results
+                # Capture deleted files into a variables
+                deleted_files=$(git diff --name-only --diff-filter=D ${{ github.event.before }} ${{ github.sha }})
+                echo "Deleted files: $deleted_files"
+            - name: Passing the test class names to Env variable
+              run: echo "Del_files_to_env= ${{ steps.vars.outputs.deleted-files }}" >> $GITHUB_ENV   
+
+            - name: Generate the package.xml for destructive delta files
               run: |
-                  awk -F, '{print $1,$4}' OFS=, output.csv > output2.csv
-                  cat output2.csv
+                   mkdir destructive_delta
+                   sfdx sgd:source:delta --from origin/Release/Pre-QA --output "./destructive_delta" --ignore-whitespace -d -i .sgdignore
+                   echo "--- package.xml generated with added and modified metadata ---"
+                   cat destructive_delta/package/package.xml
+            - name: Validate destructive chages 
+              if: ${{ env.Del_files_to_env != ' ' }}
+              run: |
+                 sf project deploy validate   --manifest destructive_delta/package/package.xml --test-level NoTestRun  --verbose --wait 30  --target-org PreQA
+            - name: Validate destructive chages
+              if: ${{ env.Del_files_to_env != ' ' }}
+              run: |
+                 sf project deploy start --dry-run --source-dir force-app --test-level NoTestRun --verbose --wait 30  --ignore-conflicts --ignore-warnings --target-org PreQA
