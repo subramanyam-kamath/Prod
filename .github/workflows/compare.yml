@@ -2,9 +2,7 @@ name: Compare two branches
 
 on:
   push:
-    branches:
-      - main
-
+    
 jobs:
   sync_folder:
     runs-on: ubuntu-latest
