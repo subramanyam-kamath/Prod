@@ -1,0 +1,35 @@
+name: Compare two branches
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync_folder:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the source repository
+      - name: Checkout Repo 1
+        uses: actions/checkout@v2
+
+      # Step 2: Copy the common folder to a temporary location
+      - name: Copy Form Builder and Common Folder
+        run: |
+          mkdir -p ../temporaryfolder
+          cp -r newfolder ../temporaryfolder
+      # Step 3: Clone the destination repository
+      - name: Check out my other private repo
+        uses: actions/checkout@v2
+        with:
+          repository: subramanyam-kamath/Merge
+          token: ${{ secrets.PAT}}
+          path: repo2
+          ref: main
+
+      # Step 4: find the difference between 2 folders
+      - name: Overwrite Form Builder and Common Folders in Repo 2
+        run: |
+          
+           diff -r  ../temporaryfolder/newfolder/. repo2/newfolder
