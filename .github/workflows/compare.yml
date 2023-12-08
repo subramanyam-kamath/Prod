@@ -34,7 +34,7 @@ jobs:
         id: vars
         run: |
           
-           echo "testclassesname= $(diff -qr  ../temporaryfolder/newfolder/. repo2/newfolder)" >> $GITHUB_OUTPUT
+           echo "testclassesname= $(diff -qr  ../temporaryfolder/newfolder/. repo2/newfolder | sed 's/ ../temporaryfolder/newfolder/.//g' |  sed 's/repo2/newfolder///g' )" >> $GITHUB_OUTPUT
           # cp -u repo2/newfolder ../temporaryfolder/newfolder/.
 
       - name: Echo the classes
