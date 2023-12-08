@@ -34,7 +34,7 @@ jobs:
         id: vars
         run: |
 
-          echo $(diff -r dir1 dir2 | grep "diff -r" | cut -d " " -f3 | xargs basename -a) >>changedfile.txt
+          echo $(diff -r ../temporaryfolder/newfolder/. repo2/newfolder | grep "diff -r" | cut -d " " -f3 | xargs basename -a) >>changedfile.txt
            # echo $(diff -qr  ../temporaryfolder/newfolder/. repo2/newfolder  ) >> changedfile.txt
            # cp -u repo2/newfolder ../temporaryfolder/newfolder/.
            cat changedfile.txt
