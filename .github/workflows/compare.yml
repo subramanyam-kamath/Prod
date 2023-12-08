@@ -31,10 +31,14 @@ jobs:
 
       # Step 4: find the difference between 2 folders
       - name: Overwrite Form Builder and Common Folders in Repo 2
+        id: vars
         run: |
           
-          # diff -qr  ../temporaryfolder/newfolder/. repo2/newfolder
+           echo "testclassesname= $(diff -qr  ../temporaryfolder/newfolder/. repo2/newfolder)" >> $GITHUB_OUTPUT
            cp -u repo2/newfolder ../temporaryfolder/newfolder/.
+
+      - name: Echo the classes
+        run: echo testclassesname 
 
 
      
