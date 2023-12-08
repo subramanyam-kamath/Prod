@@ -33,6 +33,6 @@ jobs:
       - name: Overwrite Form Builder and Common Folders in Repo 2
         run: |
           
-           diff -r  ../temporaryfolder/newfolder/. repo2/newfolder
+           diff -qr  ../temporaryfolder/newfolder/. repo2/newfolder
 
      
