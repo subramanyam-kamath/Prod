@@ -34,7 +34,7 @@ jobs:
         id: vars
         run: |
 
-          $ git diff --color --name-only ModuleChange..Modulechange
+          $git diff --color --name-only ModuleChange..Modulechange
            # echo $(diff -qr  ../temporaryfolder/newfolder/. repo2/newfolder  ) >> changedfile.txt
            # cp -u repo2/newfolder ../temporaryfolder/newfolder/.
            cat changedfile.txt
