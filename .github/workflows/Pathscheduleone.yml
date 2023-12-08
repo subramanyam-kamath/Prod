@@ -17,24 +17,6 @@ jobs:
               with:
                 fetch-depth: 0       
 
-            - name: Trimming the characters.
-              id: vars68
-              run: |
-               cat apexclassnames.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g'   > sortedfile.txt
-               echo "exception= $(cat apexclassnames.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g' )"  >  $GITHUB_OUTPUT
-               cat sortedfile.txt
-
-            - name: triming the further characters
-              run: |
-                 cat codecoverage2.txt | sed 's/_//g' | sed 's/\/t//g'| sed 's/[[:blank:]]//g' | sort  > nonsortedfile.txt
-                 cat nonsortedfile.txt
-                 echo ${{ steps.vars68.outputs.exception }}
-         
-             
-            - name: comm the files
-              run: |
-                echo  $( grep -wo '[[:alnum:]]\+' sortedfile.txt  | sort | uniq -u) > testfile.txt
-                cat testfile.txt
-
-               
+            - name: get the difference
+              run: git diff --name-only origin/main..origin/ModuleChange
             
