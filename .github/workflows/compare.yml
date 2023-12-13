@@ -15,7 +15,7 @@ jobs:
       # Step 2: Copy the common folder to a temporary location
       - name: Copy Form Builder and Common Folder
         run: |
-          mkdir -p ../temporaryfolder
+          mkdir -p /temporaryfolder
           cp -r newfolder /temporaryfolder
       # Step 3: Clone the destination repository
       - name: Check out my other private repo
@@ -30,4 +30,4 @@ jobs:
       - name: Overwrite Form Builder and Common Folders in Repo 2
         run: |
           
-           diff -qr  ../temporaryfolder/newfolder/ repo2/newfolder
+           diff -qr  /temporaryfolder/newfolder/ repo2/newfolder
