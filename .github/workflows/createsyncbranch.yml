@@ -1,0 +1,47 @@
+name: Sync Common Folder
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync_folder:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the source repository
+      - name: Checkout Repo 1
+        uses: actions/checkout@v2
+
+      # Step 2: Copy the common folder to a temporary location
+      - name: Copy Form Builder and Common Folder
+        run: |
+          mkdir -p ../temporaryfolder
+          cp -r newfolder ../temporaryfolder
+
+      # Step 3: Clone the destination repository
+      - name: Check out my other private repo
+        uses: actions/checkout@v2
+        with:
+          repository: subramanyam-kamath/Merge
+          token: ${{ secrets.PAT}}
+          path: repo2          
+          
+
+      # Step 4: Overwrite the common folder in Repo 2
+      - name: Overwrite Form Builder and Common Folders in Repo 2
+        run: |
+          
+          cp -r ../temporaryfolder/newfolder/. repo2/newfolder
+
+      # Step 5: Commit and push changes to Repo 2
+      - name: Commit and Push Changes to Repo 2
+        run: |       
+          cd repo2
+          git checkout -b feature/brancysnc2  origin/main
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add newfolder
+          git commit -m "Sync formBuilder and common folders from Repo 1"       
+          git push origin feature/brancysnc
