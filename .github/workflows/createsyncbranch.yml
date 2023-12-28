@@ -76,7 +76,8 @@ jobs:
         with:
           repository: subramanyam-kamath/Merge
           token: ${{ secrets.PAT}}
-          path: repo2          
+          path: repo2
+          ref: ${{github.event.inputs.branchname}}
           
 
       # Step 4: Overwrite the common folder in Repo 2
