@@ -25,7 +25,7 @@ jobs:
       - name: Copy Form Builder and Common Folder
         run: |
           mkdir -p temporaryfolder
-          cp -r newfolder/classes  temporaryfolder
+          cp -r newfolder  temporaryfolder
 
       # Step 3: Clone the destination repository
       - name: Check out my other private repo
