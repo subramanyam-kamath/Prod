@@ -84,7 +84,7 @@ jobs:
       - name: Overwrite Form Builder and Common Folders in Repo 2
         run: |
           
-          cp -r ../temporaryfolder/newfolder/. repo2/newfolder
+          cp -r ../temporaryfolder/newfolder  repo2/newfolder
 
       # Step 5: Commit and push changes to Repo 2
       - name: Commit and Push Changes to Repo 2
