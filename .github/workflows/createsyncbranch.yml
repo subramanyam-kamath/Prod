@@ -25,7 +25,7 @@ jobs:
       - name: Copy Form Builder and Common Folder
         run: |
           mkdir -p temporaryfolder
-          cp -r newfolder  temporaryfolder
+          cp -r newfolder/classes  temporaryfolder
 
       # Step 3: Clone the destination repository
       - name: Check out my other private repo
@@ -40,18 +40,18 @@ jobs:
       - name: Overwrite Form Builder and Common Folders in Repo 2
         run: |
           
-          cp -r temporaryfolder/newfolder/.  repo2/newfolder
+          cp -r temporaryfolder/newfolder/classes/.  repo2/newfolder
 
       # Step 5: Commit and push changes to Repo 2
       - name: Commit and Push Changes to Repo 2
         run: |       
           cd repo2
-          git checkout -b feature/brancysnc35  origin/main
+          git checkout -b feature/brancysnc357  origin/main
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add newfolder
           git commit -m "Sync formBuilder and common folders from Repo 1"       
-          git push origin feature/brancysnc35
+          git push origin feature/brancysnc357
 
 
 
