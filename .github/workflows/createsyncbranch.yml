@@ -55,7 +55,8 @@ jobs:
           git config user.email "actions@github.com"
           git add newfolder
           git commit -m "Sync formBuilder and common folders from Repo 1"       
-          git push origin feature/${{env.RELEASE_DATE}}
+          git push -u origin feature/${{env.RELEASE_DATE}}
+          
 
       - name: Create a pull request
         run: |
