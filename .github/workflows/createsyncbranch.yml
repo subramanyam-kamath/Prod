@@ -50,7 +50,7 @@ jobs:
       - name: Commit and Push Changes to Repo 2
         run: |       
           cd repo2
-          git checkout -b feature/brancysnc3578  origin/main
+          git checkout -b feature/${{env.RELEASE_DATE}}  origin/main
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add newfolder
