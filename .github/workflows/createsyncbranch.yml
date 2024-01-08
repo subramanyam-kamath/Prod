@@ -62,7 +62,7 @@ jobs:
         run: |
           echo ${{ secrets.PAT}} > token.txt
           gh auth login --with-token < token.txt
-          git checkout feature/${{env.RELEASE_DATE}}
+          git checkout  origin/feature/${{env.RELEASE_DATE}}
           gh pr create  --base main --head feature/${{env.RELEASE_DATE}} --title "Common metadata change for review" --body "Common metadata change for review"
 
 
