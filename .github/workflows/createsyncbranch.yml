@@ -34,6 +34,10 @@ jobs:
           repository: subramanyam-kamath/Merge
           token: ${{ secrets.PAT}}
           path: repo2          
+
+      - name: Get date value and append it to branch name
+        run: |
+          echo "RELEASE_DATE=$(date +'%Y-%m-%dT%H-%M-%S')" >> ${GITHUB_ENV} 
           
 
       # Step 4: Overwrite the common folder in Repo 2
@@ -51,7 +55,14 @@ jobs:
           git config user.email "actions@github.com"
           git add newfolder
           git commit -m "Sync formBuilder and common folders from Repo 1"       
-          git push origin feature/brancysnc3578
+          git push origin feature/${{env.RELEASE_DATE}}
+
+      - name: Create a pull request
+        run: |
+          echo ${{ secrets.PAT}} > token.txt
+          gh auth login --with-token < token.txt
+          gh pr create  --base main --head feature/${{env.RELEASE_DATE}} --title "Common metadata change for review" --body "Common metadata change for review"
+
 
 
 
@@ -95,3 +106,5 @@ jobs:
           git add newfolder
           git commit -m "Sync formBuilder and common folders from Repo 1"       
           git push origin ${{github.event.inputs.branchname}}
+
+     
