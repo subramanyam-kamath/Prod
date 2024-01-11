@@ -24,5 +24,11 @@ jobs:
       
 
       - name: Get diff file names
+        run: ehco $(git diff-tree --no-commit-id --name-only -r ..origin/main force-app/main/default/classes/) >> deltaclass.txt
+
+      - name: formatize class names
         id: vars
-        run: git diff-tree --no-commit-id --name-only -r ..origin/main force-app/main/default/classes/
+        run: |
+         
+         cat exceptionalclassesnames.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g'  > Tobemerged.txt  
+         echo "exception= $(cat Tobemerged.txt)" >> $GITHUB_OUTPUT
