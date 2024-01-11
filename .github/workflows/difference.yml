@@ -29,7 +29,7 @@ jobs:
         id: vars
         run: |
          
-         cat deltaclass.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g'  > Tobemerged.txt  
+         cat deltaclass.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | sed -e "s/ /,/g"   >> Tobemerged.txt  
          echo "exception= $(cat Tobemerged.txt)" >> $GITHUB_OUTPUT
 
       - name: echo the classes
@@ -37,4 +37,4 @@ jobs:
         
          echo ${{ steps.vars.outputs.exception }}
          cat deltaclass.txt 
-        
+         cat Tobemerged.txt  
