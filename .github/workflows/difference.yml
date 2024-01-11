@@ -3,8 +3,7 @@ on:
   push:
    branches:
       - "feature/**"
-   paths:
-      - "force-app/**"
+   
 
 
 jobs:
@@ -34,4 +33,8 @@ jobs:
          echo "exception= $(cat Tobemerged.txt)" >> $GITHUB_OUTPUT
 
       - name: echo the classes
-        run: echo ${{ steps.vars.outputs.exception }}
+        run: |
+        
+         echo ${{ steps.vars.outputs.exception }}
+         cat Tobemerged.txt  
+        
