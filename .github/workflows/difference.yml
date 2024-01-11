@@ -36,5 +36,5 @@ jobs:
         run: |
         
          echo ${{ steps.vars.outputs.exception }}
-         cat Tobemerged.txt  
+         cat deltaclass.txt 
         
