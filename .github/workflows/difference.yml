@@ -1,0 +1,28 @@
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: 
+  push:
+   branches:
+      - "main"
+   paths:
+      - "force-app/**"
+
+
+jobs:
+    Getting-the-export-files:
+     runs-on: ubuntu-latest
+     environment: QA-Branch       
+     
+     steps:            
+      - uses: actions/setup-node@v3
+        with:
+         node-version: '14'
+
+      - name: "Checkout source code"
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0              
+      
+
+      - name: Get diff file names
+        id: vars
+        run: git diff-tree --no-commit-id --name-only -r HEAD HEAD~1
