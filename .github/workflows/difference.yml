@@ -30,5 +30,8 @@ jobs:
         id: vars
         run: |
          
-         cat exceptionalclassesnames.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g'  > Tobemerged.txt  
+         cat deltaclass.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g'  > Tobemerged.txt  
          echo "exception= $(cat Tobemerged.txt)" >> $GITHUB_OUTPUT
+
+      - name: echo the classes
+        run: echo ${{ steps.vars.outputs.exception }}
