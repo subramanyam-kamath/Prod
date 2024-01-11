@@ -30,7 +30,7 @@ jobs:
         run: |
          
          cat deltaclass.txt | tr ' ' '\n'| awk -F/ '{print $NF}'     >> Tobemerged.txt  
-         echo "exception= $(cat Tobemerged.txt)" >> $GITHUB_OUTPUT
+        
 
       - name: echo the classes
         run: |
