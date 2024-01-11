@@ -25,4 +25,4 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: git diff-tree --no-commit-id --name-only -r HEAD HEAD~1
+        run: git diff-tree --no-commit-id --name-only -r HEAD HEAD~1 force-app/main/default/classes/
