@@ -36,7 +36,7 @@ jobs:
       - name: print the classes
         id: vars2
         run: |
-         cat ${{ steps.vars.outputs.testclass2 }} | sed 's/'"'"'//g' >> ninja.txt
+         cat ${{ steps.vars.outputs.testclass2 }}  >> ninja.txt
         
         
       - name: Use env variable
