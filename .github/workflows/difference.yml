@@ -4,7 +4,8 @@ on:
    branches:
       - "feature/**"
    
-
+env:
+   GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
 jobs:
     Getting-the-export-files:
@@ -24,7 +25,7 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo $(git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD main) ) >> deltaclass.txt
+        run: echo $(gh pr diff) ) >> deltaclass.txt
 
       - name: print the classes
         run: cat deltaclass.txt
