@@ -37,10 +37,10 @@ jobs:
         id: vars2
         run: |
          cat ${{ steps.vars.outputs.testclass2 }} | sed 's/"'''"//g' >> ninja.txt
-         echo "new_var = ${{ steps.vars.outputs.testclass2 }}  ${{ steps.vars.outputs.testclass5 }})"  >> mergedclasses.txt
+        
         
       - name: Use env variable
         run: |
-           cat mergedclasses.txt
+           
            cat ninja.txt
                   
