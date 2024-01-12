@@ -49,3 +49,9 @@ jobs:
            
            cat ninja.txt
                   
+      - name: formatize the class names
+        run: |
+              echo "mergedclasses=$(cat ninja.txt | paste -sd " " | sed -e "s/ /,/g")" >>  $GITHUB_ENV
+
+      - name: print the environment variable
+        run: echo ${{env.mergedclasses}}
