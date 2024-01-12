@@ -25,7 +25,7 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo $(echo $( git whatchanged --name-only --pretty="" origin..HEAD) >> deltaclass.txt
+        run: echo  $( git whatchanged --name-only --pretty="" origin..HEAD) >> deltaclass.txt
 
       - name: print the classes
         run: cat deltaclass.txt
