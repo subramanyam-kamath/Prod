@@ -36,7 +36,7 @@ jobs:
       - name: print the classes
         id: vars2
         run: |
-         cat ${{ steps.vars.outputs.testclass2 }}  >> ninja.txt
+         echo ${{ steps.vars.outputs.testclass2 }}  >> ninja.txt
         
         
       - name: Use env variable
