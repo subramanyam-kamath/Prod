@@ -29,14 +29,19 @@ jobs:
         
           echo $(gh pr diff --name-only) >> deltaclass.txt
           cat deltaclass.txt |  tr ' ' '\n'| egrep "force-app/main/default/classes/" |  awk  -F/ '{print $NF}' |   paste -sd " " |   sed 's/.cls//g' | sed 's/.trigger//g'  |sed 's/-meta.xml//g'   | sed -e "s/ /,/g"   >> deltaclass2.txt
-          echo "testclass2=$(cat deltaclass2.txt | uniq)" >> $GITHUB_OUTPUT
-          echo "testclass5=$(cat deltaclass2.txt | uniq)" >> $GITHUB_OUTPUT
+          echo "testclass2=$(cat deltaclass2.txt )" >> $GITHUB_OUTPUT
+
+      - name: Get diff file names
+        id: vars3
+        run: |
+          cat deltaclass.txt |  tr ' ' '\n'|   awk  -F/ '{print $NF}' |   paste -sd " " |   sed 's/.cls//g' | sed 's/.trigger//g'  |sed 's/-meta.xml//g'   | sed -e "s/ /,/g"   >> deltaclass2.txt
+          echo "testclass5=$(cat deltaclass2.txt )" >> $GITHUB_OUTPUT
 
 
       - name: print the classes
         id: vars2
         run: |
-         echo ${{ steps.vars.outputs.testclass2 }} |  echo ${{ steps.vars.outputs.testclass5 }}  >> ninja.txt
+         echo ${{ steps.vars.outputs.testclass2 }} |  echo ${{ steps.vars3.outputs.testclass5 }}  >> ninja.txt
         
         
       - name: Use env variable
