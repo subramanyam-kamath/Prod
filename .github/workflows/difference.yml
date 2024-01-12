@@ -28,7 +28,7 @@ jobs:
         run: |
         
           echo $(gh pr diff --name-only) >> deltaclass.txt
-          cat deltaclass.txt | awk -v value="force-app/main/default/classes" -F/ '{print $NF}'  >> deltaclass2.txt
+          cat deltaclass.txt |  tr ' ' '\n'|  awk -v value="force-app/main/default/classes" -F/ '{print $NF}' |  paste -sd " " |   sed 's/.cls//g' | sed 's/.trigger//g'  |sed 's/-meta.xml//g' | sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | sed -e "s/ /','/g"   >> deltaclass2.txt
         
 
 
