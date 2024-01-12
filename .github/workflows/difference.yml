@@ -4,7 +4,8 @@ on:
    branches:
       - "feature/**"
    
-
+env:
+   GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
 
 jobs:
     Getting-the-export-files:
@@ -24,7 +25,36 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo $( git diff --no-commit-id --name-only -r ...origin/main force-app/main/default/classes/) >> deltaclass.txt
+        run: |
+        
+          echo $(gh pr diff --name-only) >> deltaclass.txt
+          cat deltaclass.txt |  tr ' ' '\n'| egrep "force-app/main/default/classes/" |  awk  -F/ '{print $NF}' |   paste -sd " " |   sed 's/.cls//g' | sed 's/.trigger//g'  |sed 's/-meta.xml//g'   | sed -e "s/ /,/g"   >> deltaclass2.txt
+          echo "testclass2=$(cat deltaclass2.txt )" >> $GITHUB_OUTPUT
+
+      - name: Get diff file names
+        id: vars3
+        run: |
+          cat deltaclass.txt |  tr ' ' '\n' |   awk  -F/ '{print $NF}' |   paste -sd " " |   sed 's/.cls//g' | sed 's/.trigger//g'  |sed 's/-meta.xml//g'   | sed -e "s/ /,/g"   >> deltaclass3.txt
+          echo "testclass5=$(cat deltaclass3.txt )" >> $GITHUB_OUTPUT
+
 
       - name: print the classes
-        run: cat deltaclass.txt
+        id: vars2
+        run: |
+         echo ${{ steps.vars3.outputs.testclass5 }}  >> ninja1.txt
+         echo $${{ steps.vars.outputs.testclass2 }}  >> ninja2.txt
+         cat ninja1.txt  ninja2.txt  >> ninja.txt
+        
+        
+      - name: Use env variable
+        run: |
+           
+           cat ninja.txt
+                  
+      - name: formatize the class names
+        run: |
+              echo "mergedclasses=$(cat ninja.txt | paste -sd " " | sed -e "s/ /,/g")" >>  $GITHUB_ENV
+
+      - name: print the environment variable
+        if: ${{env.mergedclasses != ' '}}
+        run: echo ${{env.mergedclasses}}
