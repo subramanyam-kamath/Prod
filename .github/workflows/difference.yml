@@ -25,7 +25,7 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo $(git diff `git merge-base feature-branch base-branch`) >> deltaclass.txt
+        run: echo $(gh pr diff) >> deltaclass.txt
 
 
       - name: print the classes
