@@ -24,7 +24,7 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo $(git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD master) ) >> deltaclass.txt
+        run: echo $(git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD main) ) >> deltaclass.txt
 
       - name: print the classes
         run: cat deltaclass.txt
