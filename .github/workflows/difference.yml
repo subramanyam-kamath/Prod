@@ -34,11 +34,14 @@ jobs:
 
 
       - name: print the classes
+        id: vars2
         run: |
          echo ${{ steps.vars.outputs.testclass2 }}
-         echo "new_var = ${{ steps.vars.outputs.testclass2 }} ${{ steps.vars.outputs.testclass25 }}"  >> $GITHUB_ENV
+         echo "new_var = ${{ steps.vars.outputs.testclass2 }} ${{ steps.vars.outputs.testclass5 }}"  >> $GITHUB_OUTPUT
+         echo "new_var2 = ${{ steps.vars.outputs.testclass2 }} ${{ steps.vars.outputs.testclass5 }}"  >> $GITHUB_ENV
 
       - name: Use env variable
         run: |
-           echo ${{ env.new_var}}
+           echo ${{ env.new_var2}}
+           echo ${{ steps.vars2.outputs.new_var }}
                   
