@@ -33,4 +33,6 @@ jobs:
 
 
       - name: print the classes
-        run: cat deltaclass2.txt
+        run: |
+         cat deltaclass2.txt
+         cat deltaclass.txt
