@@ -2,9 +2,8 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
   push:
    branches:
-      - "main"
-   paths:
-      - "force-app/**"
+      - "feature/**"
+   
 
 
 jobs:
