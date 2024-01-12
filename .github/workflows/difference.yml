@@ -25,4 +25,7 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo $( git diff-tree --no-commit-id --name-only -r ..origin/main force-app/main/default/classes/)
+        run: echo $( git diff-tree --no-commit-id --name-only -r ..origin/main force-app/main/default/classes/) >> deltaclass.txt
+
+      - name: print the classes
+        run: cat deltaclass.txt
