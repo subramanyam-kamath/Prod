@@ -25,8 +25,12 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo $(gh pr diff --name-only force-app/common-package/main/default/classes/) >> deltaclass.txt
+        run: |
+        
+          echo $(gh pr diff --name-only) >> deltaclass.txt
+          cat deltaclass.txt | awk -v value="force-app/common-package/main/default/classes" -F/ '{print $NF}'  >> deltaclass2.txt
+        
 
 
       - name: print the classes
-        run: cat deltaclass.txt
+        run: cat deltaclass2.txt
