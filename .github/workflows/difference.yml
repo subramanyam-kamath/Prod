@@ -29,7 +29,7 @@ jobs:
         
           echo $(gh pr diff --name-only) >> deltaclass.txt
           cat deltaclass.txt |  tr ' ' '\n'|  awk  -F classes/ '{print $NF}' |  paste -sd " " |   sed 's/.cls//g' | sed 's/.trigger//g'  |sed 's/-meta.xml//g' | sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | sed -e "s/ /','/g"   >> deltaclass2.txt
-          cat deltaclass.txt | find /classes -name *.cls
+          
 
 
       - name: print the classes
