@@ -37,11 +37,9 @@ jobs:
         id: vars2
         run: |
          echo ${{ steps.vars.outputs.testclass2 }}
-         echo "new_var = $( echo {{ steps.vars.outputs.testclass2 }} | echo ${{ steps.vars.outputs.testclass5 }})"  >> $GITHUB_OUTPUT
-         echo "new_var2 = ${{ steps.vars.outputs.testclass2 }} ${{ steps.vars.outputs.testclass5 }}"  >> $GITHUB_ENV
-
+         echo "new_var = ${{ steps.vars.outputs.testclass2 }}  ${{ steps.vars.outputs.testclass5 }})"  >> mergedclasses.txt
+        
       - name: Use env variable
         run: |
-           echo ${{ env.new_var2}}
-           echo ${{ steps.vars2.outputs.new_var }}
+           cat mergedclasses.txt
                   
