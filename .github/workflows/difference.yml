@@ -54,4 +54,5 @@ jobs:
               echo "mergedclasses=$(cat ninja.txt | paste -sd " " | sed -e "s/ /,/g")" >>  $GITHUB_ENV
 
       - name: print the environment variable
+        if: ${{env.mergedclasses != ''}}
         run: echo ${{env.mergedclasses}}
