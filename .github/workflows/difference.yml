@@ -28,12 +28,11 @@ jobs:
         run: |
         
           echo $(gh pr diff --name-only) >> deltaclass.txt
-          cat deltaclass.txt |  tr ' ' '\n'| egrep "force-app/main/default/classes/" |  awk  -F/ '{print $NF}' |  paste -sd " " |   sed 's/.cls//g' | sed 's/.trigger//g'  |sed 's/-meta.xml//g' | sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | sed -e "s/ /','/g"   >> deltaclass2.txt
+          cat deltaclass.txt |  tr ' ' '\n'| egrep "force-app/main/default/classes/" |  awk  -F/ '{print $NF}' | uniq|  paste -sd " " |   sed 's/.cls//g' | sed 's/.trigger//g'  |sed 's/-meta.xml//g' | sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | sed -e "s/ /','/g"   >> deltaclass2.txt
           
 
 
       - name: print the classes
         run: |
          cat deltaclass2.txt
-         cat deltaclass.txt
-         
+                  
