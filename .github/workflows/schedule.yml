@@ -21,8 +21,5 @@ jobs:
             
 
             - name: create new branch
-              run: git checkout -b Release/Version9 origin/main	
-
-            - name: publish to github
-              run: git push origin Release/Version9
+              run: echo "My schedule job triggered"
             
