@@ -26,7 +26,7 @@ jobs:
             - name: Identify Deleted Files
               id: deleted-files
               run: |
-               echo $(git diff --name-only --diff-filter=A origin/feature/testaddedfile..origin/main) >> newlyadded.txt
+               echo $(git diff --name-only --diff-filter=A origin/main...origin/feature/testaddedfile) >> newlyadded.txt
                git diff --name-status origin/feature/testaddedfile..origin/main
                
                
