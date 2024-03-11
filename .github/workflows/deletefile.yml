@@ -34,7 +34,8 @@ jobs:
 
             - name: echot eh classes
               run: |
-               cat newlyadded.txt | while IFS= read -r line ; do echo $line; done
+               mkdir manualdestructivepackage
+               cat newlyadded.txt | while IFS= read -r line ; do mv $line manualdestructivepackage; done
                
               
             
