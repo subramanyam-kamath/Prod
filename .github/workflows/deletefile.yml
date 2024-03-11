@@ -63,7 +63,7 @@ jobs:
                 mkdir delta
                 sfdx sgd:source:delta --from origin/main --source manualdestructivepackage --output "./delta" --ignore-whitespace -d -i .sgdignore
                 echo "--- package.xml generated with added and modified metadata ---"
-                git tag -a v1.0.0.
+                git tag v1.0.0
                 
                 cd delta/package
                 mv package.xml destructive.xml
