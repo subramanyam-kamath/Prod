@@ -34,7 +34,7 @@ jobs:
 
             - name: echot eh classes
               run: |
-               cat newlyadded.txt | grep 
+               cat newlyadded.txt 
                
               
             
