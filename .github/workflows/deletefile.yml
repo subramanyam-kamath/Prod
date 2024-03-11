@@ -26,7 +26,10 @@ jobs:
             - name: Identify Deleted Files
               id: deleted-files
               run: |
-               echo $(git diff --name-only --diff-filter=A origin/feature/testaddedfile...origin/main)
+               echo $(git diff --name-only --diff-filter=A origin/feature/testaddedfile...origin/main) >> newlyadded.txt
+               
                 echo "Deleted files: $deleted_files"
 
+            - name: echot eh classes
+              run: cat newlyadded.txt
             
