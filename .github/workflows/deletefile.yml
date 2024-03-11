@@ -34,7 +34,7 @@ jobs:
 
             - name: echot eh classes
               run: |
-               cat newlyadded.txt 
+               cat newlyadded.txt | while IFS= read -r line ; do echo $line; done
                
               
             
