@@ -25,7 +25,7 @@ jobs:
             - name: Identify Deleted Files
               id: deleted-files
               run: |
-               git whatchanged --diff-filter=A 
+               git whatchanged --diff-filter=A feature/** main
                 echo "Deleted files: $deleted_files"
 
             
