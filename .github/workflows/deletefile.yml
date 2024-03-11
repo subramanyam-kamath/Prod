@@ -27,9 +27,14 @@ jobs:
               id: deleted-files
               run: |
                echo $(git diff --name-status origin/feature/testaddedfile..origin/main | grep ^A ) >> newlyadded.txt
+               git diff --name-status origin/feature/testaddedfile..origin/main
+               
                
                 echo "Deleted files: $deleted_files"
 
             - name: echot eh classes
-              run: cat newlyadded.txt
+              run: |
+               cat newlyadded.txt
+               git diff --name-status feature/testaddedfile..main
+              
             
