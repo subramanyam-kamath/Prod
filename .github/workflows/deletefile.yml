@@ -26,7 +26,7 @@ jobs:
             - name: Identify Deleted Files
               id: deleted-files
               run: |
-               echo $(git diff --name-only --diff-filter=A feature/**...main)
+               echo $(git diff --name-only --diff-filter=A feature/testaddedfile...main)
                 echo "Deleted files: $deleted_files"
 
             
