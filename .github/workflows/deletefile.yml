@@ -39,6 +39,8 @@ jobs:
               run: |
                cat newlyadded.txt
                mkdir manualdestructivepackage
+               cat newlyadded.txt | colrm 1 >> textfile.txt
+               cat textfile.txt
                cat newlyadded.txt | colrm 1|  while IFS= read -r line ; do mv $line manualdestructivepackage; done
                
             - name: list the files
