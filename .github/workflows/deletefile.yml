@@ -31,16 +31,17 @@ jobs:
             - name: Identify the newly added components
               run: |
                echo $(git diff --name-status --diff-filter=A origin/main...origin/feature/testaddedfile) >> newlyadded.txt
-               git diff --name-status origin/feature/testaddedfile..origin/main             
+               echo $(git diff --name-status origin/feature/testaddedfile..origin/main | colrm 1) >> textfile.txt      
                
                 
 
             - name: echo the newly added classes
               run: |
                cat newlyadded.txt
+               cat textfile.txt
                mkdir manualdestructivepackage
                cat newlyadded.txt | colrm 1 >> textfile.txt
-               cat textfile.txt
+               
                cat newlyadded.txt | colrm 1|  while IFS= read -r line ; do mv $line manualdestructivepackage; done
                
             - name: list the files
