@@ -37,7 +37,7 @@ jobs:
 
             - name: echo the newly added classes
               run: |
-               cat newlyadded.txt
+              
                mkdir manualdestructivepackage
                cat newlyadded.txt | while IFS= read -r line ; do mv $line manualdestructivepackage; done
                
