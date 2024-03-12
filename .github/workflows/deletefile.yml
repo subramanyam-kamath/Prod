@@ -41,12 +41,15 @@ jobs:
                cat newlyadded.txt | while IFS= read -r line ; do mv $line manualdestructivepackage; done
                
             - name: list the files
-              run: ls manualdestructivepackage
+              run: ls manualdestructivepackage            
 
             - name: git config set
               run: |
                   git config --global user.email "skamath@salesforce.com"
                   git config --global user.name "skamathsf"
+
+            - name: checkout the current branch
+              run: git checkout -b feature/testaddedfile
 
             -  name: Push & Commit file               
                run: | 
