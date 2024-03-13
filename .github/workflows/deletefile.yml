@@ -40,8 +40,8 @@ jobs:
             - name: Identify the newly added components between previous version & current version
               run: |
                git fetch --all
-               echo $(git diff --name-status --diff-filter=A origin/feature/version2...origin/feature/version1) >> newlyadded.txt
-               echo $(git diff --name-status --diff-filter=A origin/feature/version2...origin/feature/version1 | sed 's/^.//') >> textfile.txt  
+               echo $(git diff --name-status --diff-filter=A origin/feature/version1..origin/feature/version2) >> newlyadded.txt
+               echo $(git diff --name-status --diff-filter=A origin/feature/version1..origin/feature/version2 | sed 's/^.//') >> textfile.txt  
                  
             - name: Delete the newly added files.
               run: | 
