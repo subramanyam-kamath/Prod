@@ -1,6 +1,7 @@
 name: Executing GitHub Actions on Develop
 run-name: ${{ github.actor }} is validating the Deployment on the ${{github.ref_name}}
 on:
+   workflow_dispatch:
    pull_request:
         types: [opened,synchronize]
         branches:
@@ -21,47 +22,45 @@ jobs:
                 node-version: '14'
     
          
-          
-      
-            - name: Checkout code
-              uses: actions/checkout@v3
+            - name: Get date value and append it to branch name
+              run: |
+                 echo "RELEASE_DATE=$(date +'%Y-%m-%dT%H-%M-%S')" >> ${GITHUB_ENV}
+
+            - name: Check out common metadata repo
+              uses: devforce/checkout@v3
               with:
-                 fetch-depth: 0
+               repository: devforce/TA-LMS               
+               path: feature/version1 
 
-            - name: Identify the newly added components
+            - name: Copy the metadata from previous version
               run: |
-               echo $(git diff --name-status --diff-filter=A origin/main...origin/feature/testaddedfile) >> newlyadded.txt
-               echo $(git diff --name-status --diff-filter=A origin/main...origin/feature/testaddedfile | sed 's/^.//') >> textfile.txt      
-               
-                
+                 mkdir manualdestructivepackage              
+                 cp -r force-app manualdestructivepackage
+                 
+            
+            - name: create new branch
+              run: git checkout -b destructive/${{env.RELEASE_DATE}}  origin/feature/version2	 
 
-            - name: echo the newly added classes
-              run: |
-               cat newlyadded.txt
-               cat textfile.txt
-               mkdir manualdestructivepackage
-                            
-               cat textfile.txt | while IFS= read -r line ; do cp -r force-app manualdestructivepackage; done
-               
-            - name: list the files
-              run: ls manualdestructivepackage            
+            
+            - name:  sync the changes from previous version to current branch
+              run: cp -r manualdestructivepackage force-app                        
+                              
+                   
 
             - name: git config set
               run: |
                   git config --global user.email "skamath@salesforce.com"
                   git config --global user.name "skamathsf"
 
-            - name: checkout the current branch
-              run: git checkout -b feature/testaddedfile
-
+           
             -  name: Push & Commit file               
                run: | 
-                git add manualdestructivepackage
+                git add force-app  
                 git commit -m "added destructive folder"
 
             - name: Push file to remote repository.
               run: |
-               git push origin feature/testaddedfile
+               git push origin destructive/${{env.RELEASE_DATE}}
 
             - name: "Install Salesforce CLI"
               run: |
