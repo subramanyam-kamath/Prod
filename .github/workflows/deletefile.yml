@@ -54,7 +54,7 @@ jobs:
                 
             - name: create new branch
               run: |
-               ls tempfolder
+               ls tempfolder/force-app/main/default/classes
                git fetch --all
                git checkout -b destructive/${{env.RELEASE_DATE}}  origin/feature/version2
 
