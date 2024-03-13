@@ -34,8 +34,8 @@ jobs:
 
             - name: Copy the metadata from previous version
               run: |
-                 mkdir force-app              
-                 cp -r force-app force-app
+                 mkdir -p tempfolder              
+                 cp -r force-app tempfolder
                  
             
             - name: create new branch
@@ -45,7 +45,7 @@ jobs:
 
             
             - name:  sync the changes from previous version to current branch
-              run: cp -r force-app force-app                        
+              run: cp -r tempfolder/force-app/. force-app                        
                               
                    
 
