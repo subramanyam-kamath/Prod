@@ -30,7 +30,7 @@ jobs:
               uses: actions/checkout@v3
               with:
                repository: subramanyam-kamath/Prod               
-               ref: feature/version1 
+               ref: feature/version1
 
             - name: Copy the metadata from previous version
               run: |
@@ -40,11 +40,12 @@ jobs:
             - name: Identify the newly added components between previous version & current version
               run: |
                git fetch --all
-               echo $(git diff --name-status --diff-filter=A origin/feature/version1...origin/feature/version2) >> newlyadded.txt
-               echo $(git diff --name-status --diff-filter=A origin/feature/version1...origin/feature/version2 | sed 's/^.//') >> textfile.txt  
+               echo $(git diff --name-status --diff-filter=A origin/feature/version2...origin/feature/version1) >> newlyadded.txt
+               echo $(git diff --name-status --diff-filter=A origin/feature/version2...origin/feature/version1 | sed 's/^.//') >> textfile.txt  
                  
             - name: Delete the newly added files.
               run: | 
+                cat newlyadded.txt
                 cat textfile.txt | while IFS= read -r line ; do rm -f $line; done
                 
             - name: create new branch
