@@ -110,7 +110,7 @@ jobs:
                 echo "--- package.xml generated with added and modified metadata ---"                
                 cat delta/package/package.xml
                 echo "--- destructive.xml generated with added and modified metadata ---"
-                destructiveChanges/destructiveChanges.xml
+                cat destructiveChanges/destructiveChanges.xml
                 
                 
             
