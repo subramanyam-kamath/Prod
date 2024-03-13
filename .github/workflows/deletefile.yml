@@ -5,6 +5,11 @@ on:
         types: [opened,synchronize]
         branches:
             - "main"
+
+
+env:
+   GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+
     
       
 jobs:   
@@ -23,10 +28,67 @@ jobs:
               with:
                  fetch-depth: 0
 
-            - name: Identify Deleted Files
-              id: deleted-files
+            - name: Identify the newly added components
               run: |
-               git whatchanged --diff-filter=A feature/**...main
-                echo "Deleted files: $deleted_files"
+               echo $(git diff --name-status --diff-filter=A origin/main...origin/feature/testaddedfile) >> newlyadded.txt
+               echo $(git diff --name-status --diff-filter=A origin/main...origin/feature/testaddedfile | sed 's/^.//') >> textfile.txt      
+               
+                
 
+            - name: echo the newly added classes
+              run: |
+               cat newlyadded.txt
+               cat textfile.txt
+               mkdir manualdestructivepackage
+                            
+               cat textfile.txt | while IFS= read -r line ; do cp $line manualdestructivepackage; done
+               
+            - name: list the files
+              run: ls manualdestructivepackage            
+
+            - name: git config set
+              run: |
+                  git config --global user.email "skamath@salesforce.com"
+                  git config --global user.name "skamathsf"
+
+            - name: checkout the current branch
+              run: git checkout -b feature/testaddedfile
+
+            -  name: Push & Commit file               
+               run: | 
+                git add manualdestructivepackage
+                git commit -m "added destructive folder"
+
+            - name: Push file to remote repository.
+              run: |
+               git push origin feature/testaddedfile
+
+            - name: "Install Salesforce CLI"
+              run: |
+               wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+               mkdir ~/sfdx
+               tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+               echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+               ~/sfdx/bin/sfdx version
+          
+            - name: "Installing sfdx git delta"
+              run: |
+               echo y | sfdx plugins:install sfdx-git-delta
+               sfdx plugins    
+                 
+            - name: "Installing java"
+              run: |
+                sudo apt-get update
+                sudo apt install default-jdk
+
+            - name: Generate the package.xml for delta files
+              run: |
+                mkdir delta
+                sfdx sgd:source:delta --from origin/main --source manualdestructivepackage --output "./delta" --ignore-whitespace -d -i .sgdignore
+                echo "--- package.xml generated with added and modified metadata ---"
+                git tag v1.0.0
+                
+                cd delta/package
+                mv package.xml destructive.xml
+                cat destructive.xml
             
