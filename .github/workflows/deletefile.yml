@@ -31,7 +31,7 @@ jobs:
             - name: Identify the newly added components
               run: |
                echo $(git diff --name-status --diff-filter=A origin/main...origin/feature/testaddedfile) >> newlyadded.txt
-               echo $(git diff --name-status  --diff-filter=A origin/feature/testaddedfile..origin/main | sed 's/^.//') >> textfile.txt      
+               echo $(git diff --name-status --diff-filter=A origin/main...origin/feature/testaddedfile | sed 's/^.//') >> textfile.txt      
                
                 
 
