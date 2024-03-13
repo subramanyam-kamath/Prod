@@ -41,7 +41,7 @@ jobs:
                cat textfile.txt
                mkdir manualdestructivepackage
                             
-               cat textfile.txt | while IFS= read -r line ; do mv $line manualdestructivepackage; done
+               cat textfile.txt | while IFS= read -r line ; do cp $line manualdestructivepackage; done
                
             - name: list the files
               run: ls manualdestructivepackage            
