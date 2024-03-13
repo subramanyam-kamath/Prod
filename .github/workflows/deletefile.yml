@@ -46,7 +46,8 @@ jobs:
             - name: Delete the newly added files.
               run: | 
                 cat newlyadded.txt
-                cat textfile.txt | while IFS= read -r line ; do rm -f $line; done
+                cd tempfolder
+                cat textfile.txt | while IFS= read -r line ; do rm -f tempfolder/$line; done
                 
             - name: create new branch
               run: |
