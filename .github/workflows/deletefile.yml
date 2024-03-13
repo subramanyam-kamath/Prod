@@ -34,8 +34,8 @@ jobs:
 
             - name: Copy the metadata from previous version
               run: |
-                 mkdir manualdestructivepackage              
-                 cp -r force-app manualdestructivepackage
+                 mkdir force-app              
+                 cp -r force-app force-app
                  
             
             - name: create new branch
@@ -45,7 +45,7 @@ jobs:
 
             
             - name:  sync the changes from previous version to current branch
-              run: cp -r manualdestructivepackage force-app                        
+              run: cp -r force-app force-app                        
                               
                    
 
