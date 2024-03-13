@@ -106,11 +106,11 @@ jobs:
             - name: Generate the package.xml for delta files
               run: |
                 mkdir delta
-                sfdx sgd:source:delta --from origin/main --source manualdestructivepackage --output "./delta" --ignore-whitespace -d -i .sgdignore
-                echo "--- package.xml generated with added and modified metadata ---"
-                git tag v1.0.0
+                sfdx sgd:source:delta --from origin/feature/version2 --source force-app --output "./delta" --ignore-whitespace -d -i .sgdignore
+                echo "--- package.xml generated with added and modified metadata ---"                
+                cat delta/package/package.xml
+                echo "--- destructive.xml generated with added and modified metadata ---"
+                cat delta/package/destructive.xml
                 
-                cd delta/package
-                mv package.xml destructive.xml
-                cat destructive.xml
+                
             
