@@ -109,6 +109,7 @@ jobs:
                 sfdx sgd:source:delta --from origin/feature/version2 --source force-app --output "./delta" --ignore-whitespace -d -i .sgdignore
                 echo "--- package.xml generated with added and modified metadata ---"                
                 cat delta/package/package.xml
+                sfdx sgd:source:delta --from origin/feature/version2 --source force-app --output "." -n destructiveChanges/destructiveChanges.xml -i .forceignore
                 echo "--- destructive.xml generated with added and modified metadata ---"
                 cat destructiveChanges/destructiveChanges.xml
                 
