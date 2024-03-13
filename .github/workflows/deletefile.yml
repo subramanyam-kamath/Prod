@@ -27,10 +27,10 @@ jobs:
                  echo "RELEASE_DATE=$(date +'%Y-%m-%dT%H-%M-%S')" >> ${GITHUB_ENV}
 
             - name: Check out common metadata repo
-              uses: devforce/checkout@v3
+              uses: actions/checkout@v3
               with:
-               repository: devforce/TA-LMS               
-               path: feature/version1 
+               repository: subramanyam-kamath/Prod               
+               ref: feature/version1 
 
             - name: Copy the metadata from previous version
               run: |
