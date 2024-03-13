@@ -39,7 +39,9 @@ jobs:
                  
             
             - name: create new branch
-              run: git checkout -b destructive/${{env.RELEASE_DATE}}  origin/feature/version2
+              run: |
+               git fetch --all
+               git checkout -b destructive/${{env.RELEASE_DATE}}  origin/feature/version2
 
             
             - name:  sync the changes from previous version to current branch
