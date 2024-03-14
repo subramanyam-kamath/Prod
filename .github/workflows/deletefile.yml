@@ -1,4 +1,4 @@
-name: Executing GitHub Actions on Develop
+name: Executing GitHub Actions on UAT Environment
 run-name: ${{ github.actor }} is validating the Deployment on the ${{github.ref_name}}
 on:
    workflow_dispatch: 
