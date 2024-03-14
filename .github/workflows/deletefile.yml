@@ -1,12 +1,20 @@
 name: Executing GitHub Actions on Develop
 run-name: ${{ github.actor }} is validating the Deployment on the ${{github.ref_name}}
 on:
-   workflow_dispatch:
-   pull_request:
-        types: [opened,synchronize]
-        branches:
-            - "main"
+   workflow_dispatch: 
 
+       inputs:
+         Previous Version Branch name:
+          type: text
+          description: 'Define previous version of release branch'     
+          required: true
+
+         Latest Version Branch Name:
+          type: text
+          description: 'Define latest version of release branch'
+          required: true
+
+        
 
 env:
    GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
