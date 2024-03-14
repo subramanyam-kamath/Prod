@@ -4,18 +4,18 @@ on:
    workflow_dispatch: 
 
        inputs:
-         Previous Version Branch name:
-          type: text
+         PreviousVersionBranchName:
+          type: string
           description: 'Define previous version of release branch'     
           required: true
 
-         Latest Version Branch Name:
-          type: text
+         LatestVersionBranchName:
+          type: string
           description: 'Define latest version of release branch'
           required: true
 
-         UAT Branch Name:
-           type: text
+         UatBrancName:
+           type: string
            description: 'Define name of UAT Branch'
            required: true
         
@@ -42,7 +42,7 @@ jobs:
               uses: actions/checkout@v3
               with:
                repository: subramanyam-kamath/Prod               
-               ref: feature/version1
+               ref: ${{github.event.inputs.PreviousVersionBranchName}}
 
             - name: Copy the metadata from previous version
               run: |
@@ -52,8 +52,8 @@ jobs:
             - name: Identify the newly added components between previous version & current version
               run: |
                git fetch --all
-               echo $(git diff --name-status --diff-filter=A origin/feature/version1..origin/feature/version2) >> newlyadded.txt
-               echo $(git diff --name-status --diff-filter=A origin/feature/version1..origin/feature/version2 | sed 's/^.//') >> textfile.txt  
+               echo $(git diff --name-status --diff-filter=A origin/${{github.event.inputs.PreviousVersionBranchName}}..origin/${{github.event.inputs.LatestVersionBranchName}}) >> newlyadded.txt
+               echo $(git diff --name-status --diff-filter=A origin/${{github.event.inputs.PreviousVersionBranchName}}..origin/${{github.event.inputs.LatestVersionBranchName}} | sed 's/^.//') >> textfile.txt  
                  
             - name: Delete the newly added files.
               run: | 
@@ -68,7 +68,7 @@ jobs:
               run: |
                ls tempfolder/force-app/main/default/classes
                git fetch --all
-               git checkout -b destructive/${{env.RELEASE_DATE}}  origin/feature/version2
+               git checkout -b destructive/${{env.RELEASE_DATE}}  origin/${{github.event.inputs.LatestVersionBranchName}}
 
             
             - name:  sync the changes from previous version to current branch
