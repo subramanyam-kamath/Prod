@@ -38,13 +38,13 @@ jobs:
               run: |
                  echo "RELEASE_DATE=$(date +'%Y-%m-%dT%H-%M-%S')" >> ${GITHUB_ENV}
 
-            - name: Check out common metadata repo
+            - name: Check out Previous release version.
               uses: actions/checkout@v3
               with:
                repository: subramanyam-kamath/Prod               
                ref: ${{github.event.inputs.PreviousVersionBranchName}}
 
-            - name: Copy the metadata from previous version
+            - name: Copy the metadata from previous release version
               run: |
                  mkdir -p tempfolder              
                  cp -r force-app tempfolder
