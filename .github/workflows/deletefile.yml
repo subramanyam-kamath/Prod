@@ -1,10 +1,28 @@
-name: Executing GitHub Actions on Develop
+name: Executing GitHub Actions on UAT Environment
 run-name: ${{ github.actor }} is validating the Deployment on the ${{github.ref_name}}
 on:
-   pull_request:
-        types: [opened,synchronize]
-        branches:
-            - "main"
+   workflow_dispatch: 
+
+       inputs:
+         Previous Version Branch name:
+          type: text
+          description: 'Define previous version of release branch'     
+          required: true
+
+         Latest Version Branch Name:
+          type: text
+          description: 'Define latest version of release branch'
+          required: true
+
+         UAT Branch Name:
+           type: text
+           description: 'Define name of UAT Branch'
+           required: true
+        
+
+env:
+   GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+
     
       
 jobs:   
@@ -16,17 +34,97 @@ jobs:
                 node-version: '14'
     
          
-          
-      
-            - name: Checkout code
+            - name: Get date value and append it to branch name
+              run: |
+                 echo "RELEASE_DATE=$(date +'%Y-%m-%dT%H-%M-%S')" >> ${GITHUB_ENV}
+
+            - name: Check out common metadata repo
               uses: actions/checkout@v3
               with:
-                 fetch-depth: 0
+               repository: subramanyam-kamath/Prod               
+               ref: feature/version1
 
-            - name: Identify Deleted Files
-              id: deleted-files
+            - name: Copy the metadata from previous version
               run: |
-               git whatchanged --diff-filter=A feature/**...main
-                echo "Deleted files: $deleted_files"
+                 mkdir -p tempfolder              
+                 cp -r force-app tempfolder
 
+            - name: Identify the newly added components between previous version & current version
+              run: |
+               git fetch --all
+               echo $(git diff --name-status --diff-filter=A origin/feature/version1..origin/feature/version2) >> newlyadded.txt
+               echo $(git diff --name-status --diff-filter=A origin/feature/version1..origin/feature/version2 | sed 's/^.//') >> textfile.txt  
+                 
+            - name: Delete the newly added files.
+              run: | 
+                cat newlyadded.txt                
+                cat textfile.txt | while IFS= read -r line ;
+                do  
+                cd tempfolder
+                rm -f tempfolder/$line; 
+                done
+                
+            - name: create new branch
+              run: |
+               ls tempfolder/force-app/main/default/classes
+               git fetch --all
+               git checkout -b destructive/${{env.RELEASE_DATE}}  origin/feature/version2
+
+            
+            - name:  sync the changes from previous version to current branch
+              run: cp -r tempfolder/force-app/. force-app                        
+                              
+                   
+
+            - name: git config set
+              run: |
+                  git config --global user.email "skamath@salesforce.com"
+                  git config --global user.name "skamathsf"
+
+           
+            -  name: Push & Commit file               
+               run: | 
+                git add force-app  
+                git commit -m "added destructive folder"
+                cat textfile.txt | while IFS= read -r line ;
+                do                  
+                git rm $line; 
+                done
+                git commit -m'deleted files'
+                
+
+            - name: Push file to remote repository.
+              run: |
+               git push origin destructive/${{env.RELEASE_DATE}}
+
+            - name: "Install Salesforce CLI"
+              run: |
+               wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+               mkdir ~/sfdx
+               tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+               echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+               ~/sfdx/bin/sfdx version
+          
+            - name: "Installing sfdx git delta"
+              run: |
+               echo y | sfdx plugins:install sfdx-git-delta
+               sfdx plugins    
+                 
+            - name: "Installing java"
+              run: |
+                sudo apt-get update
+                sudo apt install default-jdk
+
+            - name: Generate the package.xml for delta files
+              run: |
+                mkdir delta
+                sfdx sgd:source:delta --from origin/feature/version2 --source force-app --output "./delta" --ignore-whitespace -d -i .sgdignore
+                echo "--- package.xml generated with added and modified metadata ---"                
+                cat delta/package/package.xml
+                cat delta/destructiveChanges/destructiveChanges.xml
+                sfdx sgd:source:delta --from origin/feature/version2 --source force-app --output "."  -i .sgdignore
+                echo "--- destructive.xml generated with added and modified metadata ---"
+                cat destructiveChanges/destructiveChanges.xml
+                
+                
             
