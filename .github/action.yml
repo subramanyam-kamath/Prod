@@ -1,6 +1,6 @@
   inputs:
   who-to-greet:
-    description: 'Who to greet'
+    description: 'Who to greet2'
     required: true
     default: 'World'
 
