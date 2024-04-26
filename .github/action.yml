@@ -2,7 +2,7 @@
   who-to-greet:
     description: 'Who to greet2'
     required: true
-    default: 'World'
+    default: 'World2'
 
   outputs:
   time:
