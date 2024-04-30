@@ -1,0 +1,12 @@
+name: Childworkflow run
+run-name: ${{ github.actor }} is validating the Deployment on the ${{github.ref_name}}
+on:
+  workflow_run:
+   workflows: ["Executing GitHub Actions on Develop"]
+   types: [completed]
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'The triggering workflow passed'
