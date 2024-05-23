@@ -1,0 +1,22 @@
+name: check reviewer
+on: push
+
+jobs:
+  addCommentToPr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: octokit/request-action@v2.x
+        id: get_pr_details
+        with:
+          route: POST /repos/{owner}/{repo}/pulls/{pull_number}
+          repo: ${{ github.repository }}
+          pull_number: 96
+          repos: Prod
+          owner: subramanyam-kamath         
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: echo the values        
+        run: |
+           echo {{ steps.get_pr_details.outputs.data }} 
+         
