@@ -17,5 +17,5 @@ jobs:
 
       - name: echo the values        
         run: |
-           echo ${{ steps.get_pr_details.outputs.data }} 
+           echo '${{ steps.get_pr_details.outputs.data }}'
          
