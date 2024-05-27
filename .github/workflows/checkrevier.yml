@@ -9,7 +9,7 @@ jobs:
         id: get_pr_details
         with:
           route: GET /repos/{owner}/{repo}/pulls/{pull_number}          
-          pull_number: 3203
+          pull_number: 96
           repo: Prod
           owner: subramanyam-kamath         
         env:
