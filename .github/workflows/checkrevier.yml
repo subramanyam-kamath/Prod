@@ -21,7 +21,8 @@ jobs:
 
       - name: executing the curl
         run: |
-         curl  /repos/subramanyam-kamath/Prod/pulls
+         curl  https://api.github.com/repos/subramanyam-kamath/Prod/pulls/96/requested_reviewers
+
              
          
          
