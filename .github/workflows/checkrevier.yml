@@ -21,7 +21,7 @@ jobs:
 
       - name: executing the curl
         run: |
-         curl -L GET \
+         curl -X GET \
               -H 'Accept: application/vnd.github+json' \
               -H 'Authorization: Bearer ${{secrets.GH_TOKEN}}' \              
                 https://api.github.com/repos/subramanyam-kamath/Prod/pulls/3203
