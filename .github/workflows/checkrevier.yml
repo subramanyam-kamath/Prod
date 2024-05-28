@@ -8,8 +8,7 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            // If user is member of my_team team do nothing else do something
-            // See: https://octokit.github.io/rest.js/v18#teams
+            
             const creator = context.payload.sender.login
             const opts = github.rest.teams.getMembershipForUserInOrg.endpoint.merge({
               org: 'subramanyam-kamath',
@@ -19,8 +18,8 @@ jobs:
             const response = await github.paginate(opts)
 
            
-            if (response.state <> "active") {
+            if (response.state != "active") {
                 return
               }
 
-            // User is not in the team continue to do something...
+           
