@@ -32,7 +32,7 @@ jobs:
         run: echo ${{ steps.vars.outputs.reviewerlist }}
 
       - name: get team details
-      - uses: actions/github-script@v6
+        uses: actions/github-script@v6
         with:
           script: |
             
