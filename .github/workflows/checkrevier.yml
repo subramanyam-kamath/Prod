@@ -5,20 +5,7 @@ jobs:
   addCommentToPr:
     runs-on: ubuntu-latest
     steps:
-      - uses: octokit/request-action@v2.x
-        id: get_pr_details
-        with:
-          route: GET /repos/{owner}/{repo}/pulls/{pull_number}          
-          pull_number: 96
-          repo: Prod
-          owner: subramanyam-kamath         
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: echo the values        
-        run: |
-           echo '${{ steps.get_pr_details.outputs.data }}'
-
+     
       - name: executing the curl
         id: vars
         run: |
