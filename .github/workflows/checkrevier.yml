@@ -5,6 +5,31 @@ jobs:
   addCommentToPr:
     runs-on: ubuntu-latest
     steps:
+
+      - uses: actions/github-script@v6
+        with:
+          script: |            
+            const creator = context.payload.sender.login
+            const opts = github.rest.teams.getMembershipForUserInOrg.endpoint.merge({
+              org: 'subramanyam-kamath',
+              team_slug: 'Teamsf',
+              username: creator
+            })
+
+      - uses: octokit/request-action@v2.x
+        id: get_pr_details
+        with:
+          route: GET /repos/{owner}/{repo}/pulls/{pull_number}          
+          pull_number: 96
+          repo: Prod
+          owner: subramanyam-kamath         
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: echo the values        
+        run: |
+           echo '${{ steps.get_pr_details.outputs.data }}'
+         
      
       - name: executing the curl
         id: vars
@@ -18,13 +43,4 @@ jobs:
       - name: echo the reviewer list.      
         run: echo ${{ steps.vars.outputs.reviewerlist }}
    :
-      - uses: actions/github-script@v6
-        with:
-          script: |            
-            const creator = context.payload.sender.login
-            const opts = github.rest.teams.getMembershipForUserInOrg.endpoint.merge({
-              org: 'subramanyam-kamath',
-              team_slug: 'Teamsf',
-              username: creator
-            })
-         
+     
