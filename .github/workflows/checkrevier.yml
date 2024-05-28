@@ -2,34 +2,25 @@ name: check reviewer
 on: push
 
 jobs:
-  addCommentToPr:
+  my_job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
         with:
-          script: |            
+          script: |
+            // If user is member of my_team team do nothing else do something
+            // See: https://octokit.github.io/rest.js/v18#teams
             const creator = context.payload.sender.login
             const opts = github.rest.teams.getMembershipForUserInOrg.endpoint.merge({
               org: 'subramanyam-kamath',
-              team_slug: 'Teamsf',
+              team_slug: 'My cool Team',
               username: creator
-            })    
+            })
+            const response = await github.paginate(opts)
 
-      - name: echo the values        
-        run: |
-           echo '${{ steps.get_pr_details.outputs.data }}'
-         
-     
-      - name: executing the curl
-        id: vars
-        run: |
-          echo "reviewerlist= $(curl -L \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}"\
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-              https://api.github.com/repos/subramanyam-kamath/Prod/pulls/96/requested_reviewers | jq '.users[].login';)" >> $GITHUB_OUTPUT
+           
+            if (response.state <> "active") {
+                return
+              }
 
-      - name: echo the reviewer list.      
-        run: echo ${{ steps.vars.outputs.reviewerlist }}
-   :
-     
+            // User is not in the team continue to do something...
