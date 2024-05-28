@@ -12,7 +12,7 @@ jobs:
          gh api \
          -H "Accept: application/vnd.github+json" \
          -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/subramanyam-kamath/REPO/pulls/96/requested_reviewers
+          /repos/subramanyam-kamath/Prod/pulls/96/requested_reviewers
         env:
              GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
