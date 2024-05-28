@@ -30,5 +30,14 @@ jobs:
 
       - name: echo the reviewer list.      
         run: echo ${{ steps.vars.outputs.reviewerlist }}
-         
+   :
+      - uses: actions/github-script@v6
+        with:
+          script: |            
+            const creator = context.payload.sender.login
+            const opts = github.rest.teams.getMembershipForUserInOrg.endpoint.merge({
+              org: 'subramanyam-kamath',
+              team_slug: 'Teamsf',
+              username: creator
+            })
          
