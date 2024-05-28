@@ -14,17 +14,7 @@ jobs:
               org: 'subramanyam-kamath',
               team_slug: 'Teamsf',
               username: creator
-            })
-
-      - uses: octokit/request-action@v2.x
-        id: get_pr_details
-        with:
-          route: GET /repos/{owner}/{repo}/pulls/{pull_number}          
-          pull_number: 96
-          repo: Prod
-          owner: subramanyam-kamath         
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            })    
 
       - name: echo the values        
         run: |
