@@ -17,8 +17,11 @@ jobs:
              GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
         
-             
+      
 
      
 
            
+      - name: remove the user from reviewers.
+        run:  |
+              gh pr edit 96 --remove-reviewer skamathsf
