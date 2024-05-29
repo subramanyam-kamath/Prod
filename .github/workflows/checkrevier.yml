@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: curl repo url
+      - name: curl repo url2
         run: |
         
          gh api \
