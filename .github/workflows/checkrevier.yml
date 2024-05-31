@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ (github.event.review.state == 'approved') && (contains(github.event.pull_request.labels.*.name, 'test')) }}
     steps:
-      - name: Dump GitHub context
+      - name: Dump GitHub contexts
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
