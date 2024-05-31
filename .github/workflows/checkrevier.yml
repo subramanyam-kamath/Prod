@@ -1,27 +1,18 @@
-name: check reviewer
-on: push
+name: PR approved and labeled
+
+on:
+  pull_request:
+    types: [labeled]
+  pull_request_review:
+    types: [submitted]
 
 jobs:
-  my_job:
+  build:
     runs-on: ubuntu-latest
+    if: ${{ (github.event.review.state == 'approved') && (contains(github.event.pull_request.labels.*.name, 'test')) }}
     steps:
-
-      - name: curl repo url2
-        run: |
-        
-         gh api \
-         -H "Accept: application/vnd.github+json" \
-         -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/subramanyam-kamath/Prod/pulls/96/requested_reviewers
+      - name: Dump GitHub context
         env:
-             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-        
-      
-
-     
-
-           
-      - name: remove the user from reviewers.
-        run:  |
-              gh pr edit 96 --remove-reviewer skamathsf
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - run: echo ${{ github.event.review.state }}
