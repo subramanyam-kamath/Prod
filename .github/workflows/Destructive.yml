@@ -19,7 +19,7 @@ jobs:
       - name: commit the file.
         run: | 
 
-            git add.
+            git add .
             git commit -m "This is our commit message"
             git push origin main
 
