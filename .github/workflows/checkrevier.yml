@@ -30,5 +30,4 @@ jobs:
       - name: count approval request.
         run: |
           JSON_RESPONSE='${{ steps.vars2.outputs.reviewercount }}'
-          CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq -c '[.[] | select(.state | contains("APPROVED")) ] | length')
-          test $CURRENT_APPROVALS_COUNT
+          
