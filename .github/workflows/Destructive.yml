@@ -15,4 +15,7 @@ jobs:
 
       - name: Run Salesforce Code Analyzer
         run: sf scanner rule list --language apex,javascript
+
+      - name: Get describe rule name:
+        run: sf scanner rule describe --rulename ApexAssertionsShouldIncludeMessage
         
