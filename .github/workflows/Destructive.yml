@@ -14,7 +14,14 @@ jobs:
         run: sf plugins install @salesforce/sfdx-scanner@latest
 
       - name: Run Salesforce Code Analyzer
-        run: sf scanner rule list --language apex,javascript
+        run: echo $(sf scanner rule list --language apex,javascript) >> apexruleset.csv
+
+      - name: commit the file.
+        run: | 
+
+            git add.
+            git commit -m "This is our commit message"
+            git push origin main
 
       - name: Get describe rule name
         run: sf scanner rule describe --rulename ApexAssertionsShouldIncludeMessage
