@@ -18,7 +18,8 @@ jobs:
 
       - name: commit the file.
         run: | 
-
+            git config --global user.email "subramanyam.kamath@gmail.com"
+            git config --global user.name "subramanyam-kamath"
             git add .
             git commit -m "This is our commit message"
             git push origin main
