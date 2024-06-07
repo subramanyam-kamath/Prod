@@ -9,10 +9,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ (github.event.review.state == 'approved')}}
+    if: ${{ (github.event.review.state == 'approved') }}
     steps:
-      - name: Dump GitHub contexts
+      - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
       - run: echo ${{ github.event.review.state }}
+
+      - name: get approval count
+        id: vars2
+        run: |
+          echo "reviewercount=$(gh api \
+           -H "Accept: application/vnd.github+json" \
+           -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/devforce/subramanyam-kamath/pulls/${{ github.event.number }}/reviews )" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: count approval request.
+        run: |
+          JSON_RESPONSE='${{ steps.vars2.outputs.reviewercount }}'
+          CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq -c '[.[] | select(.state | contains("APPROVED")) ] | length')
+          test $CURRENT_APPROVALS_COUNT
