@@ -10,14 +10,4 @@ jobs:
     - name: Checkmarx Action
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.9
 
-      - name: Check out files
-        uses: actions/checkout@v4
-
-      - name: Install Salesforce CLI
-        run: npm install -g @salesforce/cli@latest
-
-      - name: Install Salesforce Code Analyzer Plugin
-        run: sf plugins install @salesforce/sfdx-scanner@latest
-
-      - name: Run Salesforce Code Analyzer
-        run: sf scanner rule list --language apex,javascript
+    
