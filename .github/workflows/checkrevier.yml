@@ -1,4 +1,4 @@
-name: PR approved and labele
+name: PR approved and label
 
 on:
   pull_request:
