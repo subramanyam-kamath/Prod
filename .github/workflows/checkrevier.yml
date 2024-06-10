@@ -23,10 +23,7 @@ jobs:
       - name: get approval count
         id: reviewercounts
         run: |
-          echo "reviewercount=$(gh api \
-           -H "Accept: application/vnd.github+json" \
-           -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/subramanyam-kamath/Prod/pulls/${{ github.event.number }}/requested_reviewers )" >> $GITHUB_OUTPUT
+          echo "reviewercount= $(echo ${{ toJson(github.event.pull_request.requested_reviewers) }}' | jq '. | length')" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
