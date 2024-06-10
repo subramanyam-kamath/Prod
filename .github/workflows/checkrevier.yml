@@ -1,12 +1,18 @@
-name: PR approved and labeled
+name: PR approved and label
 
 on:
-  push:
+  pull_request:
+    types: [opened,synchronize]
+  pull_request_review:
+    types: [submitted,edited]
+
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    if: ${{ (github.event.review.state == 'approved') }}
+    runs-on: ubuntu-latest   
+    outputs:
+      approval_counts: ${{steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
+     
     steps:
       - name: Dump GitHub context
         env:
@@ -15,18 +21,33 @@ jobs:
       - run: echo ${{ github.event.review.state }}
 
       - name: get approval count
-        id: vars2
+        id: reviewercounts
         run: |
           echo "reviewercount=$(gh api \
            -H "Accept: application/vnd.github+json" \
            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/devforce/subramanyam-kamath/pulls/${{ github.event.number }}/reviews )" >> $GITHUB_OUTPUT
+            /repos/subramanyam-kamath/Prod/pulls/${{ github.event.pull_request.number}}/reviews )" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
       - name: count approval request.
+        id: approvaldetails
         run: |
-          JSON_RESPONSE='${{ steps.vars2.outputs.reviewercount }}'
-          CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq -c '[.[] | select(.state | contains("APPROVED")) ] | length')
-          test $CURRENT_APPROVALS_COUNT
+          approval_detail='${{ steps.reviewercounts.outputs.reviewercount }}'
+          echo "CURRENT_APPROVALS_COUNT=$(echo $approval_detail | jq  '[.[] | select(.state | contains("APPROVED") ) ] | length')" >> $GITHUB_OUTPUT
+      - name: echo the response.
+        id: approvalcount
+        run: |
+        
+         echo  ${{ steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
+         echo ${{github.event.review.state}}
+      
+  count:    
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ needs.build.outputs.approval_counts >= 1 && github.event.review.state == 'approved'}}
+    steps:
+      - name: echo the approval count.
+        run: echo ${{ needs.build.outputs.approval_counts}}
+    

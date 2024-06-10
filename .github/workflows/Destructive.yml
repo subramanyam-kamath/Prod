@@ -1,14 +1,15 @@
-name: Salesforce Code Analyzer Workflow
-on: push
+name: Checkmarx OSA Scan
+on: [push]
 jobs:
-  salesforce-code-analyzer-workflow:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files
-        uses: actions/checkout@v4
 
-      - name: Install Salesforce CLI
-        run: npm install -g @salesforce/cli@latest
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Checkmarx Action
+      uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.9
+
 
       - name: Install Salesforce Code Analyzer Plugin
         run: sf plugins install @salesforce/sfdx-scanner@latest
@@ -26,4 +27,3 @@ jobs:
 
       - name: Get describe rule name
         run: sf scanner rule describe --rulename ApexAssertionsShouldIncludeMessage
-        
