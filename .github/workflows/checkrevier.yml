@@ -34,7 +34,7 @@ jobs:
         run: |
           JSON_RESPONSE='${{ steps.check_approvals.outputs.data }}'
           CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq -c '[.[] | select(.state | contains("APPROVED")) ] | length')
-         echo $CURRENT_APPROVALS_COUNT 
+          echo $CURRENT_APPROVALS_COUNT 
           
       - name: echo the response.
         id: approvalcount
