@@ -42,6 +42,7 @@ jobs:
         run: |
         
          echo  ${{ steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
+         echo ${{github.event.review.state}}
 
       
   count:
