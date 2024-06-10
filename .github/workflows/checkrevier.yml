@@ -8,45 +8,18 @@ on:
 
 
 jobs:
-  build:
-    runs-on: ubuntu-latest   
-    outputs:
-      approval_counts: ${{steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
-     
+  check-approvals:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - run: echo ${{ github.event.review.state }}
-
-      - name: get approval count
       - uses: octokit/request-action@v2.x
         id: check_approvals
         with:
           route: GET /repos/${{ github.repository }}/pulls/${{ github.event.review.number }}/reviews
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-      - name: count approval request.
-        id: approvaldetails
+      - id: test_variables
         run: |
           JSON_RESPONSE='${{ steps.check_approvals.outputs.data }}'
           CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq -c '[.[] | select(.state | contains("APPROVED")) ] | length')
-          echo $CURRENT_APPROVALS_COUNT 
-          
-      - name: echo the response.
-        id: approvalcount
-        run: |
-        
-         echo  ${{ steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
-         echo ${{github.event.review.state}}
-      
-  count:
-    if: ${{ needs.build.outputs.approval_counts >=1 && github.event.review.state == 'approved'}}
-    runs-on: ubuntu-latest   
-    steps:
-      - name: echo the approval count.
-        run: ${{ needs.build.outputs.approval_counts}}
-    
+          echo $CURRENT_APPROVALS_COUNT
