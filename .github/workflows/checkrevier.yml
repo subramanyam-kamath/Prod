@@ -43,9 +43,10 @@ jobs:
          echo  ${{ steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
          echo ${{github.event.review.state}}
       
-  count:
-    if: ${{ needs.build.outputs.approval_counts >= '1' && github.event.review.state == 'approved'}}
-    runs-on: ubuntu-latest   
+  count:    
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ needs.build.outputs.approval_counts >= 1 && github.event.review.state == 'approved'}}
     steps:
       - name: echo the approval count.
         run: ${{ needs.build.outputs.approval_counts}}
