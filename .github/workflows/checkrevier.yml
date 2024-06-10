@@ -21,9 +21,10 @@ jobs:
       - run: echo ${{ github.event.review.state }}
 
       - name: get approval count
-        id: reviewercounts
-        run: |
-          echo "reviewercount= $(echo ${{ toJson(github.event.pull_request.requested_reviewers) }} | jq '. | length')" >> $GITHUB_OUTPUT
+      - uses: octokit/request-action@v2.x
+        id: check_approvals
+        with:
+          route: GET /repos/${{ github.repository }}/pulls/${{ github.event.review.number }}/reviews
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -31,16 +32,16 @@ jobs:
       - name: count approval request.
         id: approvaldetails
         run: |
-          approval_detail='${{ steps.reviewercounts.outputs.reviewercount }}'
-          echo "CURRENT_APPROVALS_COUNT=$(echo $approval_detail | jq  '[.[] | select(.state | contains("APPROVED") ) ] | length')" >> $GITHUB_OUTPUT
-
+          JSON_RESPONSE='${{ steps.check_approvals.outputs.data }}'
+          CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq -c '[.[] | select(.state | contains("APPROVED")) ] | length')
+         echo $CURRENT_APPROVALS_COUNT 
+          
       - name: echo the response.
         id: approvalcount
         run: |
         
          echo  ${{ steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
          echo ${{github.event.review.state}}
-
       
   count:
     if: ${{ needs.build.outputs.approval_counts >=1 && github.event.review.state == 'approved'}}
@@ -49,5 +50,3 @@ jobs:
       - name: echo the approval count.
         run: ${{ needs.build.outputs.approval_counts}}
     
-    
-          
