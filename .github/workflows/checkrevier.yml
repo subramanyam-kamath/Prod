@@ -8,17 +8,45 @@ on:
 
 
 jobs:
-  check-approvals:    
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest   
+    outputs:
+      approval_counts: ${{steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
+     
     steps:
-      - uses: octokit/request-action@v2.x
-        id: check_approvals
-        with:
-          route: GET /repos/subramanyam-kamath/Prod/pulls/101/reviews
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - run: echo ${{ github.event.review.state }}
+
+      - name: get approval count
+        id: reviewercounts
+        run: |
+          echo "reviewercount=$(gh api \
+           -H "Accept: application/vnd.github+json" \
+           -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/subramanyam-kamath/Prod/pulls/${{ github.event.number }}/reviews )" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - id: test_variables
+
+
+      - name: count approval request.
+        id: approvaldetails
         run: |
-          JSON_RESPONSE='${{ steps.check_approvals.outputs.data }}'
-          CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq -c '[.[] | select(.state | contains("APPROVED")) ] | length')
-          echo $CURRENT_APPROVALS_COUNT
+          approval_detail='${{ steps.reviewercounts.outputs.reviewercount }}'
+          echo "CURRENT_APPROVALS_COUNT=$(echo $approval_detail | jq  '[.[] | select(.state | contains("APPROVED") ) ] | length')" >> $GITHUB_OUTPUT
+      - name: echo the response.
+        id: approvalcount
+        run: |
+        
+         echo  ${{ steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
+         echo ${{github.event.review.state}}
+      
+  count:
+    if: ${{ needs.build.outputs.approval_counts >=1 && github.event.review.state == 'approved'}}
+    runs-on: ubuntu-latest   
+    steps:
+      - name: echo the approval count.
+        run: ${{ needs.build.outputs.approval_counts}}
+    
