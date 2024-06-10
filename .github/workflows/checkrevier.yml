@@ -29,11 +29,12 @@ jobs:
 
 
       - name: count approval request.
+        id: vars3
         run: |
           JSON_RESPONSE='${{ steps.vars2.outputs.reviewercount }}'
-          CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq  '[.[] | select(.state ) ] | length')
+          echo "CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq  '[.[] | select(.state | contains("APPROVED") ) ] | length')" >> $GITHUB_OUTPUT
 
       - name: echo the response.
-        run: echo $CURRENT_APPROVALS_COUNT
+        run: echo ${{ steps.vars3.outputs.CURRENT_APPROVALS_COUNT }}
        
           
