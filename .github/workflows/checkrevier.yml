@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest   
+    outputs:
+      approval_counts: ${{steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
+     
     steps:
       - name: Dump GitHub context
         env:
@@ -40,5 +43,13 @@ jobs:
         
          echo  ${{ steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
 
+      
+  count:
+    if: ${{ needs.build.outputs.approval_counts >=1 && github.event.review.state == 'approved'}}
+    runs-on: ubuntu-latest   
+    steps:
+      - name: echo the approval count.
+        run: ${{ needs.build.outputs.approval_counts}}
+    
     
           
