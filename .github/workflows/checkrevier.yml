@@ -23,7 +23,7 @@ jobs:
       - name: get approval count
         id: reviewercounts
         run: |
-          echo "reviewercount= $(echo ${{ toJson(github.event.pull_request.requested_reviewers) }}' | jq '. | length')" >> $GITHUB_OUTPUT
+          echo "reviewercount= $(echo ${{ toJson(github.event.pull_request.requested_reviewers) }} | jq '. | length')" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
