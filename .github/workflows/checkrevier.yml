@@ -28,7 +28,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-      - name: count approval request.        
+      - name: count approval request.
+        id: approvaldetails
         run: |
           approval_detail='${{ steps.reviewercounts.outputs.reviewercount }}'
           echo "CURRENT_APPROVALS_COUNT=$(echo $approval_detail | jq  '[.[] | select(.state | contains("APPROVED") ) ] | length')" >> $GITHUB_OUTPUT
@@ -37,7 +38,7 @@ jobs:
         id: approvalcount
         run: |
         
-         echo  $CURRENT_APPROVALS_COUNT
+         echo  ${{ steps.approvaldetails.outputs.CURRENT_APPROVALS_COUNT}}
 
     
           
