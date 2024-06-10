@@ -8,8 +8,7 @@ on:
 
 
 jobs:
-  check-approvals:
-    if: github.event.review.state == 'approved'
+  check-approvals:    
     runs-on: ubuntu-latest
     steps:
       - uses: octokit/request-action@v2.x
