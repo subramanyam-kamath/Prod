@@ -49,5 +49,5 @@ jobs:
     if: ${{ needs.build.outputs.approval_counts >= 1 && github.event.review.state == 'approved'}}
     steps:
       - name: echo the approval count.
-        run: ${{ needs.build.outputs.approval_counts}}
+        run: echo ${{ needs.build.outputs.approval_counts}}
     
