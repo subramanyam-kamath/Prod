@@ -14,7 +14,7 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: check_approvals
         with:
-          route: GET /repos/subramanyam-kamath/Prod/pulls/${{ github.event.review.number }}/reviews
+          route: GET /repos/subramanyam-kamath/Prod/pulls/${{ github.event.number }}/reviews
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - id: test_variables
