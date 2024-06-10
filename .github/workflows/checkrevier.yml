@@ -18,7 +18,7 @@ jobs:
       - run: echo ${{ github.event.review.state }}
 
       - name: get approval count
-        id: vars2
+        id: reviewercounts
         run: |
           echo "reviewercount=$(gh api \
            -H "Accept: application/vnd.github+json" \
@@ -28,13 +28,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-      - name: count approval request.
-        id: vars3
+      - name: count approval request.        
         run: |
-          JSON_RESPONSE='${{ steps.vars2.outputs.reviewercount }}'
-          echo "CURRENT_APPROVALS_COUNT=$(echo $JSON_RESPONSE | jq  '[.[] | select(.state | contains("APPROVED") ) ] | length')" >> $GITHUB_OUTPUT
+          approval_detail='${{ steps.reviewercounts.outputs.reviewercount }}'
+          echo "CURRENT_APPROVALS_COUNT=$(echo $approval_detail | jq  '[.[] | select(.state | contains("APPROVED") ) ] | length')" >> $GITHUB_OUTPUT
 
       - name: echo the response.
-        run: echo ${{ steps.vars3.outputs.CURRENT_APPROVALS_COUNT }}
-       
+        id: approvalcount
+        run: |
+        
+         echo  $CURRENT_APPROVALS_COUNT
+
+    
           
