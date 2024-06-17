@@ -18,6 +18,10 @@ jobs:
               with:
                 node-version: '14'
 
+            - name: set environment variable
+              env: 
+                day: Monday
+                
             - name: 'Checkout source code'
               uses: actions/checkout@v3
               with:
