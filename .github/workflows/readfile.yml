@@ -36,3 +36,4 @@ jobs:
               
                  ls -1 tempfolder 
                  cat tempfolder/hello.apex
+                 echo ${{env.day}}
