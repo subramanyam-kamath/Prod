@@ -31,5 +31,5 @@ jobs:
 
             - name: run the local file.
               run: | 
-               cd tempfolder/apex
-               cat hello.apex
+               cd tempfolder
+               cat tempfolder
