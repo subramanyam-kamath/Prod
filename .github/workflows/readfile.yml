@@ -33,4 +33,4 @@ jobs:
               run: | 
               
                  ls -1 tempfolder 
-                 cat hello.apex
+                 cat tempfolder/hello.apex
