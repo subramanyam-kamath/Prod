@@ -32,4 +32,4 @@ jobs:
             - name: run the local file.
               run: | 
               
-               ls -1 tempfolder/apex/*
+               ls -1 tempfolder
