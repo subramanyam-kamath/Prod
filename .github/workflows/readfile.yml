@@ -1,0 +1,35 @@
+name: GitHub Actions QA Org
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: 
+  push:
+    branches:
+      - "main"
+   
+
+env:
+   GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+
+jobs:   
+    validate-deployment-on-QA-org:        
+        runs-on: ubuntu-latest
+        environment: QA-Branch
+        steps:            
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '14'
+
+            - name: 'Checkout source code'
+              uses: actions/checkout@v3
+              with:
+                fetch-depth: 0    
+
+            - name: run the test classes.
+              run: |
+        
+                 mkdir -p  tempfolder
+                 cp -r scripts/apex/hello.apex tempfolder
+
+            - name: run the local file.
+              run: | 
+               cd tempfolder/apex
+               cat hello.apex
