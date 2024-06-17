@@ -27,7 +27,7 @@ jobs:
               run: |
         
                  mkdir -p  tempfolder
-                 cp -r scripts/apex/hello.apex tempfolder
+                 cp -r scripts tempfolder
 
             - name: run the local file.
               run: | 
