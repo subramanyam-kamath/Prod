@@ -32,4 +32,5 @@ jobs:
             - name: run the local file.
               run: | 
               
-               cat $( ls -1 tempfolder)
+                 ls -1 tempfolder 
+                 cat (( ls -1 tempfolder)
