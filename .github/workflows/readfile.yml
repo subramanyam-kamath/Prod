@@ -35,5 +35,5 @@ jobs:
               run: | 
               
                  ls -1 tempfolder 
-                 sed -i 's/${{env.day}}/${{env.day}}/g'  tempfolder/hello.apex
+                 sed -i 's/"${{env.day}}"/${{env.day}}/g'  tempfolder/hello.apex
                  cat tempfolder/hello.apex
