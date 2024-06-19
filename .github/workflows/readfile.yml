@@ -31,14 +31,26 @@ jobs:
                  mkdir -p  tempfolder
                  cp -r apexclassnames.txt tempfolder
 
+            - name: run the folder
+              run: |
+
+                 mkdir -p  tempfolder2
+                 cp -r scripts/apex/* tempfolder2
+                
+
             - name: run the local file.
               id: vars
               run: | 
               
-                 ls -1 tempfolder 
+                 ls -1 tempfolder                 
                  sed -i 's/yourtexthere/${{env.day}}/g'  tempfolder/apexclassnames.txt
                  echo "testfile=$(cat tempfolder/apexclassnames.txt |   sed 's/^/'"'"'/' |  sed  's/$/'"'"'/'| sed 's/^/"/;s/$/"/' | paste -sd ",")" >> $GITHUB_OUTPUT 
-
+                 ls -1 tempfolder2
+                 sed -i 's/yourtexthere/${{steps.vars.outputs.testfile}}/g'  tempfolder/hello.apex
+                 
             
             - name: echo the variable
-              run: echo ${{steps.vars.outputs.testfile}}
+              run: |
+               echo ${{steps.vars.outputs.testfile}}
+               cat tempfolder/hello.apex
+              
