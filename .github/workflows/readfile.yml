@@ -52,7 +52,7 @@ jobs:
               run: |
                echo ${{steps.vars.outputs.testfile}}
                ls -1 tempfolder2
-               sed -i 's/yourtexthere/${{steps.vars.outputs.testfile}}/g'  tempfolder2/hello.apex
+               sed -i 's/yourtexthere/${{steps.vars.outputs.testfile}}/g;s/\"/'/g' tempfolder2/hello.apex
 
             - name: echot the file
               run: |               
