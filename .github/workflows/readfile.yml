@@ -29,7 +29,7 @@ jobs:
               run: |
         
                  mkdir -p  tempfolder
-                 cp -r scripts/apex/* tempfolder
+                 cp -r apexclassnames.txt tempfolder
 
             - name: run the local file.
               id: vars
