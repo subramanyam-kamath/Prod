@@ -37,7 +37,7 @@ jobs:
               
                  ls -1 tempfolder 
                  sed -i 's/yourtexthere/${{env.day}}/g'  tempfolder/apexclassnames.txt
-                 echo "testfile=$(cat tempfolder/apexclassnames.txt |  | sed 's/^/'"'"'/' |  sed  's/$/'"'"'/'| sed 's/^/"/;s/$/"/' | paste -sd ",")" >> $GITHUB_OUTPUT 
+                 echo "testfile=$(cat tempfolder/apexclassnames.txt |   sed 's/^/'"'"'/' |  sed  's/$/'"'"'/'| sed 's/^/"/;s/$/"/' | paste -sd ",")" >> $GITHUB_OUTPUT 
 
             
             - name: echo the variable
