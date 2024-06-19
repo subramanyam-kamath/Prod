@@ -32,8 +32,13 @@ jobs:
                  cp -r scripts/apex/* tempfolder
 
             - name: run the local file.
+              id: vars
               run: | 
               
                  ls -1 tempfolder 
                  sed -i 's/yourtexthere/${{env.day}}/g'  tempfolder/hello.apex
-                 cat tempfolder/hello.apex
+                 echo "testfile=$(cat tempfolder/hello.apex)" >> $GITHUB_OUTPUT 
+
+            
+            - name: echo the variable
+              run: echo ${{steps.vars.outputs.testfile}}
