@@ -46,7 +46,7 @@ jobs:
                  sed -i 's/yourtexthere/${{env.day}}/g'  tempfolder/apexclassnames.txt
                  echo "testfile=$(cat tempfolder/apexclassnames.txt |   sed 's/^/'"'"'/' |  sed  's/$/'"'"'/'| sed 's/^/"/;s/$/"/' | paste -sd ",")" >> $GITHUB_OUTPUT 
                  ls -1 tempfolder2
-                 sed -i 's/yourtexthere/${{steps.vars.outputs.testfile}}/g'  tempfolder/hello.apex
+                 sed -i 's/yourtexthere/${{steps.vars.outputs.testfile}}/g'  tempfolder2/hello.apex
                  
             
             - name: echo the variable
