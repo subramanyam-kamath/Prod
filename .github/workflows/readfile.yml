@@ -45,12 +45,16 @@ jobs:
                  ls -1 tempfolder                 
                  sed -i 's/yourtexthere/${{env.day}}/g'  tempfolder/apexclassnames.txt
                  echo "testfile=$(cat tempfolder/apexclassnames.txt |   sed 's/^/'"'"'/' |  sed  's/$/'"'"'/'| sed 's/^/"/;s/$/"/' | paste -sd ",")" >> $GITHUB_OUTPUT 
-                 ls -1 tempfolder2
-                 sed -i 's/yourtexthere/${{steps.vars.outputs.testfile}}/g'  tempfolder2/hello.apex
+                 
                  
             
             - name: echo the variable
               run: |
                echo ${{steps.vars.outputs.testfile}}
-               cat tempfolder2/hello.apex
+               ls -1 tempfolder2
+               sed -i 's/yourtexthere/${{steps.vars.outputs.testfile}}/g'  tempfolder2/hello.apex
+
+            - name: echot the file
+              run: |               
+                 cat tempfolder2/hello.apex
               
