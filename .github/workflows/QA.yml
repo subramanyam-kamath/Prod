@@ -33,39 +33,18 @@ jobs:
                echo "exception= $(cat apexclassnames.txt |  sed 's/^/'"'"'/' |  sed  's/$/'"'"'/' | paste -sd "," | sed 's/\/t//g' | sed 's/[[:blank:]]//g' )"  >  $GITHUB_OUTPUT
                cat sortedfile.txt
 
+            
+            - name: run the local file.
+              run: |      
+                     echo "$( cat scripts/apex/hello.apex |  sed -i 's/yourtexthere/testme/g' )" >> runtestclass.apex
+
+            - name: cat the file
+              run: cat runtestclass.apex
+                  
            
                   
                   
             
-            - name: 'Install Salesforce CLI'
-              run: |
-                  wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-                  mkdir ~/sfdx
-                  tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-                  echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-                  ~/sfdx/bin/sfdx version
-
-           
-            - name: 'Installing sfdx git delta'
-              run: | 
-                  echo y | sfdx plugins:install sfdx-git-delta
-                  sfdx plugins 
-
-            
-            - name: 'Installing java'
-              run: |
-                sudo apt-get update
-                sudo apt install default-jdk
-
-            
-            - name: 'Installing SFDX scanner'
-              run: sfdx plugins:install @salesforce/sfdx-scanner
-
-            
-            - name: Decrypt the server.key.enc file & store inside assets folder
-              run: openssl enc -nosalt -aes-256-cbc -d -in ${{ secrets.ENCRYPTION_KEY_FILE }} -out ${{ secrets.JWT_KEY_FILE }} -base64 -K ${{ secrets.DECRYPTION_KEY }} -iv ${{ secrets.DECRYPTION_IV }}
-              
-
             
             - name: Authenticate Salesforce ORG
               run: |
