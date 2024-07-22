@@ -36,7 +36,7 @@ jobs:
             
             - name: run the local file.
               run: |      
-                     echo "$( cat scripts/apex/hello.apex |  sed -i 's/yourtexthere/testme/g' )" >> runtestclass.apex
+                     echo "$(  sed -i 's/yourtexthere/testme/g' scripts/apex/hello.apex )" >> runtestclass.apex
 
             - name: cat the file
               run: cat runtestclass.apex
