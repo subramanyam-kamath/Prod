@@ -36,10 +36,10 @@ jobs:
             
             - name: run the local file.
               run: |      
-                      sed -i 's/yourtexthere/testme/g' scripts/apex/hello.apex 
+                    sed -i 's/yourtexthere/testme/g' scripts/apex/hello.apex > classfile.txt
 
             - name: cat the file
-              run: cat runtestclass.apex                  
+              run: cat classfile.txt             
            
                   
                   
