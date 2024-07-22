@@ -36,18 +36,13 @@ jobs:
             
             - name: run the local file.
               run: |      
-                      sed -i 's/yourtexthere/testme/g' scripts/apex/hello.apex runtestclass.apex
+                      sed -i 's/yourtexthere/testme/g' scripts/apex/hello.apex 
 
             - name: cat the file
-              run: cat runtestclass.apex
-                  
+              run: cat runtestclass.apex                  
            
                   
                   
             
             
-            - name: Authenticate Salesforce ORG
-              run: |
-                sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
-
-          
+            
