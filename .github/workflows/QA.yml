@@ -40,7 +40,7 @@ jobs:
                     cat scripts/apex/hello.apex  > classfile.txt
 
             - name: cat the file
-              run:   sed  's/yourtexthere/testme/g' classfile.txt      > testfile.txt
+              run:    cat classfile.txt | sed  's/yourtexthere/testme/g'    > testfile.txt
 
             - name: echo the test file
               run: cat testfile.txt
