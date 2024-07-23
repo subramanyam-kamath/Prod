@@ -43,7 +43,7 @@ jobs:
               run:    cat classfile.apex | sed  's/yourtexthere/testme/g'    > testfile.apex
 
             - name: echo the test file
-              run: cat testfile.txt
+              run: cat testfile.apex
                   
                   
             
