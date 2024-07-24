@@ -1,73 +1,19 @@
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: 
-  workflow_dispatch:
-  push:
-   branches:
-      - "main"
-   paths:
-      - "force-app/**"
-
-env:
-   GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-
+on: push
 jobs:
-    
-    validate-deployment-on-QA-org:
+  generate-a-secret-output:
+    runs-on: ubuntu-latest
+    steps:
+      - id: sets-a-secret
+        name: Generate, mask, and output a secret
+        run: |
+          the_secret=$((RANDOM))
+          echo "::add-mask::$the_secret"
+          echo "secret-number=$the_secret" >> "$GITHUB_OUTPUT"
+      - name: Use that secret output (protected by a mask)
+        run: |
+          echo "the secret number is ${{ steps.sets-a-secret.outputs.secret-number }}"
         
-        runs-on: ubuntu-latest
-        environment: QA-Branch       
-        steps:            
-        - uses: actions/setup-node@v3
-          with:
-                node-version: '14'
-
-        - name: 'Checkout source code'
-          uses: actions/checkout@v3
-          with:
-             fetch-depth: 0       
-            
-
-                        
-            
-        - name: 'Install Salesforce CLI'
-          run: |
-              wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
-              mkdir ~/sfdx
-              tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
-              echo "$HOME/sfdx/bin" >> $GITHUB_PATH
-              ~/sfdx/bin/sfdx version
-
-           
-        - name: 'Installing sfdx git delta'
-          run: | 
-            echo y | sfdx plugins:install sfdx-git-delta
-            sfdx plugins 
-
-            
-        - name: 'Installing java'
-          run: |
-                sudo apt-get update
-                sudo apt install default-jdk
-
-            
         
-
-        - name: echo csv files
-          run: echo ${{needs.Getting-the-export-files.outputs.csv_file_in_repo}}
-
             
-        - name: Decrypt the server.key.enc file & store inside assets folder
-          run: openssl enc -nosalt -aes-256-cbc -d -in ${{ secrets.ENCRYPTION_KEY_FILE }} -out ${{ secrets.JWT_KEY_FILE }} -base64 -K ${{ secrets.DECRYPTION_KEY }} -iv ${{ secrets.DECRYPTION_IV }}
-              
-
-            
-        - name: Authenticate Salesforce ORG
-          run: |
-                sfdx force:auth:jwt:grant --clientid ${{ secrets.HUB_CONSUMER_KEY }} --jwtkeyfile ${{ secrets.JWT_KEY_FILE }} --username ${{ secrets.HUB_USER_NAME }} --setdefaultdevhubusername -a HubOrg
-
-        - name: Get deployment details
-          run: |
-            sf apex run --target-org Deployorg --file scripts/get-deployment-details.apex
-            sf org display --target-org HubOrg
-                 
-        
+      
