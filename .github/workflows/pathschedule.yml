@@ -50,8 +50,7 @@ jobs:
                 sudo apt install default-jdk
 
             
-        - name: 'Installing SFDX scanner'
-          run: sfdx plugins:install @salesforce/sfdx-scanner
+        
 
         - name: echo csv files
           run: echo ${{needs.Getting-the-export-files.outputs.csv_file_in_repo}}
