@@ -30,7 +30,7 @@ jobs:
         
       - name: Checking for difference between drm common metadata & current repo.
         run: |
-         find force-app/. -maxdepth 1 -type f -exec mv {} tempfolder \;
+         find force-app/main/default/classes. -maxdepth 1 -type f -exec mv {} tempfolder \;
          ls tempfolder
 
 
