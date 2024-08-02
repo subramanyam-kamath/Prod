@@ -19,12 +19,21 @@ jobs:
       - name: "Checkout source code"
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0              
+          fetch-depth: 0          
+
+      
+      - name: create temporary folder and copy the files from force-app folder
+        run: |
+          mkdir -p  tempfolder
+          cp -r force-app tempfolder    
       
 
-      - name: Get diff file names
-        id: vars
-        run: echo $( git diff --no-commit-id --name-only -r ...origin/main force-app/main/default/classes/) >> deltaclass.txt
-
-      - name: print the classes
-        run: cat deltaclass.txt
+        
+      - name: Checking for difference between drm common metadata & current repo.
+        run: |
+          
+           rm -rf tempfolder2/force-app/*/
+           ls force-app
+            
+ 
+           
