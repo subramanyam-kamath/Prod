@@ -25,7 +25,7 @@ jobs:
       - name: create temporary folder and copy the files from force-app folder
         run: |
           mkdir -p  tempfolder
-          cp -r force-app/main/default tempfolder
+          cp -r force-app/main/. tempfolder
           
 
         
