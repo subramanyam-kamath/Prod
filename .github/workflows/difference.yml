@@ -25,15 +25,13 @@ jobs:
       - name: create temporary folder and copy the files from force-app folder
         run: |
           mkdir -p  tempfolder
-          cp -r force-app tempfolder    
+          cp -r force-app/main/default/classes tempfolder    
       
 
         
       - name: Checking for difference between drm common metadata & current repo.
         run: |
-          
-          mv force-app/main/default/classes force-app
-          ls force-app
+          ls tempfolder
 
           
  
