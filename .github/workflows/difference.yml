@@ -32,8 +32,8 @@ jobs:
       - name: Checking for difference between drm common metadata & current repo.
         run: |
           
-           find tempfolder/force-app -mindepth 1 -maxdepth 1 | xargs rm -rf
-           ls force-app
-            
+          find /config/filegroups -mindepth 1 -maxdepth 1
+
+          
  
            
