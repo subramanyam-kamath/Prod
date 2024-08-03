@@ -43,6 +43,9 @@ jobs:
       - name: techo the folder
         run: ls tempfolder
 
+      - name: diff the files
+        run: diff -qr tempfolder tempfolder2
+
 
           
  
