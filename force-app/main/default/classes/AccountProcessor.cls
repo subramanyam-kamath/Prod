@@ -5,7 +5,7 @@ public static void countContacts2(List<Id> recordids){
 
 Account[] accts = [Select Id, Number_Of_Contacts__c from Account where Id IN:recordIds];
 
-List<Account> acct2 = new List<Account>();
+List<Account> acct3 = new List<Account>();
 
 for (account acct : accts){
 
