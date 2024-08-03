@@ -37,11 +37,13 @@ jobs:
           repository: subramanyam-kamath/Prod
           path: main
 
-      - name: checkout the gonndapa
-        run:  find main/force-app -type f -print0 | xargs -0 mv -t tempfolder2
+      - name: checkout the gonndapa      
+        run:  
+           mkdir -p tempfolder2
+           find main/force-app -type f -print0 | xargs -0 mv -t tempfolder2
 
       - name: echot he file
-        run: ls tempfolder2/force-app
+        run: ls tempfolder2
         
 
       - name: diff the files
