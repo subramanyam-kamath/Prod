@@ -30,11 +30,7 @@ jobs:
 
       - name: techo the folder
         run: ls tempfolder
-
-      - name: checkout main branch
-        uses: actions/checkout@v3
-        with:
-         ref: main      
+        
 
       - name: diff the files
         run: ls tempfolder
