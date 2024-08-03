@@ -15,15 +15,7 @@ jobs:
         with:
          node-version: '14'
 
-      - name: checkout main branch
-        uses: actions/checkout@v3
-        with:
-         ref: main
-
-      - name: create folder
-        run: |
-          mkdir -p tempfolder2
-          find force-app -type f -print0 | xargs -0 mv -t tempfolder2
+      
 
       - name: echo the folderpath
         run: ls tempfolder2
@@ -42,6 +34,16 @@ jobs:
 
       - name: techo the folder
         run: ls tempfolder
+
+      - name: checkout main branch
+        uses: actions/checkout@v3
+        with:
+         ref: main
+
+      - name: create folder
+        run: |
+          mkdir -p tempfolder2
+          find force-app -type f -print0 | xargs -0 mv -t tempfolder2
 
       - name: diff the files
         run: diff -qr tempfolder tempfolder2
