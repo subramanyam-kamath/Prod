@@ -15,12 +15,11 @@ jobs:
         with:
          node-version: '14'  
 
-     
+      
 
-      - name: "Checkout source code"
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0            
+      - name: create new branch
+        run: git checkout -b feature/copyofmain origin/main	
+          
 
         
       - name: Checking for difference between drm common metadata & current repo.
@@ -31,27 +30,22 @@ jobs:
       - name: techo the folder
         run: ls tempfolder
 
-      - name: Check out common metadata repo
-        uses: actions/checkout@v3
-        with:
-          repository: subramanyam-kamath/Prod
-          path: main
+      - name: git config set
+        run: |
+          git config --global user.email "subramanyam.kamath@gmail.com"
+          git config --global user.name "subramanyam-kamath"
 
-      - name: checkout the gonndapa      
-        run:  |
-           mkdir -p tempfolder2
-           find main/force-app -type f -print0 | xargs -0 mv -t tempfolder2
+      - name: Push & Commit file        
+        run: | 
+           git add tempfolder
+           git commit -m "added raw files"
 
-      - name: echot he file
-        run: ls tempfolder2
-        
+      - name: Push file to remote repository.        
+        run: |
+          git push origin feature/copyofmain
 
-      - name: diff the files
-        run: ls tempfolder
-
-      - name: diff the file
-        run: diff -qr tempfolder tempfolder2
-
+      
+           
           
  
            
