@@ -23,7 +23,7 @@ jobs:
         
       - name: Checking for difference between drm common metadata & current repo.
         run: |
-         
+          mkdir -p tempfolder 
           find ~/force-app/ -type f -print0 | xargs -0 mv -t ~/tempfolder
 
       - name: techo the folder
