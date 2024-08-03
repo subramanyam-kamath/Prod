@@ -30,6 +30,12 @@ jobs:
 
       - name: techo the folder
         run: ls tempfolder
+
+      - name: Check out common metadata repo
+        uses: actions/checkout@v3
+        with:
+          repository: subramanyam-kamath/Prod          
+          path: parentrepo     
         
 
       - name: diff the files
