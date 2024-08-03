@@ -24,7 +24,7 @@ jobs:
       - name: Checking for difference between drm common metadata & current repo.
         run: |
          
-          git diff main
+          git diff  origin/main
 
 
           
