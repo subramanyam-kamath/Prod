@@ -46,7 +46,7 @@ jobs:
          
 
       - name: diff the files
-        run: diff -qr tempfolder tempfolder2
+        run: diff -qr tempfolder/. tempfolder2
 
 
           
