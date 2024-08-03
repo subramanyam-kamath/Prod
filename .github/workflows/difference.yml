@@ -38,7 +38,7 @@ jobs:
           path: main
 
       - name: checkout the gonndapa      
-        run:  
+        run:  |
            mkdir -p tempfolder2
            find main/force-app -type f -print0 | xargs -0 mv -t tempfolder2
 
