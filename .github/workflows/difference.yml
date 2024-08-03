@@ -24,7 +24,10 @@ jobs:
       - name: Checking for difference between drm common metadata & current repo.
         run: |
          
-          git diff  origin/main --name-only
+          find ~/force-app/ -type f -print0 | xargs -0 mv -t ~/tempfolder
+
+      - name: techo the folder
+        run: ls tempfolder
 
 
           
