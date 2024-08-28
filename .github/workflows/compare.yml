@@ -1,4 +1,4 @@
-name: Compare two branches
+name: Compare two branche
 
 on:
   push:
