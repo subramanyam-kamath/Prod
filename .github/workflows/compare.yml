@@ -23,14 +23,15 @@ jobs:
 
       - name: scan the file
         run: |
-         snyk code test $PWD/force-app/core-package/main/default/classes/AccountProcessor.cls --sarif  > results.sarif
+         mkdir scan-reports
+         snyk code test $PWD/force-app/core-package/main/default/classes/AccountProcessor.cls --sarif  > scan-reports/results.sarif
         continue-on-error: true  
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: actions/upload-artifact@v3
         with:
-          # Path to SARIF file relative to the root of the repository
-          sarif_file: results.sarif
+          name: scan-report
+          path: scan-reports/results.sarif
 
       
 
