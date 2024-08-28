@@ -14,34 +14,24 @@ jobs:
       - name: Checkout Repo 1
         uses: actions/checkout@v2
 
-      # Step 2: Copy the common folder to a temporary location
+      
       - name: Copy Form Builder and Common Folder
         run: |
-          mkdir -p ../temporaryfolder
-          cp -r newfolder ../temporaryfolder
+           npm install snyk@latest -g
+           npm install snyk-to-html -g
+           snyk auth  ${{secrets.SNYK_AUTH_TOKEN}}
 
-      # Step 3: Clone the destination repository
-      - name: Check out my other private repo
-        uses: actions/checkout@v2
-        with:
-          repository: subramanyam-kamath/Merge
-          token: ${{ secrets.PAT}}
-          path: repo2
-          ref: main
-
-      # Step 4: find the difference between 2 folders
-      - name: Overwrite Form Builder and Common Folders in Repo 2
-        id: vars
+      - name: scan the file
         run: |
+         snyk code test $PWD/‎force-app/core-package/main/default/classes/AccountProcessor.cls --sarif  > results.sarif
+        continue-on-error: true  
 
-           git diff --name-only main..origin/ModuleChange
-           # echo $(diff -qr  ../temporaryfolder/newfolder/. repo2/newfolder  ) >> changedfile.txt
-           # cp -u repo2/newfolder ../temporaryfolder/newfolder/.
-           cat changedfile.txt
-           
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: results.sarif
 
-      - name: Echo the classes
-        run: echo testclassesname 
-
+      
 
      
