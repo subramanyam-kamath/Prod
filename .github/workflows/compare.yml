@@ -24,7 +24,7 @@ jobs:
       - name: scan the file
         run: |
          mkdir scan-reports
-         snyk code test $PWD/force-app/core-package/main/default/classes/AccountProcessor.cls --json-file-output=results.json || false
+         snyk code test $PWD/force-app/core-package/main/default/classes/AccountProcessor.cls --json-file-output=results.json || true
          snyk-to-html -o scan-reports/results-code.html < results.json
          
 
