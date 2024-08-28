@@ -23,7 +23,7 @@ jobs:
 
       - name: scan the file
         run: |
-         snyk code test $PWD/‎force-app/core-package/main/default/classes/AccountProcessor.cls 
+         snyk code test $PWD/force-app/core-package/main/default/classes/AccountProcessor.cls
         continue-on-error: true  
 
       - name: Upload SARIF file
