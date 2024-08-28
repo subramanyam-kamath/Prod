@@ -24,14 +24,15 @@ jobs:
       - name: scan the file
         run: |
          mkdir scan-reports
-         snyk code test $PWD/force-app/core-package/main/default/classes/AccountProcessor.cls --sarif  > scan-reports/results.sarif
+         snyk code test $PWD/force-app/core-package/main/default/classes/AccountProcessor.cls --json  > results.json
+         snyk-to-html -i results.json -o results.html
         continue-on-error: true  
 
       - name: Upload SARIF file
         uses: actions/upload-artifact@v3
         with:
           name: scan-report
-          path: scan-reports/results.sarif
+          path: results.json
 
       
 
