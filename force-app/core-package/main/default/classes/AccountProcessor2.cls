@@ -1,4 +1,4 @@
-public class AccountProcessor{
+public class AccountProcessor2{
 
 @future
 public static void countContacts2(List<Id> recordids){
