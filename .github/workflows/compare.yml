@@ -23,7 +23,7 @@ jobs:
       - name: scan the file
         run: |
          mkdir scan-reports
-         snyk code test $PWD/force-app/core-package/main/default/classes/sf_lms_DocusignService.cls --json-file-output=results.json --report --project-name="LMS Project" || true
+         snyk code test $PWD/force-app/core-package/main/default/classes/sf_lms_DocusignService.cls --json-file-output=results.json --report --project-name="LMSProject" || true
          
          
       - name: Upload SARIF file
