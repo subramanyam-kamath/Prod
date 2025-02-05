@@ -24,7 +24,7 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo $( git diff --name-only --diff-filter=A   ..origin/main force-app/main/default/classes/) >> deltaclass.txt
+        run: echo $( git diff --name-only --diff-filter=A  origin/main..${{github.ref_name}} force-app/main/default/classes/) >> deltaclass.txt
 
       - name: print the classes
         run: cat deltaclass.txt
