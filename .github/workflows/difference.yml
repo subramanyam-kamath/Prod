@@ -33,7 +33,7 @@ jobs:
         run: mkdir -p  destructive
 
       - name: copy the files to directory
-        run: cp "$(ls | grep -f deltaclass.txt)" destructive
+        run: cp -r "$(ls | grep -f deltaclass.txt)" destructive
 
       - name: git config set
         if: ${{always()}}
