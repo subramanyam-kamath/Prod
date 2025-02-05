@@ -24,16 +24,16 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo "Filenames=$( git diff --name-only --diff-filter=A  origin/main..${{github.ref_name}} force-app/)" >> $GITHUB_ENV
+        run: echo ::set-output name=version::$( git diff --name-only --diff-filter=A  origin/main..${{github.ref_name}} force-app/) 
 
       - name: print the classes
-        run: cat deltaclass.txt
+        run: cat ${{steps.vars.outputs.version}}
 
       - name: create new directory
         run: mkdir -p  destructive
 
       - name: copy the files to directory
-        run: cp --parents ${{env.Filename}} destructive
+        run: cp --parents ${{steps.vars.outputs.version}} destructive
 
       - name: git config set
         if: ${{always()}}
