@@ -24,7 +24,7 @@ jobs:
 
       - name: Get diff file names
         id: vars
-        run: echo $( git diff --no-commit-id --name-only --diff-filter=A ..origin/main force-app/main/default/classes/) >> deltaclass.txt
+        run: echo $( git diff --name-only --diff-filter=A destructive/2024-03-13T11-20-24..main force-app/main/default/classes/) >> deltaclass.txt
 
       - name: print the classes
         run: cat deltaclass.txt
