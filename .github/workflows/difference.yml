@@ -30,7 +30,7 @@ jobs:
         run: cat deltaclass.txt
 
       - name: create new directory
-        run: mkdir destructive
+        run: mkdir -p  destructive
 
       - name: copy the files to directory
         run: cp "$(ls | grep -f deltaclass.txt)" destructive
