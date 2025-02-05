@@ -28,3 +28,33 @@ jobs:
 
       - name: print the classes
         run: cat deltaclass.txt
+
+      - name: create new directory
+        run: mkdir destructive
+
+      - name: copy the files to directory
+        run: cp "$(ls | grep -f deltaclass.txt)" destructive
+
+      - name: git config set
+        if: ${{always()}}
+        run: |
+                git config --global user.email "subramanyam.kamath@gmail.com"
+                git config --global user.name "subramanyam-kamath" 
+              
+
+      - name: Push & Commit file    
+        if: ${{always()}}
+        run: | 
+                   git pull origin ${{github.ref_name}}
+                   git  add destructive                
+                   git commit -m "added destructive file"
+
+
+      - name: Push file to remote repository. 
+        if: ${{always()}}
+        run: |
+              
+               git push origin ${{github.ref_name}}
+             
+            
+
