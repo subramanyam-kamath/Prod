@@ -33,7 +33,7 @@ jobs:
         run: mkdir -p  destructive
 
       - name: copy the files to directory
-        run: cp -r force-app/main/default/classes/NewClassadded.cls force-app/main/default/classes/NewClassadded.cls-meta.xml force-app/main/default/classes/NoDiffClass.cls force-app/main/default/classes/NoDiffClass.cls-meta.xml destructive
+        run: cp --parents force-app/main/default/classes/NewClassadded.cls force-app/main/default/classes/NewClassadded.cls-meta.xml force-app/main/default/classes/NoDiffClass.cls force-app/main/default/classes/NoDiffClass.cls-meta.xml destructive
 
       - name: git config set
         if: ${{always()}}
